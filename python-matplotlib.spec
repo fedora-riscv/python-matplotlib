@@ -1,8 +1,8 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:           python-matplotlib
-Version:        0.91.2
-Release:        2%{?dist}
+Version:        0.91.4
+Release:        1%{?dist}
 Summary:        Python plotting library
 
 Group:          Development/Libraries
@@ -39,7 +39,7 @@ Requires:       tkinter
 
 %prep
 %setup -q -n matplotlib-%{version}
-%patch0 -p1
+#%patch0 -p1
 chmod -x lib/matplotlib/mpl-data/images/*.svg
 
 %build
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug   6 2008 Jef Spaleta <jspaleta[AT]fedoraproject org> - 0.91.4-1
+- New upstream release with multiple fixes including crasher bugs
+
 * Fri Mar  21 2008 Jef Spaleta <jspaleta[AT]fedoraproject org> - 0.91.2-2
 - gcc43 cleanups
 
