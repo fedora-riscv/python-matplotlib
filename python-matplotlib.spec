@@ -2,7 +2,7 @@
 
 Name:           python-matplotlib
 Version:        0.98.5.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python plotting library
 
 Group:          Development/Libraries
@@ -78,7 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri Mar 13 2009 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.98.5-1
+* Fri Mar 13 2009 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.98.5-2
 - Latest upstream release
 - Strip out included fonts
 
