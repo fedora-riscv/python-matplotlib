@@ -78,7 +78,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Dec 22 2008 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.98.5-1
+* Fri Mar 13 2009 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.98.5-1
 - Latest upstream release
 - Strip out included fonts
 
