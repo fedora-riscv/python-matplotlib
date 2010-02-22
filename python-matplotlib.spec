@@ -1,8 +1,8 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:           python-matplotlib
-Version:        0.98.5.2
-Release:        3%{?dist}
+Version:        0.99.1.2
+Release:        1%{?dist}
 Summary:        Python plotting library
 
 Group:          Development/Libraries
@@ -38,7 +38,8 @@ Requires:       tkinter
 
 
 %prep
-%setup -q -n matplotlib-%{version}
+#%setup -q -n matplotlib-%{version}
+%setup -q -n matplotlib-0.99.1.1
 #%patch0 -p1
 chmod -x lib/matplotlib/mpl-data/images/*.svg
 
@@ -77,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Feb 22 2010 Orion Poplawski <orion@cora.nwra.com> - 0.99.1.2
+- Update to 0.99.1.2
+
 * Tue May 26 2009 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.98.5-3
 - Latest upstream release
 - Updated to work with numpy update see EPEL bug 502082
