@@ -19,7 +19,7 @@
 
 Name:           python-matplotlib
 Version:        1.0.1
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        Python plotting library
 
 Group:          Development/Libraries
@@ -36,6 +36,7 @@ Source1:        http://downloads.sourceforge.net/matplotlib/mpl_sampledata-%{ver
 Source2:        setup.cfg
 # This patch taken from upstream SVN and will not be needed for releases later than 1.0.1
 Patch0:         matplotlib-1.0.1-plot_directive.patch
+patch1:		0001-Bugfix-propagate-timezone-info-in-plot_date-xaxis_da.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  python-devel, freetype-devel, libpng-devel, zlib-devel
 BuildRequires:  pygtk2-devel, gtk2-devel
@@ -98,6 +99,8 @@ BuildRequires:  python-basemap
 %endif
 
 %patch0 -p1
+%patch1 -p1
+
 chmod -x lib/matplotlib/mpl-data/images/*.svg
 
 cp %{SOURCE2} ./setup.cfg
@@ -178,6 +181,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Sep 15 2011 Jef Spaleta <jspaleta@fedoraproject.org> - 1.0.1-12
+- Apply upstream patch for timezone in plotting (bug 735677) 
+
 * Sat Feb 26 2011 Jonathan G. Underwood <jonathan.underwood@gmail.com> - 1.0.1-11
 - Set PYTHONPATH during html doc building using find to prevent broken builds
 
