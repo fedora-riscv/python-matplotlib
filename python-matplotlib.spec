@@ -27,6 +27,7 @@ URL:            http://matplotlib.org
 #sha1sum matplotlib-1.2.0-without-gpc.tar.gz
 #92ada4ef4e7374d67e46e30bfb08c3fed068d680  matplotlib-1.2.0-without-gpc.tar.gz
 Source0:        matplotlib-%{version}-without-gpc.tar.gz
+Source1:        setup.cfg
 
 Patch0:         %{name}-noagg.patch
 Patch1:         %{name}-tk.patch
@@ -157,7 +158,7 @@ errorcharts, scatterplots, etc, with just a few lines of code.
 %package -n     python3-matplotlib-qt4
 Summary:        Qt4 backend for python3-matplotlib
 Group:          Development/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 BuildRequires:  python3-PyQt4-devel
 Requires:       python3-PyQt4
 
@@ -177,6 +178,9 @@ Requires:       python3-tkinter
 
 %prep
 %setup -q -n matplotlib-%{version}
+
+# Copy setup.cfg to the builddir
+cp %{SOURCE1} .
 
 # Remove bundled libraries
 rm -r agg24 lib/matplotlib/pyparsing_py?.py
@@ -319,6 +323,10 @@ popd
 %endif
 
 %changelog
+* Sat Jan 25 2014 Thomas Spura <tomspur@fedoraproject.org> - 1.2.0-15
+- use GTKAgg backend (#982793)
+- R python3-matplotlib not python-matplotlib (#988412)
+
 * Mon Jun 10 2013 Jon Ciesla <limburgher@gmail.com> - 1.2.0-14
 - agg rebuild.
 
