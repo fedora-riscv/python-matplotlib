@@ -17,7 +17,7 @@
 
 Name:           python-matplotlib
 Version:        1.2.0
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 License:        Python
