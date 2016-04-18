@@ -46,7 +46,7 @@
 
 Name:           python-matplotlib
 Version:        1.4.3
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
@@ -267,6 +267,8 @@ Requires:       python3-cairo
 Requires:       python3-pyparsing
 Requires:       python3-dateutil
 Requires:       python3-pytz
+Requires:       dejavu-sans-fonts
+Requires:       dvipng
 %if 0%{?fedora} >= 18
 Requires:       stix-math-fonts
 %else
@@ -555,6 +557,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Mon Apr 18 2016 Thomas Spura <tomspur@fedoraproject.org> - 1.4.3-14
+- Add missing requires of dvipng to python3-matplotlib (#1270202)
+
 * Mon Apr 04 2016 Thomas Spura <tomspur@fedoraproject.org> - 1.4.3-13
 - Require the qt5 subpackage from the qt4 subpackage (#1219556)
 
