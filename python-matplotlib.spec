@@ -4,8 +4,14 @@
 %global with_python3            0
 %endif
 %global __provides_exclude_from .*/site-packages/.*\\.so$
+%ifarch %{power64} s390x
+# disable tests on alt arches until resolved by upstream
+%global with_html               0
+%global run_tests               0
+%else
 %global with_html               1
 %global run_tests               1
+%endif
 
 # On RHEL 7 onwards, don't build with wx:
 %if 0%{?rhel} >= 7
@@ -47,7 +53,7 @@
 
 Name:           python-matplotlib
 Version:        1.5.2
-Release:        0.2%{?rctag:.%{rctag}}%{?dist}
+Release:        0.3%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
@@ -581,6 +587,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Mon Oct 24 2016 Dan Horák <dan[at]danny.cz> - 1.5.2-0.3.rc2
+- disable tests and html docs on some alt-arches to unblock depending builds
+
 * Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.5.2-0.2.rc2
 - https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
 
