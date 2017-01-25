@@ -55,7 +55,7 @@
 
 Name:           python-matplotlib
 Version:        2.0.0
-Release:        1%{?rctag:.%{rctag}}%{?dist}
+Release:        2%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
@@ -416,7 +416,7 @@ sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
 %patch9 -p1 -b .qh
 %endif
 %patch10 -p1 -b .tests
-%ifarch aarch64 %{power64}
+%ifarch aarch64 %{power64} s390 s390x
 %patch11 -p1 -b .tests-aarch64ppc64
 %endif
 %ifarch i686
@@ -620,6 +620,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Wed Jan 25 2017 Dan Horák <dan[at]danny.cz> - 2.0.0-2
+- Apply the 'aarch64' test tolerance patch on s390(x) also
+
 * Fri Jan 20 2017 Orion Poplawski <orion@cora.nwra.com> - 2.0.0-1
 - Update to 2.0.0 final
 
