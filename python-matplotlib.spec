@@ -55,13 +55,14 @@
 
 Name:           python-matplotlib
 Version:        2.0.0
-Release:        2%{?rctag:.%{rctag}}%{?dist}.1
+Release:        2%{?rctag:.%{rctag}}%{?dist}.2
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
 License:        Python and MIT
 URL:            http://matplotlib.org
-Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}.tar.gz#/matplotlib-%{version}%{?rctag}.tar.gz
+#Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}.tar.gz#/matplotlib-%{version}%{?rctag}.tar.gz
+Source0:        matplotlib-%{version}-without-copyrighted.tar.xz
 Source1:        setup.cfg
 
 Patch2:         20_matplotlibrc_path_search_fix.patch
@@ -620,6 +621,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Mon Mar 06 2017 Thomas Spura <tomspur@fedoraproject.org> - 2.0.0-2.2
+- Remove copyrighted file from tarball (gh-8034)
+
 * Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.0-2.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
