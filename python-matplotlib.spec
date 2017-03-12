@@ -55,7 +55,7 @@
 
 Name:           python-matplotlib
 Version:        2.0.0
-Release:        2%{?rctag:.%{rctag}}%{?dist}.2
+Release:        3%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
@@ -621,6 +621,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Sun Mar 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 2.0.0-3
+- Fix NVR
+
 * Mon Mar 06 2017 Thomas Spura <tomspur@fedoraproject.org> - 2.0.0-2.2
 - Remove copyrighted file from tarball (gh-8034)
 
