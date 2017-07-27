@@ -55,7 +55,7 @@
 
 Name:           python-matplotlib
 Version:        2.0.0
-Release:        3%{?rctag:.%{rctag}}%{?dist}
+Release:        3%{?rctag:.%{rctag}}%{?dist}.1
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
@@ -621,6 +621,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.0-3.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Sun Mar 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 2.0.0-3
 - Fix NVR
 
