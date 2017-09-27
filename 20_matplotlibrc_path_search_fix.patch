@@ -1,6 +1,6 @@
 --- a/lib/matplotlib/__init__.py	2016-04-04 12:54:26.427194940 +0200
 +++ b/lib/matplotlib/__init__.py	2016-04-04 12:56:12.662590255 +0200
-@@ -713,9 +713,12 @@ def _get_data_path():
+@@ -635,9 +635,12 @@ def _get_data_path():
  
      _file = _decode_filesystem_path(__file__)
      path = os.sep.join([os.path.dirname(_file), 'mpl-data'])
@@ -13,12 +13,12 @@
      # setuptools' namespace_packages may highjack this init file
      # so need to try something known to be in matplotlib, not basemap
      import matplotlib.afm
-@@ -843,7 +846,7 @@ def matplotlib_fname():
-                     home, '.matplotlib', 'matplotlibrc')
-             return fname
+@@ -731,7 +734,7 @@ def matplotlib_fname():
+             yield matplotlibrc
+             yield os.path.join(matplotlibrc, 'matplotlibrc')
+         yield os.path.join(_get_configdir(), 'matplotlibrc')
+-        yield os.path.join(get_data_path(), 'matplotlibrc')
++        yield '/etc/matplotlibrc'
  
--    path = get_data_path()  # guaranteed to exist or raise
-+    path = '/etc'  # guaranteed to exist or raise
-     fname = os.path.join(path, 'matplotlibrc')
-     if not os.path.exists(fname):
-         warnings.warn('Could not find matplotlibrc; using defaults')
+     for fname in gen_candidates():
+         if os.path.isfile(fname):

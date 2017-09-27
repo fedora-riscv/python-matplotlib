@@ -51,10 +51,10 @@
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
 
-#global rctag rc2
+%global rctag rc1
 
 Name:           python-matplotlib
-Version:        2.0.2
+Version:        2.1.0
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
@@ -67,8 +67,6 @@ Source1:        setup.cfg
 Patch2:         20_matplotlibrc_path_search_fix.patch
 # https://github.com/matplotlib/matplotlib/issues/6538
 Patch8:         python-matplotlib-disable-failing-tests-arm.patch
-# https://github.com/matplotlib/matplotlib/issues/6791
-Patch9:         python-matplotlib-qhull.patch
 # https://github.com/matplotlib/matplotlib/issues/7134
 # https://github.com/matplotlib/matplotlib/issues/7158
 # https://github.com/matplotlib/matplotlib/issues/7159
@@ -99,13 +97,13 @@ Summary:        Python 2D plotting library
 BuildRequires:  numpy
 BuildRequires:  pyparsing
 BuildRequires:  python-dateutil
-BuildRequires:  python-pycxx-devel
 BuildRequires:  python-pyside
 BuildRequires:  python-setuptools
 BuildRequires:  python-six
 BuildRequires:  python-subprocess32
 BuildRequires:  python2-devel
-BuildRequires:  python2-functools32
+BuildRequires:  python2-backports
+BuildRequires:  python2-backports-functools_lru_cache
 BuildRequires:  python2-pillow
 BuildRequires:  pytz
 %if %{with_html}
@@ -119,7 +117,7 @@ BuildRequires:  python2-colorspacious
 BuildRequires:  python2-cycler >= 0.10.0
 %endif
 %if %{run_tests}
-BuildRequires:  python-nose
+BuildRequires:  python2-pytest
 BuildRequires:  python2-cycler >= 0.10.0
 BuildRequires:  python2-mock
 %endif
@@ -129,7 +127,7 @@ Requires:       numpy
 Requires:       pyparsing
 Requires:       python2-cycler >= 0.10.0
 Requires:       python-dateutil
-Requires:       python2-functools32
+Requires:       python2-backports-functools_lru_cache
 Requires:       python-matplotlib-data = %{version}-%{release}
 %{?backend_subpackage:Requires: python2-matplotlib-%{backend_subpackage}%{?_isa} = %{version}-%{release}}
 Recommends:     python2-pillow
@@ -292,7 +290,6 @@ BuildRequires:  python3-setuptools
 BuildRequires:  python3-gobject
 BuildRequires:  python3-numpy
 BuildRequires:  python3-pillow
-BuildRequires:  python3-pycxx-devel
 BuildRequires:  python3-pyparsing
 BuildRequires:  python3-pytz
 BuildRequires:  python3-six
@@ -304,8 +301,7 @@ Requires:       python3-cycler >= 0.10.0
 Requires:       python3-dateutil
 Requires:       python3-matplotlib-%{?backend_subpackage}%{!?backend_subpackage:tk}%{?_isa} = %{version}-%{release}
 %if %{run_tests}
-BuildRequires:  python3-mock
-BuildRequires:  python3-nose
+BuildRequires:  python3-pytest
 %endif
 Requires:       python3-numpy
 Recommends:     python3-pillow
@@ -388,7 +384,7 @@ Requires:       python3-tkinter
 
 %prep
 %setup -q -n matplotlib-%{version}%{?rctag}
-rm -r extern/qhull
+rm -r extern/libqhull
 
 # Copy setup.cfg to the builddir
 sed 's/\(backend = \).*/\1%{backend}/' >setup.cfg <%{SOURCE1}
@@ -411,10 +407,6 @@ sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
 %patch8 -p1 -b .tests-arm
 %endif
 
-%if 0%{?fedora} > 24
-# Installation paths changed
-%patch9 -p1 -b .qh
-%endif
 %patch10 -p1 -b .tests
 %ifarch aarch64 %{power64} s390 s390x
 %patch11 -p1 -b .tests-aarch64ppc64
@@ -474,19 +466,22 @@ rm -fr %{buildroot}%{python3_sitearch}/matplotlib/mpl-data
 
 %if %{run_tests}
 %check
+# These files confuse pytest, and we want to test the installed copy.
+rm -rf build*/
+
 export http_proxy=http://127.0.0.1/
 # This should match the default backend
 echo "backend      : %{backend}" > matplotlibrc
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python2_sitearch} \
-     xvfb-run -a %{__python2} tests.py --no-network --processes=$(getconf _NPROCESSORS_ONLN) --process-timeout=300
+     xvfb-run -a %{__python2} -m pytest -m 'not network' --pyargs matplotlib -ra
 
 %if %{with_python3}
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
-     xvfb-run -a %{__python3} tests.py --no-network --processes=$(getconf _NPROCESSORS_ONLN) --process-timeout=300
+     xvfb-run -a %{__python3} -m pytest -m 'not network' --pyargs matplotlib -ra
 %endif
 %endif # run_tests
 
