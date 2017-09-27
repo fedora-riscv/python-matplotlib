@@ -424,10 +424,6 @@ sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
 %patch13 -p1 -b .tests-i686
 %endif
 
-chmod -x lib/matplotlib/mpl-data/images/*.svg
-chmod -x lib/matplotlib/{dates,sankey}.py
-chmod -x lib/mpl_toolkits/mplot3d/*.py
-
 %build
 export http_proxy=http://127.0.0.1/
 MPLCONFIGDIR=$PWD \
