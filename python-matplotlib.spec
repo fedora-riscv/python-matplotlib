@@ -54,7 +54,7 @@
 #global rctag rc2
 
 Name:           python-matplotlib
-Version:        2.0.1
+Version:        2.0.2
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
@@ -616,6 +616,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Thu Sep 28 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.0.2-1
+- Update to latest release
+
 * Thu Sep 28 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.0.1-1
 - Update to latest release
 
