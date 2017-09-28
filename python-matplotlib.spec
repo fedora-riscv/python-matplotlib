@@ -54,15 +54,14 @@
 #global rctag rc2
 
 Name:           python-matplotlib
-Version:        2.0.0
-Release:        3%{?rctag:.%{rctag}}%{?dist}.2
+Version:        2.0.1
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
 License:        Python and MIT
 URL:            http://matplotlib.org
-#Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}.tar.gz#/matplotlib-%{version}%{?rctag}.tar.gz
-Source0:        matplotlib-%{version}-without-copyrighted.tar.xz
+Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}.tar.gz#/matplotlib-%{version}%{?rctag}.tar.gz
 Source1:        setup.cfg
 
 Patch2:         20_matplotlibrc_path_search_fix.patch
@@ -617,6 +616,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Thu Sep 28 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.0.1-1
+- Update to latest release
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.0-3.2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
