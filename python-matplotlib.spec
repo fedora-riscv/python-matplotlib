@@ -51,7 +51,7 @@
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
 
-%global rctag rc1
+#global rctag rc1
 
 Name:           python-matplotlib
 Version:        2.1.0
