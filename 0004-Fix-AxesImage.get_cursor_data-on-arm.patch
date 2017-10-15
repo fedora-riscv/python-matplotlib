@@ -1,7 +1,7 @@
 From a95786dc8f982c8f7d212badad883754fe448c98 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 7 Oct 2017 00:28:59 -0400
-Subject: [PATCH 4/8] Fix AxesImage.get_cursor_data on arm.
+Subject: [PATCH 4/9] Fix AxesImage.get_cursor_data on arm.
 
 For some reason, NaN gets converted to 0 as an integer instead of
 INT_MIN like on x86.

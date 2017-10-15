@@ -75,6 +75,7 @@ Patch0006:      0006-Use-fuzzy-comparison-for-stroke-join-determination.patch
 # Fedora-specific patches.
 Patch1001:      0007-matplotlibrc-path-search-fix.patch
 Patch1002:      0008-TST-Increase-tolerances-for-FreeType-2.7.1.patch
+Patch1686:      0009-TST-Increase-some-tolerances-for-32-bit-systems.patch
 
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
@@ -386,7 +387,19 @@ Requires:       python3-tkinter
 %endif
 
 %prep
-%autosetup -n matplotlib-%{version}%{?rctag} -p1
+%autosetup -n matplotlib-%{version}%{?rctag} -N
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
+%patch1001 -p1
+%patch1002 -p1
+%ifarch i686
+# Switch to full autosetup when 32-bit systems are dropped.
+%patch1686 -p1
+%endif
 rm -r extern/libqhull
 
 # Copy setup.cfg to the builddir

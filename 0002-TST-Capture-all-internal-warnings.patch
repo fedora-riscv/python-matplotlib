@@ -1,7 +1,7 @@
 From 279f95dae9dcd74d51c5913254889712697d1d8a Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 6 Oct 2017 20:06:09 -0400
-Subject: [PATCH 2/8] TST: Capture all internal warnings.
+Subject: [PATCH 2/9] TST: Capture all internal warnings.
 
 These are either deprecations, or checks for old, but probably
 incorrect, behaviour.

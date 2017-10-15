@@ -1,7 +1,7 @@
 From aaab55ffee458dc867f3f51e2a9908c6885b7dec Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 7 Oct 2017 05:40:35 -0400
-Subject: [PATCH 5/8] TST: Use fuzzy comparison in test_psd_csd_equal.
+Subject: [PATCH 5/9] TST: Use fuzzy comparison in test_psd_csd_equal.
 
 Fixes #7158.
 

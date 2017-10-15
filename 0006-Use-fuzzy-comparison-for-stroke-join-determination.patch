@@ -1,7 +1,7 @@
 From 5b1c238764a6f594991459f2c269e41157edba2f Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sun, 15 Oct 2017 17:16:11 -0400
-Subject: [PATCH 6/8] Use fuzzy comparison for stroke join determination.
+Subject: [PATCH 6/9] Use fuzzy comparison for stroke join determination.
 
 This sometimes produces something just slightly different from 0
 compared to x86(_64).

@@ -1,7 +1,7 @@
 From 0420e360523e3452467bfc7d9bb19c3593cde2e7 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Thu, 5 Oct 2017 21:26:53 -0400
-Subject: [PATCH 1/8] TST: Skip sphinxext if unavailable instead of error.
+Subject: [PATCH 1/9] TST: Skip sphinxext if unavailable instead of error.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---

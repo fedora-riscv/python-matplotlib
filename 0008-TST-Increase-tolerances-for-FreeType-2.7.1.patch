@@ -1,7 +1,7 @@
 From ce6e4fd43193698df2168fa946be479e5f8b96ff Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sun, 15 Oct 2017 17:35:47 -0400
-Subject: [PATCH 8/8] TST: Increase tolerances for FreeType 2.7.1.
+Subject: [PATCH 8/9] TST: Increase tolerances for FreeType 2.7.1.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---

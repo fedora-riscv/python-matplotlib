@@ -1,7 +1,7 @@
 From ee4253242cbaf972443ee49c59f056d8957f4f4f Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 6 Oct 2017 20:53:16 -0400
-Subject: [PATCH 3/8] TST: Don't require LaTeX or Inkscape for nose tests.
+Subject: [PATCH 3/9] TST: Don't require LaTeX or Inkscape for nose tests.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
