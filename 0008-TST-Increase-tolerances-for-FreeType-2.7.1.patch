@@ -1,0 +1,128 @@
+From ce6e4fd43193698df2168fa946be479e5f8b96ff Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Sun, 15 Oct 2017 17:35:47 -0400
+Subject: [PATCH 8/8] TST: Increase tolerances for FreeType 2.7.1.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/testing/decorators.py     | 2 +-
+ lib/matplotlib/tests/test_axes.py        | 4 ++--
+ lib/matplotlib/tests/test_mathtext.py    | 4 ++--
+ lib/matplotlib/tests/test_patches.py     | 2 +-
+ lib/matplotlib/tests/test_patheffects.py | 2 +-
+ lib/matplotlib/tests/test_streamplot.py  | 2 +-
+ lib/mpl_toolkits/tests/test_mplot3d.py   | 2 +-
+ 7 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/lib/matplotlib/testing/decorators.py b/lib/matplotlib/testing/decorators.py
+index c5e069b31..ebd68cfab 100644
+--- a/lib/matplotlib/testing/decorators.py
++++ b/lib/matplotlib/testing/decorators.py
+@@ -406,7 +406,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
+     return decorator
+ 
+ 
+-def image_comparison(baseline_images, extensions=None, tol=0,
++def image_comparison(baseline_images, extensions=None, tol=0.1,
+                      freetype_version=None, remove_text=False,
+                      savefig_kwarg=None,
+                      # Default of mpl_test_settings fixture and cleanup too.
+diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
+index 273b6f4ec..4cf9cfa29 100644
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -672,7 +672,7 @@ def test_polar_rlabel_position():
+ 
+ 
+ @image_comparison(baseline_images=['polar_theta_wedge'], style='default',
+-                  tol=0.01 if six.PY2 else 0)
++                  tol=0.1)
+ def test_polar_theta_limits():
+     r = np.arange(0, 3.0, 0.01)
+     theta = 2*np.pi*r
+@@ -4641,7 +4641,7 @@ def test_rc_spines():
+ 
+ 
+ @image_comparison(baseline_images=['rc_grid'], extensions=['png'],
+-                  savefig_kwarg={'dpi': 40})
++                  savefig_kwarg={'dpi': 40}, tol=0.2)
+ def test_rc_grid():
+     fig = plt.figure()
+     rc_dict0 = {
+diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
+index 7ef77ce6a..b8c9c9e8b 100644
+--- a/lib/matplotlib/tests/test_mathtext.py
++++ b/lib/matplotlib/tests/test_mathtext.py
+@@ -174,7 +174,7 @@ def baseline_images(request, fontset, index):
+                          ['cm', 'stix', 'stixsans', 'dejavusans',
+                           'dejavuserif'])
+ @pytest.mark.parametrize('baseline_images', ['mathtext'], indirect=True)
+-@image_comparison(baseline_images=None)
++@image_comparison(baseline_images=None, tol=0.31)
+ def test_mathtext_rendering(baseline_images, fontset, index, test):
+     matplotlib.rcParams['mathtext.fontset'] = fontset
+     fig = plt.figure(figsize=(5.25, 0.75))
+@@ -188,7 +188,7 @@ def test_mathtext_rendering(baseline_images, fontset, index, test):
+                          ['cm', 'stix', 'stixsans', 'dejavusans',
+                           'dejavuserif'])
+ @pytest.mark.parametrize('baseline_images', ['mathfont'], indirect=True)
+-@image_comparison(baseline_images=None, extensions=['png'])
++@image_comparison(baseline_images=None, extensions=['png'], tol=0.3)
+ def test_mathfont_rendering(baseline_images, fontset, index, test):
+     matplotlib.rcParams['mathtext.fontset'] = fontset
+     fig = plt.figure(figsize=(5.25, 0.75))
+diff --git a/lib/matplotlib/tests/test_patches.py b/lib/matplotlib/tests/test_patches.py
+index 20ffa6b08..9f5088f0f 100644
+--- a/lib/matplotlib/tests/test_patches.py
++++ b/lib/matplotlib/tests/test_patches.py
+@@ -269,7 +269,7 @@ def test_wedge_movement():
+ 
+ # png needs tol>=0.06, pdf tol>=1.617
+ @image_comparison(baseline_images=['wedge_range'],
+-                  remove_text=True, tol=1.65 if on_win else 0)
++                  remove_text=True, tol=0.1)
+ def test_wedge_range():
+     ax = plt.axes()
+ 
+diff --git a/lib/matplotlib/tests/test_patheffects.py b/lib/matplotlib/tests/test_patheffects.py
+index 9b8a4379c..ebbcd6529 100644
+--- a/lib/matplotlib/tests/test_patheffects.py
++++ b/lib/matplotlib/tests/test_patheffects.py
+@@ -125,7 +125,7 @@ def test_SimplePatchShadow_offset():
+     assert pe._offset == (4, 5)
+ 
+ 
+-@image_comparison(baseline_images=['collection'], tol=0.015)
++@image_comparison(baseline_images=['collection'], tol=0.1)
+ def test_collection():
+     x, y = np.meshgrid(np.linspace(0, 10, 150), np.linspace(-5, 5, 100))
+     data = np.sin(x) + np.cos(y)
+diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
+index ac997b2b2..cd7233e2e 100644
+--- a/lib/matplotlib/tests/test_streamplot.py
++++ b/lib/matplotlib/tests/test_streamplot.py
+@@ -36,7 +36,7 @@ def test_startpoints():
+ 
+ 
+ @image_comparison(baseline_images=['streamplot_colormap'],
+-                  tol=0.002)
++                  tol=0.1)
+ def test_colormap():
+     X, Y, U, V = velocity_field()
+     plt.streamplot(X, Y, U, V, color=U, density=0.6, linewidth=2,
+diff --git a/lib/mpl_toolkits/tests/test_mplot3d.py b/lib/mpl_toolkits/tests/test_mplot3d.py
+index c157433c7..c13f3be2f 100644
+--- a/lib/mpl_toolkits/tests/test_mplot3d.py
++++ b/lib/mpl_toolkits/tests/test_mplot3d.py
+@@ -658,7 +658,7 @@ class TestVoxels(object):
+     @image_comparison(
+         baseline_images=['voxels-xyz'],
+         extensions=['png'],
+-        tol=0.01
++        tol=0.02
+     )
+     def test_xyz(self):
+         fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+-- 
+2.13.5
+

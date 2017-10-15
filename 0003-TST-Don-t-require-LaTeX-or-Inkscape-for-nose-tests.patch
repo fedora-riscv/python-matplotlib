@@ -1,0 +1,28 @@
+From ee4253242cbaf972443ee49c59f056d8957f4f4f Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Fri, 6 Oct 2017 20:53:16 -0400
+Subject: [PATCH 3/8] TST: Don't require LaTeX or Inkscape for nose tests.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_compare_images.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/lib/matplotlib/tests/test_compare_images.py b/lib/matplotlib/tests/test_compare_images.py
+index 488fae823..f5bb9dda8 100644
+--- a/lib/matplotlib/tests/test_compare_images.py
++++ b/lib/matplotlib/tests/test_compare_images.py
+@@ -203,6 +203,10 @@ def test_nose_image_comparison(func, kwargs, errors, failures, dots,
+             assert failures[self.failure_count][1] in str(err[1])
+             self.failure_count += 1
+ 
++    # Make sure that multiple extensions work, but don't require LaTeX or
++    # Inkscape to do so.
++    kwargs.setdefault('extensions', ['png', 'png', 'png'])
++
+     func = image_comparison(**kwargs)(func)
+     loader = nose.loader.TestLoader()
+     suite = loader.loadTestsFromGenerator(
+-- 
+2.13.5
+

@@ -1,5 +1,17 @@
---- a/lib/matplotlib/__init__.py	2016-04-04 12:54:26.427194940 +0200
-+++ b/lib/matplotlib/__init__.py	2016-04-04 12:56:12.662590255 +0200
+From 400b97c30de5aa45e48a26c552dc310a3c1cf758 Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Wed, 27 Sep 2017 19:35:59 -0400
+Subject: [PATCH 7/8] matplotlibrc path search fix
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/__init__.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
+index 00488a134..b989bc380 100644
+--- a/lib/matplotlib/__init__.py
++++ b/lib/matplotlib/__init__.py
 @@ -635,9 +635,12 @@ def _get_data_path():
  
      _file = _decode_filesystem_path(__file__)
@@ -22,3 +34,6 @@
  
      for fname in gen_candidates():
          if os.path.isfile(fname):
+-- 
+2.13.5
+

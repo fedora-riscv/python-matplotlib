@@ -64,16 +64,17 @@ URL:            http://matplotlib.org
 Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}.tar.gz#/matplotlib-%{version}%{?rctag}.tar.gz
 Source1:        setup.cfg
 
-Patch2:         20_matplotlibrc_path_search_fix.patch
-# https://github.com/matplotlib/matplotlib/issues/6538
-Patch8:         python-matplotlib-disable-failing-tests-arm.patch
-# https://github.com/matplotlib/matplotlib/issues/7134
-# https://github.com/matplotlib/matplotlib/issues/7158
-# https://github.com/matplotlib/matplotlib/issues/7159
-# https://github.com/matplotlib/matplotlib/issues/7797
-Patch10:        python-matplotlib-increase-tests-tolerance.patch
-Patch11:        python-matplotlib-increase-tests-tolerance-aarch64ppc64.patch
-Patch13:        python-matplotlib-increase-tests-tolerance-i686.patch
+# https://github.com/matplotlib/matplotlib/pull/9304
+Patch0001:      0001-TST-Skip-sphinxext-if-unavailable-instead-of-error.patch
+Patch0002:      0002-TST-Capture-all-internal-warnings.patch
+Patch0003:      0003-TST-Don-t-require-LaTeX-or-Inkscape-for-nose-tests.patch
+Patch0004:      0004-Fix-AxesImage.get_cursor_data-on-arm.patch
+Patch0005:      0005-TST-Use-fuzzy-comparison-in-test_psd_csd_equal.patch
+Patch0006:      0006-Use-fuzzy-comparison-for-stroke-join-determination.patch
+
+# Fedora-specific patches.
+Patch1001:      0007-matplotlibrc-path-search-fix.patch
+Patch1002:      0008-TST-Increase-tolerances-for-FreeType-2.7.1.patch
 
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
@@ -102,7 +103,9 @@ BuildRequires:  python-setuptools
 BuildRequires:  python-six
 BuildRequires:  python-subprocess32
 BuildRequires:  python2-devel
+%if %{fedora} > 26
 BuildRequires:  python2-backports
+%endif
 BuildRequires:  python2-backports-functools_lru_cache
 BuildRequires:  python2-pillow
 BuildRequires:  pytz
@@ -383,7 +386,7 @@ Requires:       python3-tkinter
 %endif
 
 %prep
-%setup -q -n matplotlib-%{version}%{?rctag}
+%autosetup -n matplotlib-%{version}%{?rctag} -p1
 rm -r extern/libqhull
 
 # Copy setup.cfg to the builddir
@@ -402,18 +405,6 @@ fi
 sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
 %endif
 
-%patch2 -p1
-%ifarch armv7hl aarch64
-%patch8 -p1 -b .tests-arm
-%endif
-
-%patch10 -p1 -b .tests
-%ifarch aarch64 %{power64} s390 s390x
-%patch11 -p1 -b .tests-aarch64ppc64
-%endif
-%ifarch i686
-%patch13 -p1 -b .tests-i686
-%endif
 
 %build
 export http_proxy=http://127.0.0.1/
@@ -503,9 +494,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 
 %files -n python2-matplotlib
 %license LICENSE/
-%doc CONTRIBUTING.md
-%doc CHANGELOG
-%doc README.rst
+%doc README.rst CONTRIBUTING.md
 %{python2_sitearch}/*egg-info
 %{python2_sitearch}/matplotlib-*-nspkg.pth
 %{python2_sitearch}/matplotlib/
@@ -564,9 +553,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %if %{with_python3}
 %files -n python3-matplotlib
 %license LICENSE/
-%doc CONTRIBUTING.md
-%doc CHANGELOG
-%doc README.rst
+%doc README.rst CONTRIBUTING.md
 %{python3_sitearch}/*egg-info
 %{python3_sitearch}/matplotlib-*-nspkg.pth
 %{python3_sitearch}/matplotlib/
