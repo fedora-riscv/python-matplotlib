@@ -70,6 +70,8 @@ Patch0002:      0002-TST-Capture-all-internal-warnings.patch
 Patch0003:      0003-TST-Don-t-require-LaTeX-or-Inkscape-for-nose-tests.patch
 Patch0004:      0004-Fix-AxesImage.get_cursor_data-on-arm.patch
 Patch0005:      0005-TST-Use-fuzzy-comparison-in-test_psd_csd_equal.patch
+# Depending on https://bugzilla.redhat.com/show_bug.cgi?id=1502499
+# this may or may not go upstream.
 Patch0006:      0006-Use-fuzzy-comparison-for-stroke-join-determination.patch
 
 # Fedora-specific patches.
@@ -615,6 +617,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Mon Oct 16 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.0-1
+- Update to latest release
+
 * Thu Sep 28 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.0.2-1
 - Update to latest release
 
