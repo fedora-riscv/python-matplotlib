@@ -54,7 +54,7 @@
 #global rctag rc1
 
 Name:           python-matplotlib
-Version:        2.1.0
+Version:        2.1.1
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
@@ -64,20 +64,14 @@ URL:            http://matplotlib.org
 Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}.tar.gz#/matplotlib-%{version}%{?rctag}.tar.gz
 Source1:        setup.cfg
 
-# https://github.com/matplotlib/matplotlib/pull/9304
-Patch0001:      0001-TST-Skip-sphinxext-if-unavailable-instead-of-error.patch
-Patch0002:      0002-TST-Capture-all-internal-warnings.patch
-Patch0003:      0003-TST-Don-t-require-LaTeX-or-Inkscape-for-nose-tests.patch
-Patch0004:      0004-Fix-AxesImage.get_cursor_data-on-arm.patch
-Patch0005:      0005-TST-Use-fuzzy-comparison-in-test_psd_csd_equal.patch
 # Depending on https://bugzilla.redhat.com/show_bug.cgi?id=1502499
 # this may or may not go upstream.
-Patch0006:      0006-Use-fuzzy-comparison-for-stroke-join-determination.patch
+Patch0001:      0001-Use-fuzzy-comparison-for-stroke-join-determination.patch
 
 # Fedora-specific patches.
-Patch1001:      0007-matplotlibrc-path-search-fix.patch
-Patch1002:      0008-TST-Increase-tolerances-for-FreeType-2.7.1.patch
-Patch1686:      0009-TST-Increase-some-tolerances-for-32-bit-systems.patch
+Patch1001:      0002-matplotlibrc-path-search-fix.patch
+Patch1002:      0003-TST-Increase-tolerances-for-FreeType-2.7.1.patch
+Patch1686:      0004-TST-Increase-some-tolerances-for-32-bit-systems.patch
 
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
@@ -391,11 +385,6 @@ Requires:       python3-tkinter
 %prep
 %autosetup -n matplotlib-%{version}%{?rctag} -N
 %patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
 %patch1001 -p1
 %patch1002 -p1
 %ifarch i686
@@ -617,6 +606,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Sun Dec 10 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.1-1
+- Update to latest release
+
 * Mon Oct 16 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.0-1
 - Update to latest release
 

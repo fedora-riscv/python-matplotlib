@@ -1,7 +1,7 @@
-From ce6e4fd43193698df2168fa946be479e5f8b96ff Mon Sep 17 00:00:00 2001
+From cfdc835923407810bd087f60332cdc8cdcb23f05 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sun, 15 Oct 2017 17:35:47 -0400
-Subject: [PATCH 8/9] TST: Increase tolerances for FreeType 2.7.1.
+Subject: [PATCH 3/4] TST: Increase tolerances for FreeType 2.7.1.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -28,7 +28,7 @@ index c5e069b31..ebd68cfab 100644
                       savefig_kwarg=None,
                       # Default of mpl_test_settings fixture and cleanup too.
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 273b6f4ec..4cf9cfa29 100644
+index 33be78004..c73e55802 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -672,7 +672,7 @@ def test_polar_rlabel_position():
@@ -40,7 +40,7 @@ index 273b6f4ec..4cf9cfa29 100644
  def test_polar_theta_limits():
      r = np.arange(0, 3.0, 0.01)
      theta = 2*np.pi*r
-@@ -4641,7 +4641,7 @@ def test_rc_spines():
+@@ -4679,7 +4679,7 @@ def test_rc_spines():
  
  
  @image_comparison(baseline_images=['rc_grid'], extensions=['png'],
@@ -124,5 +124,5 @@ index c157433c7..c13f3be2f 100644
      def test_xyz(self):
          fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 -- 
-2.13.5
+2.13.6
 
