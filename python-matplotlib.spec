@@ -65,6 +65,7 @@ Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?r
 Source1:        setup.cfg
 
 # Fedora-specific patches.
+Source1000:     matplotlib-%{version}-with-freetype-2.8.tar.gz
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 Patch1002:      0002-TST-Increase-tolerances-for-FreeType-2.7.1.patch
 Patch1686:      0003-TST-Increase-some-tolerances-for-32-bit-systems.patch
@@ -381,7 +382,13 @@ Requires:       python3-tkinter
 %prep
 %autosetup -n matplotlib-%{version}%{?rctag} -N
 %patch1001 -p1
+%if %{fedora} > 26
+# Updated test images for FreeType 2.8.
+gzip -dc %SOURCE1000 | tar xvf - --transform='s~^\([^/]\+\)/~lib/\1/tests/baseline_images/~'
+%else
+# Small tweaks to tolerances for FreeType 2.7.1.
 %patch1002 -p1
+%endif
 %ifarch i686
 # Switch to full autosetup when 32-bit systems are dropped.
 %patch1686 -p1
