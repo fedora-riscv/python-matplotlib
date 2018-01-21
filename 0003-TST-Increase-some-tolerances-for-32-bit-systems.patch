@@ -1,7 +1,7 @@
-From 4fbf2473e97a259494117a408a5efa377fa5a947 Mon Sep 17 00:00:00 2001
+From 61eac9a522a7907db3fe01680d249789d1cff710 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sun, 15 Oct 2017 21:11:26 -0400
-Subject: [PATCH 4/4] TST: Increase some tolerances for 32-bit systems.
+Subject: [PATCH 3/3] TST: Increase some tolerances for 32-bit systems.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -32,7 +32,7 @@ index 786d50903..105714ef4 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index c73e55802..90db6dfda 100644
+index 6492cc140..8609d8c31 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -483,7 +483,7 @@ def test_single_point():
@@ -44,7 +44,7 @@ index c73e55802..90db6dfda 100644
  def test_single_date():
      time1 = [721964.0]
      data1 = [-65.54]
-@@ -972,7 +972,7 @@ def test_fill_between_interpolate():
+@@ -971,7 +971,7 @@ def test_fill_between_interpolate():
  
  
  @image_comparison(baseline_images=['fill_between_interpolate_decreasing'],
@@ -53,7 +53,7 @@ index c73e55802..90db6dfda 100644
  def test_fill_between_interpolate_decreasing():
      p = np.array([724.3, 700, 655])
      t = np.array([9.4, 7, 2.2])
-@@ -1086,7 +1086,7 @@ def test_pcolormesh():
+@@ -1085,7 +1085,7 @@ def test_pcolormesh():
  
  
  @image_comparison(baseline_images=['pcolormesh_datetime_axis'],
@@ -62,7 +62,7 @@ index c73e55802..90db6dfda 100644
  def test_pcolormesh_datetime_axis():
      fig = plt.figure()
      fig.subplots_adjust(hspace=0.4, top=0.98, bottom=.15)
-@@ -1112,7 +1112,7 @@ def test_pcolormesh_datetime_axis():
+@@ -1111,7 +1111,7 @@ def test_pcolormesh_datetime_axis():
  
  
  @image_comparison(baseline_images=['pcolor_datetime_axis'],
@@ -71,7 +71,7 @@ index c73e55802..90db6dfda 100644
  def test_pcolor_datetime_axis():
      fig = plt.figure()
      fig.subplots_adjust(hspace=0.4, top=0.98, bottom=.15)
-@@ -1168,7 +1168,7 @@ def test_canonical():
+@@ -1167,7 +1167,7 @@ def test_canonical():
  
  
  @image_comparison(baseline_images=['arc_angles'], remove_text=True,
@@ -80,7 +80,7 @@ index c73e55802..90db6dfda 100644
  def test_arc_angles():
      from matplotlib import patches
      # Ellipse parameters
-@@ -2434,7 +2434,7 @@ def test_boxplot_mod_artist_after_plotting():
+@@ -2433,7 +2433,7 @@ def test_boxplot_mod_artist_after_plotting():
  
  @image_comparison(baseline_images=['violinplot_vert_baseline',
                                     'violinplot_vert_baseline'],
@@ -89,7 +89,7 @@ index c73e55802..90db6dfda 100644
  def test_vert_violinplot_baseline():
      # First 9 digits of frac(sqrt(2))
      np.random.seed(414213562)
-@@ -2452,7 +2452,7 @@ def test_vert_violinplot_baseline():
+@@ -2451,7 +2451,7 @@ def test_vert_violinplot_baseline():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showmeans'],
@@ -98,7 +98,7 @@ index c73e55802..90db6dfda 100644
  def test_vert_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(3))
-@@ -2463,7 +2463,7 @@ def test_vert_violinplot_showmeans():
+@@ -2462,7 +2462,7 @@ def test_vert_violinplot_showmeans():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showextrema'],
@@ -107,7 +107,7 @@ index c73e55802..90db6dfda 100644
  def test_vert_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(5))
-@@ -2474,7 +2474,7 @@ def test_vert_violinplot_showextrema():
+@@ -2473,7 +2473,7 @@ def test_vert_violinplot_showextrema():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showmedians'],
@@ -116,7 +116,7 @@ index c73e55802..90db6dfda 100644
  def test_vert_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(7))
-@@ -2485,7 +2485,7 @@ def test_vert_violinplot_showmedians():
+@@ -2484,7 +2484,7 @@ def test_vert_violinplot_showmedians():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showall'],
@@ -125,7 +125,7 @@ index c73e55802..90db6dfda 100644
  def test_vert_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(11))
-@@ -2496,7 +2496,7 @@ def test_vert_violinplot_showall():
+@@ -2495,7 +2495,7 @@ def test_vert_violinplot_showall():
  
  
  @image_comparison(baseline_images=['violinplot_vert_custompoints_10'],
@@ -134,7 +134,7 @@ index c73e55802..90db6dfda 100644
  def test_vert_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(13))
-@@ -2507,7 +2507,7 @@ def test_vert_violinplot_custompoints_10():
+@@ -2506,7 +2506,7 @@ def test_vert_violinplot_custompoints_10():
  
  
  @image_comparison(baseline_images=['violinplot_vert_custompoints_200'],
@@ -143,7 +143,7 @@ index c73e55802..90db6dfda 100644
  def test_vert_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(17))
-@@ -2518,7 +2518,7 @@ def test_vert_violinplot_custompoints_200():
+@@ -2517,7 +2517,7 @@ def test_vert_violinplot_custompoints_200():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_baseline'],
@@ -152,7 +152,7 @@ index c73e55802..90db6dfda 100644
  def test_horiz_violinplot_baseline():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(19))
-@@ -2529,7 +2529,7 @@ def test_horiz_violinplot_baseline():
+@@ -2528,7 +2528,7 @@ def test_horiz_violinplot_baseline():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showmedians'],
@@ -161,7 +161,7 @@ index c73e55802..90db6dfda 100644
  def test_horiz_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(23))
-@@ -2540,7 +2540,7 @@ def test_horiz_violinplot_showmedians():
+@@ -2539,7 +2539,7 @@ def test_horiz_violinplot_showmedians():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showmeans'],
@@ -170,7 +170,7 @@ index c73e55802..90db6dfda 100644
  def test_horiz_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(29))
-@@ -2551,7 +2551,7 @@ def test_horiz_violinplot_showmeans():
+@@ -2550,7 +2550,7 @@ def test_horiz_violinplot_showmeans():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showextrema'],
@@ -179,7 +179,7 @@ index c73e55802..90db6dfda 100644
  def test_horiz_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(31))
-@@ -2562,7 +2562,7 @@ def test_horiz_violinplot_showextrema():
+@@ -2561,7 +2561,7 @@ def test_horiz_violinplot_showextrema():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showall'],
@@ -188,7 +188,7 @@ index c73e55802..90db6dfda 100644
  def test_horiz_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(37))
-@@ -2573,7 +2573,7 @@ def test_horiz_violinplot_showall():
+@@ -2572,7 +2572,7 @@ def test_horiz_violinplot_showall():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_custompoints_10'],
@@ -197,7 +197,7 @@ index c73e55802..90db6dfda 100644
  def test_horiz_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(41))
-@@ -2584,7 +2584,7 @@ def test_horiz_violinplot_custompoints_10():
+@@ -2583,7 +2583,7 @@ def test_horiz_violinplot_custompoints_10():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_custompoints_200'],
@@ -206,7 +206,7 @@ index c73e55802..90db6dfda 100644
  def test_horiz_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(43))
-@@ -3910,7 +3910,7 @@ def test_psd_noise():
+@@ -3909,7 +3909,7 @@ def test_psd_noise():
  
  
  @image_comparison(baseline_images=['csd_freqs'], remove_text=True,
@@ -215,7 +215,7 @@ index c73e55802..90db6dfda 100644
  def test_csd_freqs():
      '''test axes.csd with sinusoidal stimuli'''
      n = 10000
-@@ -5136,7 +5136,7 @@ def test_date_timezone_y():
+@@ -5153,7 +5153,7 @@ def test_date_timezone_y():
  
  
  @image_comparison(baseline_images=['date_timezone_x_and_y'],
@@ -319,7 +319,7 @@ index 16ac9e865..29c1b26f2 100644
      n = 60
      mask_level = 0.95
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index 0e423ab5f..8a46116fd 100644
+index fd6430d56..e9bf1b1db 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
 @@ -754,7 +754,7 @@ def test_imshow_endianess():
@@ -358,7 +358,7 @@ index a0e1e674f..ede6bfc64 100644
      x = np.linspace(-5, 5, 5)
      X, Y = np.meshgrid(x, x)
 diff --git a/lib/matplotlib/tests/test_transforms.py b/lib/matplotlib/tests/test_transforms.py
-index 8f19a50f3..2fbe41187 100644
+index 8f19a50f3..fa4a9aa18 100644
 --- a/lib/matplotlib/tests/test_transforms.py
 +++ b/lib/matplotlib/tests/test_transforms.py
 @@ -75,7 +75,7 @@ def test_external_transform_api():
@@ -366,7 +366,7 @@ index 8f19a50f3..2fbe41187 100644
  
  @image_comparison(baseline_images=['pre_transform_data'],
 -                  tol=0.08)
-+                  tol=0.15)
++                  tol=0.155)
  def test_pre_transform_plotting():
      # a catch-all for as many as possible plot layouts which handle
      # pre-transforming the data NOTE: The axis range is important in this
@@ -384,5 +384,5 @@ index c13f3be2f..81a28aadb 100644
      n_angles = 36
      n_radii = 8
 -- 
-2.13.6
+2.14.3
 

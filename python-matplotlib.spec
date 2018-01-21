@@ -54,24 +54,20 @@
 #global rctag rc1
 
 Name:           python-matplotlib
-Version:        2.1.1
+Version:        2.1.2
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
 License:        Python and MIT
 URL:            http://matplotlib.org
-Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}.tar.gz#/matplotlib-%{version}%{?rctag}.tar.gz
+Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}/matplotlib-%{version}%{?rctag}.tar.gz
 Source1:        setup.cfg
 
-# Depending on https://bugzilla.redhat.com/show_bug.cgi?id=1502499
-# this may or may not go upstream.
-Patch0001:      0001-Use-fuzzy-comparison-for-stroke-join-determination.patch
-
 # Fedora-specific patches.
-Patch1001:      0002-matplotlibrc-path-search-fix.patch
-Patch1002:      0003-TST-Increase-tolerances-for-FreeType-2.7.1.patch
-Patch1686:      0004-TST-Increase-some-tolerances-for-32-bit-systems.patch
+Patch1001:      0001-matplotlibrc-path-search-fix.patch
+Patch1002:      0002-TST-Increase-tolerances-for-FreeType-2.7.1.patch
+Patch1686:      0003-TST-Increase-some-tolerances-for-32-bit-systems.patch
 
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
@@ -384,7 +380,6 @@ Requires:       python3-tkinter
 
 %prep
 %autosetup -n matplotlib-%{version}%{?rctag} -N
-%patch0001 -p1
 %patch1001 -p1
 %patch1002 -p1
 %ifarch i686
@@ -606,6 +601,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Sun Jan 21 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-1
+- Update to latest release
+
 * Sun Dec 10 2017 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.1-1
 - Update to latest release
 

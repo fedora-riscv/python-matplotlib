@@ -1,18 +1,18 @@
-From cfdc835923407810bd087f60332cdc8cdcb23f05 Mon Sep 17 00:00:00 2001
+From 593459d2a9223d69180fed80622f4e7e2cf96239 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sun, 15 Oct 2017 17:35:47 -0400
-Subject: [PATCH 3/4] TST: Increase tolerances for FreeType 2.7.1.
+Subject: [PATCH 2/3] TST: Increase tolerances for FreeType 2.7.1.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
  lib/matplotlib/testing/decorators.py     | 2 +-
- lib/matplotlib/tests/test_axes.py        | 4 ++--
+ lib/matplotlib/tests/test_axes.py        | 5 ++---
  lib/matplotlib/tests/test_mathtext.py    | 4 ++--
- lib/matplotlib/tests/test_patches.py     | 2 +-
+ lib/matplotlib/tests/test_patches.py     | 3 +--
  lib/matplotlib/tests/test_patheffects.py | 2 +-
- lib/matplotlib/tests/test_streamplot.py  | 2 +-
+ lib/matplotlib/tests/test_streamplot.py  | 6 ++----
  lib/mpl_toolkits/tests/test_mplot3d.py   | 2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
+ 7 files changed, 10 insertions(+), 14 deletions(-)
 
 diff --git a/lib/matplotlib/testing/decorators.py b/lib/matplotlib/testing/decorators.py
 index c5e069b31..ebd68cfab 100644
@@ -28,19 +28,20 @@ index c5e069b31..ebd68cfab 100644
                       savefig_kwarg=None,
                       # Default of mpl_test_settings fixture and cleanup too.
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 33be78004..c73e55802 100644
+index 7164d0cec..6492cc140 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -672,7 +672,7 @@ def test_polar_rlabel_position():
+@@ -671,8 +671,7 @@ def test_polar_rlabel_position():
+     ax.tick_params(rotation='auto')
  
  
- @image_comparison(baseline_images=['polar_theta_wedge'], style='default',
+-@image_comparison(baseline_images=['polar_theta_wedge'], style='default',
 -                  tol=0.01 if six.PY2 else 0)
-+                  tol=0.1)
++@image_comparison(baseline_images=['polar_theta_wedge'], style='default')
  def test_polar_theta_limits():
      r = np.arange(0, 3.0, 0.01)
      theta = 2*np.pi*r
-@@ -4679,7 +4679,7 @@ def test_rc_spines():
+@@ -4679,7 +4678,7 @@ def test_rc_spines():
  
  
  @image_comparison(baseline_images=['rc_grid'], extensions=['png'],
@@ -72,20 +73,22 @@ index 7ef77ce6a..b8c9c9e8b 100644
      matplotlib.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
 diff --git a/lib/matplotlib/tests/test_patches.py b/lib/matplotlib/tests/test_patches.py
-index 20ffa6b08..9f5088f0f 100644
+index 20ffa6b08..81737c84d 100644
 --- a/lib/matplotlib/tests/test_patches.py
 +++ b/lib/matplotlib/tests/test_patches.py
-@@ -269,7 +269,7 @@ def test_wedge_movement():
+@@ -267,9 +267,8 @@ def test_wedge_movement():
+         assert getattr(w, attr) == new_v
  
- # png needs tol>=0.06, pdf tol>=1.617
+ 
+-# png needs tol>=0.06, pdf tol>=1.617
  @image_comparison(baseline_images=['wedge_range'],
 -                  remove_text=True, tol=1.65 if on_win else 0)
-+                  remove_text=True, tol=0.1)
++                  remove_text=True)
  def test_wedge_range():
      ax = plt.axes()
  
 diff --git a/lib/matplotlib/tests/test_patheffects.py b/lib/matplotlib/tests/test_patheffects.py
-index 9b8a4379c..ebbcd6529 100644
+index 9b8a4379c..b46d8cec4 100644
 --- a/lib/matplotlib/tests/test_patheffects.py
 +++ b/lib/matplotlib/tests/test_patheffects.py
 @@ -125,7 +125,7 @@ def test_SimplePatchShadow_offset():
@@ -93,23 +96,34 @@ index 9b8a4379c..ebbcd6529 100644
  
  
 -@image_comparison(baseline_images=['collection'], tol=0.015)
-+@image_comparison(baseline_images=['collection'], tol=0.1)
++@image_comparison(baseline_images=['collection'])
  def test_collection():
      x, y = np.meshgrid(np.linspace(0, 10, 150), np.linspace(-5, 5, 100))
      data = np.sin(x) + np.cos(y)
 diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index ac997b2b2..cd7233e2e 100644
+index 1d7e09fef..b62ca2198 100644
 --- a/lib/matplotlib/tests/test_streamplot.py
 +++ b/lib/matplotlib/tests/test_streamplot.py
-@@ -36,7 +36,7 @@ def test_startpoints():
+@@ -40,8 +40,7 @@ def test_startpoints():
+     plt.plot(start_x, start_y, 'ok')
  
  
- @image_comparison(baseline_images=['streamplot_colormap'],
--                  tol=0.002)
-+                  tol=0.1)
+-@image_comparison(baseline_images=['streamplot_colormap'],
+-                  tol=.02)
++@image_comparison(baseline_images=['streamplot_colormap'])
  def test_colormap():
      X, Y, U, V = velocity_field()
      plt.streamplot(X, Y, U, V, color=U, density=0.6, linewidth=2,
+@@ -59,8 +58,7 @@ def test_linewidth():
+                    linewidth=lw)
+ 
+ 
+-@image_comparison(baseline_images=['streamplot_masks_and_nans'],
+-                  tol=0.04 if on_win else 0)
++@image_comparison(baseline_images=['streamplot_masks_and_nans'])
+ def test_masks_and_nans():
+     X, Y, U, V = velocity_field()
+     mask = np.zeros(U.shape, dtype=bool)
 diff --git a/lib/mpl_toolkits/tests/test_mplot3d.py b/lib/mpl_toolkits/tests/test_mplot3d.py
 index c157433c7..c13f3be2f 100644
 --- a/lib/mpl_toolkits/tests/test_mplot3d.py
@@ -124,5 +138,5 @@ index c157433c7..c13f3be2f 100644
      def test_xyz(self):
          fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 -- 
-2.13.6
+2.14.3
 
