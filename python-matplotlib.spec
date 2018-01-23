@@ -385,6 +385,10 @@ Requires:       python3-tkinter
 %if %{fedora} > 26
 # Updated test images for FreeType 2.8.
 gzip -dc %SOURCE1000 | tar xvf - --transform='s~^\([^/]\+\)/~lib/\1/tests/baseline_images/~'
+%ifarch i686 armv7hl
+# Apply this because 32-bit output is a bit off.
+%patch1002 -p1
+%endif
 %else
 # Small tweaks to tolerances for FreeType 2.7.1.
 %patch1002 -p1
