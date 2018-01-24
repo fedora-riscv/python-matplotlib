@@ -1,0 +1,41 @@
+From 1e4e5f12b804561ab5b6bfa4ad76d44523d1568e Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Tue, 23 Jan 2018 20:27:17 -0500
+Subject: [PATCH 3/4] Increase tolerances for FT 2.7.1 and other arches.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_patheffects.py | 2 +-
+ lib/matplotlib/tests/test_streamplot.py  | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/lib/matplotlib/tests/test_patheffects.py b/lib/matplotlib/tests/test_patheffects.py
+index 9b8a4379c..e36d6deb6 100644
+--- a/lib/matplotlib/tests/test_patheffects.py
++++ b/lib/matplotlib/tests/test_patheffects.py
+@@ -125,7 +125,7 @@ def test_SimplePatchShadow_offset():
+     assert pe._offset == (4, 5)
+ 
+ 
+-@image_comparison(baseline_images=['collection'], tol=0.015)
++@image_comparison(baseline_images=['collection'], tol=0.019)
+ def test_collection():
+     x, y = np.meshgrid(np.linspace(0, 10, 150), np.linspace(-5, 5, 100))
+     data = np.sin(x) + np.cos(y)
+diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
+index 48f1e0683..aadcf6bfd 100644
+--- a/lib/matplotlib/tests/test_streamplot.py
++++ b/lib/matplotlib/tests/test_streamplot.py
+@@ -58,8 +58,7 @@ def test_linewidth():
+                    linewidth=lw)
+ 
+ 
+-@image_comparison(baseline_images=['streamplot_masks_and_nans'],
+-                  tol=0.04 if on_win else 0)
++@image_comparison(baseline_images=['streamplot_masks_and_nans'], tol=0.01)
+ def test_masks_and_nans():
+     X, Y, U, V = velocity_field()
+     mask = np.zeros(U.shape, dtype=bool)
+-- 
+2.14.3
+

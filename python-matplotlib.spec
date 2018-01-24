@@ -67,8 +67,10 @@ Source1:        setup.cfg
 # Fedora-specific patches.
 Source1000:     matplotlib-%{version}-with-freetype-2.8.tar.gz
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
-Patch1002:      0002-TST-Increase-tolerances-for-FreeType-2.7.1.patch
-Patch1686:      0003-TST-Increase-some-tolerances-for-32-bit-systems.patch
+Patch1002:      0002-Increase-tolerances-for-FreeType-2.7.1.patch
+Patch1003:      0003-Increase-tolerances-for-FT-2.7.1-and-other-arches.patch
+Patch1004:      0004-Increase-some-tolerances-for-32-bit-systems.patch
+Patch1005:      0004-Increase-some-tolerances-for-non-x86-arches.patch
 
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
@@ -389,13 +391,19 @@ gzip -dc %SOURCE1000 | tar xvf - --transform='s~^\([^/]\+\)/~lib/\1/tests/baseli
 # Apply this because 32-bit output is a bit off.
 %patch1002 -p1
 %endif
+%ifnarch x86_64
+%patch1003 -p1
+%endif
+%ifarch aarch64 ppc64 ppc64le s390x
+%patch1005 -p1
+%endif
 %else
 # Small tweaks to tolerances for FreeType 2.7.1.
 %patch1002 -p1
+%patch1003 -p1
 %endif
 %ifarch i686
-# Switch to full autosetup when 32-bit systems are dropped.
-%patch1686 -p1
+%patch1004 -p1
 %endif
 rm -r extern/libqhull
 

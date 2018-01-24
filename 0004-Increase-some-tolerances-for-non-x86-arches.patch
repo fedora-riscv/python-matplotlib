@@ -1,0 +1,216 @@
+From cd26dbd863d0cf2cce4d249c4941cf68d6f838ba Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Wed, 24 Jan 2018 03:02:19 -0500
+Subject: [PATCH 4/4] Increase some tolerances for non-x86 arches.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_arrow_patches.py | 4 ++--
+ lib/matplotlib/tests/test_axes.py          | 5 +++--
+ lib/matplotlib/tests/test_collections.py   | 2 +-
+ lib/matplotlib/tests/test_cycles.py        | 6 +++---
+ lib/matplotlib/tests/test_image.py         | 2 +-
+ lib/matplotlib/tests/test_legend.py        | 6 +++---
+ lib/matplotlib/tests/test_pickle.py        | 2 +-
+ lib/matplotlib/tests/test_scale.py         | 2 +-
+ lib/matplotlib/tests/test_streamplot.py    | 2 +-
+ lib/matplotlib/tests/test_units.py         | 4 ++--
+ 10 files changed, 18 insertions(+), 17 deletions(-)
+
+diff --git a/lib/matplotlib/tests/test_arrow_patches.py b/lib/matplotlib/tests/test_arrow_patches.py
+index 0a5894a30..1f75169ca 100644
+--- a/lib/matplotlib/tests/test_arrow_patches.py
++++ b/lib/matplotlib/tests/test_arrow_patches.py
+@@ -69,7 +69,7 @@ def __prepare_fancyarrow_dpi_cor_test():
+ 
+ 
+ @image_comparison(baseline_images=['fancyarrow_dpi_cor_100dpi'],
+-                  remove_text=True, extensions=['png'],
++                  remove_text=True, extensions=['png'], tol=0.016,
+                   savefig_kwarg=dict(dpi=100))
+ def test_fancyarrow_dpi_cor_100dpi():
+     """
+@@ -84,7 +84,7 @@ def test_fancyarrow_dpi_cor_100dpi():
+ 
+ 
+ @image_comparison(baseline_images=['fancyarrow_dpi_cor_200dpi'],
+-                  remove_text=True, extensions=['png'],
++                  remove_text=True, extensions=['png'], tol=0.019,
+                   savefig_kwarg=dict(dpi=200))
+ def test_fancyarrow_dpi_cor_200dpi():
+     """
+diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
+index 6492cc140..3bd1c0fda 100644
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -3229,7 +3229,8 @@ def test_vertex_markers():
+ 
+ 
+ @image_comparison(baseline_images=['vline_hline_zorder',
+-                                   'errorbar_zorder'])
++                                   'errorbar_zorder'],
++                  tol=0.02)
+ def test_eb_line_zorder():
+     x = list(xrange(10))
+ 
+@@ -4866,7 +4867,7 @@ def test_title_location_roundtrip():
+ 
+ 
+ @image_comparison(baseline_images=["loglog"], remove_text=True,
+-                  extensions=['png'])
++                  extensions=['png'], tol=0.009)
+ def test_loglog():
+     fig, ax = plt.subplots()
+     x = np.arange(1, 11)
+diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
+index c27aeb11a..969bf41cf 100644
+--- a/lib/matplotlib/tests/test_collections.py
++++ b/lib/matplotlib/tests/test_collections.py
+@@ -444,7 +444,7 @@ def test_barb_limits():
+ 
+ 
+ @image_comparison(baseline_images=['EllipseCollection_test_image'],
+-                  extensions=['png'],
++                  extensions=['png'], tol=0.012,
+                   remove_text=True)
+ def test_EllipseCollection():
+     # Test basic functionality
+diff --git a/lib/matplotlib/tests/test_cycles.py b/lib/matplotlib/tests/test_cycles.py
+index eadaf2508..5d1144f5e 100644
+--- a/lib/matplotlib/tests/test_cycles.py
++++ b/lib/matplotlib/tests/test_cycles.py
+@@ -10,7 +10,7 @@ from cycler import cycler
+ 
+ 
+ @image_comparison(baseline_images=['color_cycle_basic'], remove_text=True,
+-                  extensions=['png'])
++                  extensions=['png'], tol=0.008)
+ def test_colorcycle_basic():
+     fig = plt.figure()
+     ax = fig.add_subplot(111)
+@@ -28,7 +28,7 @@ def test_colorcycle_basic():
+ 
+ 
+ @image_comparison(baseline_images=['marker_cycle', 'marker_cycle'],
+-                  remove_text=True, extensions=['png'])
++                  remove_text=True, extensions=['png'], tol=0.008)
+ def test_marker_cycle():
+     fig = plt.figure()
+     ax = fig.add_subplot(111)
+@@ -63,7 +63,7 @@ def test_marker_cycle():
+ 
+ 
+ @image_comparison(baseline_images=['lineprop_cycle_basic'], remove_text=True,
+-                  extensions=['png'])
++                  extensions=['png'], tol=0.009)
+ def test_linestylecycle_basic():
+     fig = plt.figure()
+     ax = fig.add_subplot(111)
+diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
+index fd6430d56..b4190713f 100644
+--- a/lib/matplotlib/tests/test_image.py
++++ b/lib/matplotlib/tests/test_image.py
+@@ -754,7 +754,7 @@ def test_imshow_endianess():
+ 
+ 
+ @image_comparison(baseline_images=['imshow_masked_interpolation'],
+-                  remove_text=True, style='mpl20')
++                  remove_text=True, style='mpl20', tol=0.006)
+ def test_imshow_masked_interpolation():
+ 
+     cm = copy(plt.get_cmap('viridis'))
+diff --git a/lib/matplotlib/tests/test_legend.py b/lib/matplotlib/tests/test_legend.py
+index e63aa8ef9..d984bcac1 100644
+--- a/lib/matplotlib/tests/test_legend.py
++++ b/lib/matplotlib/tests/test_legend.py
+@@ -141,7 +141,7 @@ def test_multiple_keys():
+ 
+ 
+ @image_comparison(baseline_images=['rgba_alpha'],
+-                  extensions=['png'], remove_text=True)
++                  extensions=['png'], remove_text=True, tol=0.007)
+ def test_alpha_rgba():
+     import matplotlib.pyplot as plt
+ 
+@@ -152,7 +152,7 @@ def test_alpha_rgba():
+ 
+ 
+ @image_comparison(baseline_images=['rcparam_alpha'],
+-                  extensions=['png'], remove_text=True)
++                  extensions=['png'], remove_text=True, tol=0.007)
+ def test_alpha_rcparam():
+     import matplotlib.pyplot as plt
+ 
+@@ -179,7 +179,7 @@ def test_fancy():
+                ncol=2, shadow=True, title="My legend", numpoints=1)
+ 
+ 
+-@image_comparison(baseline_images=['framealpha'], remove_text=True)
++@image_comparison(baseline_images=['framealpha'], remove_text=True, tol=0.018)
+ def test_framealpha():
+     x = np.linspace(1, 100, 100)
+     y = x
+diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
+index bd6ac6862..ea8afd807 100644
+--- a/lib/matplotlib/tests/test_pickle.py
++++ b/lib/matplotlib/tests/test_pickle.py
+@@ -41,7 +41,7 @@ def test_simple():
+     pickle.dump(fig, BytesIO(), pickle.HIGHEST_PROTOCOL)
+ 
+ 
+-@image_comparison(baseline_images=['multi_pickle'],
++@image_comparison(baseline_images=['multi_pickle'], tol=0.004,
+                   extensions=['png'], remove_text=True,
+                   style='mpl20')
+ def test_complete():
+diff --git a/lib/matplotlib/tests/test_scale.py b/lib/matplotlib/tests/test_scale.py
+index 9b78377b2..4994ba91d 100644
+--- a/lib/matplotlib/tests/test_scale.py
++++ b/lib/matplotlib/tests/test_scale.py
+@@ -75,7 +75,7 @@ def test_extra_kwargs_raise():
+ 
+ 
+ @image_comparison(baseline_images=['logscale_nonpos_values'], remove_text=True,
+-                  extensions=['png'], style='mpl20')
++                  extensions=['png'], style='mpl20', tol=0.008)
+ def test_logscale_nonpos_values():
+     np.random.seed(19680801)
+     xs = np.random.normal(size=int(1e3))
+diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
+index aadcf6bfd..473991268 100644
+--- a/lib/matplotlib/tests/test_streamplot.py
++++ b/lib/matplotlib/tests/test_streamplot.py
+@@ -48,7 +48,7 @@ def test_colormap():
+     plt.colorbar()
+ 
+ 
+-@image_comparison(baseline_images=['streamplot_linewidth'])
++@image_comparison(baseline_images=['streamplot_linewidth'], tol=0.002)
+ def test_linewidth():
+     X, Y, U, V = velocity_field()
+     speed = np.sqrt(U*U + V*V)
+diff --git a/lib/matplotlib/tests/test_units.py b/lib/matplotlib/tests/test_units.py
+index f72ac2c60..781a3850e 100644
+--- a/lib/matplotlib/tests/test_units.py
++++ b/lib/matplotlib/tests/test_units.py
+@@ -39,7 +39,7 @@ class Quantity(object):
+ 
+ # Tests that the conversion machinery works properly for classes that
+ # work as a facade over numpy arrays (like pint)
+-@image_comparison(baseline_images=['plot_pint'],
++@image_comparison(baseline_images=['plot_pint'], tol=0.003,
+                   extensions=['png'], remove_text=False, style='mpl20')
+ def test_numpy_facade():
+     # Create an instance of the conversion interface and
+@@ -83,7 +83,7 @@ def test_numpy_facade():
+ 
+ 
+ # Tests gh-8908
+-@image_comparison(baseline_images=['plot_masked_units'],
++@image_comparison(baseline_images=['plot_masked_units'], tol=0.007,
+                   extensions=['png'], remove_text=True, style='mpl20')
+ def test_plot_masked_units():
+     data = np.linspace(-5, 5)
+-- 
+2.14.3
+

@@ -1,7 +1,7 @@
-From 61eac9a522a7907db3fe01680d249789d1cff710 Mon Sep 17 00:00:00 2001
+From 25c7d1af15f4478e795250360d2f778a76c2358d Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
-Date: Sun, 15 Oct 2017 21:11:26 -0400
-Subject: [PATCH 3/3] TST: Increase some tolerances for 32-bit systems.
+Date: Wed, 24 Jan 2018 01:38:52 -0500
+Subject: [PATCH 4/4] Increase some tolerances for 32-bit systems.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -11,11 +11,12 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  lib/matplotlib/tests/test_colorbar.py    | 11 +++++----
  lib/matplotlib/tests/test_contour.py     |  6 ++---
  lib/matplotlib/tests/test_image.py       |  2 +-
+ lib/matplotlib/tests/test_patheffects.py |  2 +-
  lib/matplotlib/tests/test_pickle.py      |  2 +-
  lib/matplotlib/tests/test_quiver.py      |  2 +-
  lib/matplotlib/tests/test_transforms.py  |  2 +-
  lib/mpl_toolkits/tests/test_mplot3d.py   |  2 +-
- 10 files changed, 38 insertions(+), 36 deletions(-)
+ 11 files changed, 39 insertions(+), 37 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_artist.py b/lib/matplotlib/tests/test_artist.py
 index 786d50903..105714ef4 100644
@@ -331,6 +332,19 @@ index fd6430d56..e9bf1b1db 100644
  def test_imshow_masked_interpolation():
  
      cm = copy(plt.get_cmap('viridis'))
+diff --git a/lib/matplotlib/tests/test_patheffects.py b/lib/matplotlib/tests/test_patheffects.py
+index e36d6deb6..985d69cb2 100644
+--- a/lib/matplotlib/tests/test_patheffects.py
++++ b/lib/matplotlib/tests/test_patheffects.py
+@@ -125,7 +125,7 @@ def test_SimplePatchShadow_offset():
+     assert pe._offset == (4, 5)
+ 
+ 
+-@image_comparison(baseline_images=['collection'], tol=0.019)
++@image_comparison(baseline_images=['collection'], tol=0.084)
+ def test_collection():
+     x, y = np.meshgrid(np.linspace(0, 10, 150), np.linspace(-5, 5, 100))
+     data = np.sin(x) + np.cos(y)
 diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
 index bd6ac6862..512f07948 100644
 --- a/lib/matplotlib/tests/test_pickle.py
