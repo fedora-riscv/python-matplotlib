@@ -64,12 +64,18 @@ URL:            http://matplotlib.org
 Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}/matplotlib-%{version}%{?rctag}.tar.gz
 Source1:        setup.cfg
 
+# https://github.com/matplotlib/matplotlib/pull/10310
+Patch0001:      0001-Add-libdl-on-Unix-like-systems.patch
+
 # Fedora-specific patches.
+# https://github.com/QuLogic/mpl-images
 Source1000:     matplotlib-%{version}-with-freetype-2.8.tar.gz
+# https://github.com/QuLogic/matplotlib/tree/fedora-patches
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 Patch1002:      0002-Increase-tolerances-for-FreeType-2.7.1.patch
 Patch1003:      0003-Increase-tolerances-for-FT-2.7.1-and-other-arches.patch
 Patch1004:      0004-Increase-some-tolerances-for-32-bit-systems.patch
+# https://github.com/QuLogic/matplotlib/tree/fedora-patches-non-x86
 Patch1005:      0004-Increase-some-tolerances-for-non-x86-arches.patch
 
 BuildRequires:  freetype-devel
@@ -383,6 +389,9 @@ Requires:       python3-tkinter
 
 %prep
 %autosetup -n matplotlib-%{version}%{?rctag} -N
+%patch0001 -p1
+
+# Fedora-specific patches follow:
 %patch1001 -p1
 %if %{fedora} > 26
 # Updated test images for FreeType 2.8.
