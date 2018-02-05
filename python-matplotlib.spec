@@ -1,4 +1,4 @@
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %global with_python3            1
 %else
 %global with_python3            0
@@ -23,7 +23,7 @@
 %endif
 
 # On Fedora 21 onwards, enable Qt5 backend:
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %global with_qt5 1
 %else
 %global with_qt5 0
@@ -55,7 +55,7 @@
 
 Name:           python-matplotlib
 Version:        2.1.2
-Release:        1%{?rctag:.%{rctag}}%{?dist}
+Release:        2%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 Group:          Development/Libraries
 # qt4_editor backend is MIT
@@ -105,7 +105,7 @@ BuildRequires:  python-setuptools
 BuildRequires:  python-six
 BuildRequires:  python-subprocess32
 BuildRequires:  python2-devel
-%if %{fedora} > 26
+%if 0%{?fedora} > 26 || 0%{?rhel} > 7 
 BuildRequires:  python2-backports
 %endif
 BuildRequires:  python2-backports-functools_lru_cache
@@ -140,7 +140,7 @@ Requires:       python-six
 Requires:       python-subprocess32
 Requires:       pytz
 %if !%{with_bundled_fonts}
-%if 0%{?fedora}
+%if 0%{?fedora}  || 0%{?rhel} > 7 
 Requires:       stix-math-fonts
 %else
 Requires:       stix-fonts
@@ -314,7 +314,7 @@ Requires:       python3-pyparsing
 Requires:       python3-pytz
 Requires:       python3-six
 %if !%{with_bundled_fonts}
-%if 0%{?fedora}
+%if 0%{?fedora}  || 0%{?rhel} > 7 
 Requires:       stix-math-fonts
 %else
 Requires:       stix-fonts
@@ -393,7 +393,7 @@ Requires:       python3-tkinter
 
 # Fedora-specific patches follow:
 %patch1001 -p1
-%if %{fedora} > 26
+%if 0%{?fedora} > 26 || 0%{?rhel} > 7 
 # Updated test images for FreeType 2.8.
 gzip -dc %SOURCE1000 | tar xvf - --transform='s~^\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 %ifarch i686 armv7hl
@@ -629,6 +629,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %endif
 
 %changelog
+* Mon Feb 05 2018 Karsten Hopp <karsten@redhat.com> - 2.1.2-2}
+- update and fix spec file conditionals
+
 * Sun Jan 21 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-1
 - Update to latest release
 
