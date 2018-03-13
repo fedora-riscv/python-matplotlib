@@ -34,7 +34,7 @@
 
 Name:           python-matplotlib
 Version:        2.1.2
-Release:        2%{?rctag:.%{rctag}}%{?dist}
+Release:        3%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -556,7 +556,10 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %changelog
-* Mon Feb 05 2018 Karsten Hopp <karsten@redhat.com> - 2.1.2-2}
+* Tue Mar 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-3
+- Cleanup spec file of old conditionals
+
+* Mon Feb 05 2018 Karsten Hopp <karsten@redhat.com> - 2.1.2-2
 - update and fix spec file conditionals
 
 * Sun Jan 21 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-1
