@@ -105,9 +105,6 @@ BuildRequires:  python-setuptools
 BuildRequires:  python-six
 BuildRequires:  python-subprocess32
 BuildRequires:  python2-devel
-%if 0%{?fedora} > 26 || 0%{?rhel} > 7 
-BuildRequires:  python2-backports
-%endif
 BuildRequires:  python2-backports-functools_lru_cache
 BuildRequires:  python2-pillow
 BuildRequires:  pytz
