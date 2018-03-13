@@ -390,7 +390,6 @@ Requires:       python3-tkinter
 
 # Fedora-specific patches follow:
 %patch1001 -p1
-%if 0%{?fedora} > 26 || 0%{?rhel} > 7 
 # Updated test images for FreeType 2.8.
 gzip -dc %SOURCE1000 | tar xvf - --transform='s~^\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 %ifarch i686 armv7hl
@@ -402,11 +401,6 @@ gzip -dc %SOURCE1000 | tar xvf - --transform='s~^\([^/]\+\)/~lib/\1/tests/baseli
 %endif
 %ifarch aarch64 ppc64 ppc64le s390x
 %patch1005 -p1
-%endif
-%else
-# Small tweaks to tolerances for FreeType 2.7.1.
-%patch1002 -p1
-%patch1003 -p1
 %endif
 %ifarch i686
 %patch1004 -p1
