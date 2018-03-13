@@ -859,7 +859,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 - fix build with new Tkinter which doesn't return an expected value in __version__
 
 * Thu Sep 15 2011 Jef Spaleta <jspaleta@fedoraproject.org> - 1.0.1-13
-- apply upstream bugfix for timezone formatting (Bug 735677) 
+- apply upstream bugfix for timezone formatting (Bug 735677)
 
 * Fri May 20 2011 Orion Poplawski <orion@cora.nwra.com> - 1.0.1-12
 - Add Requires dvipng (Bug 684836)
@@ -917,20 +917,20 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
 * Thu Jul 8 2010 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 1.0.0-1
-- New upstream release  
-- Remove undistributable file from bundled agg library 
+- New upstream release
+- Remove undistributable file from bundled agg library
 
 * Thu Jul 1 2010 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.99.3-1
-- New upstream release  
+- New upstream release
 
 * Thu May 27 2010 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.99.1.2-4
-- Upstream patch to fix deprecated gtk tooltip warning.  
+- Upstream patch to fix deprecated gtk tooltip warning.
 
 * Mon Apr 12 2010 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.99.1.2-2
-- Bump to rebuild against numpy 1.3  
+- Bump to rebuild against numpy 1.3
 
 * Thu Apr 1 2010 Jef Spaleta <jspaleta AT fedoraproject DOT org> - 0.99.1.2-1
-- Bump to rebuild against numpy 1.4.0  
+- Bump to rebuild against numpy 1.4.0
 
 * Fri Dec 11 2009 Jon Ciesla <limb@jcomserv.net> - 0.99.1.2
 - Update to 0.99.1.2
@@ -991,7 +991,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 - Rebuild for Tcl/Tk downgrade
 
 * Sat Feb 10 2007 Jef Spaleta <jspaleta@gmail.com> 0.90.0-2
-- Release bump for rebuild against new tk 
+- Release bump for rebuild against new tk
 
 * Fri Feb 09 2007 Orion Poplawski <orion@cora.nwra.com> 0.90.0-1
 - Update to 0.90.0
@@ -1053,7 +1053,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 - New upstream version 0.84
 
 * Tue Aug 02 2005 Orion Poplawski <orion@cora.nwra.com> 0.83.2-3
-- bump release 
+- bump release
 
 * Tue Aug 02 2005 Orion Poplawski <orion@cora.nwra.com> 0.83.2-2
 - Add Requires: python-numeric, pytz, python-dateutil
