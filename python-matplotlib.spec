@@ -34,7 +34,7 @@
 
 Name:           python-matplotlib
 Version:        2.1.2
-Release:        3%{?rctag:.%{rctag}}%{?dist}
+Release:        4%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -98,6 +98,7 @@ BuildRequires:  python2-cycler >= 0.10.0
 %endif
 %if %{run_tests}
 BuildRequires:  python2-pytest
+BuildRequires:  python2-pytest-xdist
 BuildRequires:  python2-cycler >= 0.10.0
 BuildRequires:  python2-mock
 %endif
@@ -265,6 +266,7 @@ Requires:       python3-dateutil
 Requires:       python3-matplotlib-%{?backend_subpackage}%{!?backend_subpackage:tk}%{?_isa} = %{version}-%{release}
 %if %{run_tests}
 BuildRequires:  python3-pytest
+BuildRequires:  python3-pytest-xdist
 %endif
 Requires:       python3-numpy
 Recommends:     python3-pillow
@@ -433,13 +435,14 @@ MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python2_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python2} -m pytest --pyargs matplotlib -m 'not network' -k 'not test_polycollection_close' -ra
+         %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
+             -m 'not network' -k 'not test_polycollection_close'
 
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python3} tests.py -m 'not network' -ra
+         %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) -m 'not network'
 %endif # run_tests
 
 %files -n python-matplotlib-data
@@ -556,6 +559,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %changelog
+* Tue Mar 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-4
+- Run tests in parallel
+
 * Tue Mar 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-3
 - Cleanup spec file of old conditionals
 - Use more python2- dependencies
