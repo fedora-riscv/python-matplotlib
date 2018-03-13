@@ -75,24 +75,24 @@ errorcharts, scatterplots, etc, with just a few lines of code.
 
 %package -n python2-matplotlib
 Summary:        Python 2D plotting library
-BuildRequires:  numpy
-BuildRequires:  pyparsing
-BuildRequires:  python-dateutil
-BuildRequires:  python-pyside
-BuildRequires:  python-setuptools
-BuildRequires:  python-six
-BuildRequires:  python-subprocess32
+BuildRequires:  python2-numpy
+BuildRequires:  python2-pyparsing
+BuildRequires:  python2-dateutil
+BuildRequires:  python2-pyside
+BuildRequires:  python2-setuptools
+BuildRequires:  python2-six
+BuildRequires:  python2-subprocess32
 BuildRequires:  python2-devel
 BuildRequires:  python2-backports-functools_lru_cache
 BuildRequires:  python2-pillow
-BuildRequires:  pytz
+BuildRequires:  python2-pytz
 %if %{with_html}
 BuildRequires:  %{_bindir}/pdftops
-# circular dependency: python-basemap requires matplotlib
-BuildRequires:  python-basemap
-BuildRequires:  python-ipython-sphinx
-BuildRequires:  python-numpydoc
-BuildRequires:  python-scikit-image
+# circular dependency: python2-basemap requires matplotlib
+BuildRequires:  python2-basemap
+BuildRequires:  python2-ipython-sphinx
+BuildRequires:  python2-numpydoc
+BuildRequires:  python2-scikit-image
 BuildRequires:  python2-colorspacious
 BuildRequires:  python2-cycler >= 0.10.0
 %endif
@@ -103,17 +103,17 @@ BuildRequires:  python2-mock
 %endif
 Requires:       dejavu-sans-fonts
 Requires:       dvipng
-Requires:       numpy
-Requires:       pyparsing
+Requires:       python2-numpy
+Requires:       python2-pyparsing
 Requires:       python2-cycler >= 0.10.0
-Requires:       python-dateutil
+Requires:       python2-dateutil
 Requires:       python2-backports-functools_lru_cache
 Requires:       python-matplotlib-data = %{version}-%{release}
 %{?backend_subpackage:Requires: python2-matplotlib-%{backend_subpackage}%{?_isa} = %{version}-%{release}}
 Recommends:     python2-pillow
-Requires:       python-six
-Requires:       python-subprocess32
-Requires:       pytz
+Requires:       python2-six
+Requires:       python2-subprocess32
+Requires:       python2-pytz
 %if !%{with_bundled_fonts}
 Requires:       stix-math-fonts
 %else
@@ -140,7 +140,7 @@ errorcharts, scatterplots, etc, with just a few lines of code.
 %package -n python2-matplotlib-qt4
 Summary:        Qt4 backend for python-matplotlib
 BuildRequires:  PyQt4-devel
-Requires:       PyQt4
+Requires:       python2-PyQt4
 Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python2-matplotlib-qt5
 %{?python_provide:%python_provide python2-matplotlib-qt4}
@@ -150,8 +150,8 @@ Requires:       python2-matplotlib-qt5
 
 %package -n python2-matplotlib-qt5
 Summary:        Qt5 backend for python-matplotlib
-BuildRequires:  python-qt5
-Requires:       python-qt5
+BuildRequires:  python2-qt5
+Requires:       python2-qt5
 Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
 %{?python_provide:%python_provide python2-matplotlib-qt5}
 
@@ -200,7 +200,7 @@ Requires:       tkinter
 Summary:        wxPython backend for python-matplotlib
 BuildRequires:  wxPython-devel
 Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-Requires:       wxPython
+Requires:       python2-wxpython
 %{?python_provide:%python_provide python2-matplotlib-wx}
 
 %description -n python2-matplotlib-wx
@@ -211,7 +211,7 @@ Summary:        Documentation files for python-matplotlib
 %if %{with_html}
 BuildRequires:  dvipng
 BuildRequires:  graphviz
-BuildRequires:  python-sphinx
+BuildRequires:  python2-sphinx
 BuildRequires:  tex(latex)
 BuildRequires:  tex-preview
 %endif
@@ -558,6 +558,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %changelog
 * Tue Mar 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-3
 - Cleanup spec file of old conditionals
+- Use more python2- dependencies
 
 * Mon Feb 05 2018 Karsten Hopp <karsten@redhat.com> - 2.1.2-2
 - update and fix spec file conditionals
