@@ -1,9 +1,3 @@
-%if 0%{?fedora} || 0%{?rhel} > 7
-%global with_python3            1
-%else
-%global with_python3            0
-%endif
-%global __provides_exclude_from .*/site-packages/.*\\.so$
 %global with_html               0
 
 # It seems like there's some kind of weird occasional error where a
@@ -13,21 +7,6 @@
 # going on, we just have to keep re-running the build until it doesn't
 # happen.
 %global run_tests               1
-
-
-# On RHEL 7 onwards, don't build with wx:
-%if 0%{?rhel} >= 7
-%global with_wx 0
-%else
-%global with_wx 1
-%endif
-
-# On Fedora 21 onwards, enable Qt5 backend:
-%if 0%{?fedora} || 0%{?rhel} > 7
-%global with_qt5 1
-%else
-%global with_qt5 0
-%endif
 
 # the default backend; one of GTK GTKAgg GTKCairo GTK3Agg GTK3Cairo
 # CocoaAgg MacOSX Qt4Agg Qt5Agg TkAgg WX WXAgg Agg Cairo GDK PS PDF SVG
@@ -57,7 +36,6 @@ Name:           python-matplotlib
 Version:        2.1.2
 Release:        2%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
-Group:          Development/Libraries
 # qt4_editor backend is MIT
 License:        Python and MIT
 URL:            http://matplotlib.org
@@ -137,11 +115,7 @@ Requires:       python-six
 Requires:       python-subprocess32
 Requires:       pytz
 %if !%{with_bundled_fonts}
-%if 0%{?fedora}  || 0%{?rhel} > 7 
 Requires:       stix-math-fonts
-%else
-Requires:       stix-fonts
-%endif
 %else
 Provides:       bundled(stix-math-fonts)
 %endif
@@ -165,7 +139,6 @@ errorcharts, scatterplots, etc, with just a few lines of code.
 
 %package -n python2-matplotlib-qt4
 Summary:        Qt4 backend for python-matplotlib
-Group:          Development/Libraries
 BuildRequires:  PyQt4-devel
 Requires:       PyQt4
 Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
@@ -175,10 +148,8 @@ Requires:       python2-matplotlib-qt5
 %description -n python2-matplotlib-qt4
 %{summary}
 
-%if %{with_qt5}
 %package -n python2-matplotlib-qt5
 Summary:        Qt5 backend for python-matplotlib
-Group:          Development/Libraries
 BuildRequires:  python-qt5
 Requires:       python-qt5
 Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
@@ -186,11 +157,9 @@ Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
 
 %description -n python2-matplotlib-qt5
 %{summary}
-%endif # with_qt5
 
 %package -n python2-matplotlib-gtk
 Summary:        GTK backend for python-matplotlib
-Group:          Development/Libraries
 BuildRequires:  gtk2-devel
 BuildRequires:  pycairo-devel
 BuildRequires:  pygtk2-devel
@@ -204,7 +173,6 @@ Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
 
 %package -n python2-matplotlib-gtk3
 Summary:        GTK3 backend for python-matplotlib
-Group:          Development/Libraries
 # This should be converted to typelib(Gtk) when supported
 BuildRequires:  gtk3
 BuildRequires:  pygobject3-base
@@ -218,7 +186,6 @@ Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
 
 %package -n python2-matplotlib-tk
 Summary:        Tk backend for python-matplotlib
-Group:          Development/Libraries
 BuildRequires:  tcl-devel
 BuildRequires:  tkinter
 BuildRequires:  tk-devel
@@ -229,10 +196,8 @@ Requires:       tkinter
 %description -n python2-matplotlib-tk
 %{summary}
 
-%if %{with_wx}
 %package -n python2-matplotlib-wx
 Summary:        wxPython backend for python-matplotlib
-Group:          Development/Libraries
 BuildRequires:  wxPython-devel
 Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       wxPython
@@ -240,11 +205,9 @@ Requires:       wxPython
 
 %description -n python2-matplotlib-wx
 %{summary}
-%endif # with_wx
 
 %package -n python2-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
-Group:          Documentation
 %if %{with_html}
 BuildRequires:  dvipng
 BuildRequires:  graphviz
@@ -280,10 +243,8 @@ Requires:       python-matplotlib-data = %{version}-%{release}
 %{summary}
 %endif
 
-%if %{with_python3}
 %package -n     python3-matplotlib
 Summary:        Python 2D plotting library
-Group:          Development/Libraries
 BuildRequires:  python3-cairo
 BuildRequires:  python3-cycler >= 0.10.0
 BuildRequires:  python3-dateutil
@@ -311,11 +272,7 @@ Requires:       python3-pyparsing
 Requires:       python3-pytz
 Requires:       python3-six
 %if !%{with_bundled_fonts}
-%if 0%{?fedora}  || 0%{?rhel} > 7 
 Requires:       stix-math-fonts
-%else
-Requires:       stix-fonts
-%endif
 %else
 Provides:       bundled(stix-math-fonts)
 %endif
@@ -334,7 +291,6 @@ errorcharts, scatterplots, etc, with just a few lines of code.
 
 %package -n     python3-matplotlib-qt4
 Summary:        Qt4 backend for python3-matplotlib
-Group:          Development/Libraries
 BuildRequires:  python3-PyQt4-devel
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-matplotlib-qt5
@@ -344,10 +300,8 @@ Requires:       python3-PyQt4
 %description -n python3-matplotlib-qt4
 %{summary}
 
-%if %{with_qt5}
 %package -n     python3-matplotlib-qt5
 Summary:        Qt5 backend for python3-matplotlib
-Group:          Development/Libraries
 BuildRequires:  python3-qt5
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-qt5
@@ -355,12 +309,10 @@ Requires:       python3-qt5
 
 %description -n python3-matplotlib-qt5
 %{summary}
-%endif # with_qt5
 
 # gtk2 never worked in Python 3 afaict, so no need for -gtk subpackage
 %package -n     python3-matplotlib-gtk3
 Summary:        GTK3 backend for python3-matplotlib
-Group:          Development/Libraries
 # This should be converted to typelib(Gtk) when supported
 BuildRequires:  gtk3
 BuildRequires:  python3-gobject
@@ -374,7 +326,6 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 
 %package -n     python3-matplotlib-tk
 Summary:        Tk backend for python3-matplotlib
-Group:          Development/Libraries
 BuildRequires:  python3-tkinter
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-tkinter
@@ -382,7 +333,6 @@ Requires:       python3-tkinter
 
 %description -n python3-matplotlib-tk
 %{summary}
-%endif
 
 %prep
 %autosetup -n matplotlib-%{version}%{?rctag} -N
@@ -442,13 +392,11 @@ popd
 # package doesn't drag in dependencies
 find examples -name '*.py' -exec chmod a-x '{}' \;
 
-%if %{with_python3}
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data \
   xvfb-run %{__python3} setup.py build
 # documentation cannot be built with python3 due to syntax errors
 # https://github.com/matplotlib/matplotlib/issues/5805
-%endif
 
 %install
 export http_proxy=http://127.0.0.1/
@@ -465,13 +413,11 @@ mv %{buildroot}%{python2_sitearch}/matplotlib/mpl-data \
 rm -rf %{buildroot}%{_datadir}/matplotlib/mpl-data/fonts
 %endif
 
-%if %{with_python3}
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data/ \
     %{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
 chmod +x %{buildroot}%{python3_sitearch}/matplotlib/dates.py
 rm -fr %{buildroot}%{python3_sitearch}/matplotlib/mpl-data
-%endif
 
 %if %{run_tests}
 %check
@@ -489,13 +435,11 @@ PYTHONPATH=%{buildroot}%{python2_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python2} -m pytest --pyargs matplotlib -m 'not network' -k 'not test_polycollection_close' -ra
 
-%if %{with_python3}
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -m 'not network' -ra
-%endif
 %endif # run_tests
 
 %files -n python-matplotlib-data
@@ -536,11 +480,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python2_sitearch}/matplotlib/backends/backend_qt4.*
 %{python2_sitearch}/matplotlib/backends/backend_qt4agg.*
 
-%if %{with_qt5}
 %files -n python2-matplotlib-qt5
 %{python2_sitearch}/matplotlib/backends/backend_qt5.*
 %{python2_sitearch}/matplotlib/backends/backend_qt5agg.*
-%endif # with_qt5
 
 %files -n python2-matplotlib-gtk
 %{python2_sitearch}/matplotlib/backends/backend_gtk.py*
@@ -556,11 +498,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python2_sitearch}/matplotlib/backends/tkagg.py*
 %{python2_sitearch}/matplotlib/backends/_tkagg.so
 
-%if %{with_wx}
 %files -n python2-matplotlib-wx
 %{python2_sitearch}/matplotlib/backends/backend_wx.*
 %{python2_sitearch}/matplotlib/backends/backend_wxagg.*
-%endif # with_wx
 
 %files -n python2-matplotlib-doc
 %doc examples
@@ -568,7 +508,6 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %doc doc/build/html/*
 %endif
 
-%if %{with_python3}
 %files -n python3-matplotlib
 %license LICENSE/
 %doc README.rst CONTRIBUTING.md
@@ -599,13 +538,11 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python3_sitearch}/matplotlib/backends/backend_qt4agg.*
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4agg.*
 
-%if %{with_qt5}
 %files -n python3-matplotlib-qt5
 %{python3_sitearch}/matplotlib/backends/backend_qt5.*
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5.*
 %{python3_sitearch}/matplotlib/backends/backend_qt5agg.*
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5agg.*
-%endif # with_qt5
 
 %files -n python3-matplotlib-gtk3
 %{python3_sitearch}/matplotlib/backends/backend_gtk*
@@ -617,7 +554,6 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python3_sitearch}/matplotlib/backends/tkagg.*
 %{python3_sitearch}/matplotlib/backends/__pycache__/tkagg.*
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
-%endif
 
 %changelog
 * Mon Feb 05 2018 Karsten Hopp <karsten@redhat.com> - 2.1.2-2}
