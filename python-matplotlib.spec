@@ -32,9 +32,12 @@
 
 #global rctag rc1
 
+# The version of FreeType in this Fedora branch.
+%global ftver 2.8
+
 Name:           python-matplotlib
-Version:        2.1.2
-Release:        4%{?rctag:.%{rctag}}%{?dist}
+Version:        2.2.2
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -42,19 +45,23 @@ URL:            http://matplotlib.org
 Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}/matplotlib-%{version}%{?rctag}.tar.gz
 Source1:        setup.cfg
 
-# https://github.com/matplotlib/matplotlib/pull/10310
-Patch0001:      0001-Add-libdl-on-Unix-like-systems.patch
+# Because the qhull package stopped shipping pkgconfig files.
+# https://src.fedoraproject.org/rpms/qhull/pull-request/1
+Patch0001:      0001-Force-using-system-qhull.patch
 
-# Fedora-specific patches.
-# https://github.com/QuLogic/mpl-images
-Source1000:     matplotlib-%{version}-with-freetype-2.8.tar.gz
+# Fedora-specific patches; see:
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches
-Patch1001:      0001-matplotlibrc-path-search-fix.patch
-Patch1002:      0002-Increase-tolerances-for-FreeType-2.7.1.patch
-Patch1003:      0003-Increase-tolerances-for-FT-2.7.1-and-other-arches.patch
-Patch1004:      0004-Increase-some-tolerances-for-32-bit-systems.patch
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches-non-x86
-Patch1005:      0004-Increase-some-tolerances-for-non-x86-arches.patch
+# Updated test images for new FreeType.
+Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{version}-with-freetype-%{ftver}/matplotlib-%{version}-with-freetype-%{ftver}.tar.gz
+# Search in /etc/matplotlibrc:
+Patch1001:      0001-matplotlibrc-path-search-fix.patch
+# Image tolerances for anything but x86_64:
+Patch1002:      0002-Increase-tolerances-for-non-x86_64-arches.patch
+# Image tolerances for 32-bit systems: i686 armv7hl
+Patch1003:      0003-Increase-some-tolerances-for-32-bit-systems.patch
+# Image tolerances for 64-bit (but not x86_64) systems: aarch64 ppc64(le) s390x
+Patch1004:      0003-Increase-some-tolerances-for-non-x86-arches.patch
 
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
@@ -78,9 +85,11 @@ Summary:        Python 2D plotting library
 BuildRequires:  python2-numpy
 BuildRequires:  python2-pyparsing
 BuildRequires:  python2-dateutil
+BuildRequires:  python2-kiwisolver
 BuildRequires:  python2-pyside
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-six
+BuildRequires:  python2-sphinx
 BuildRequires:  python2-subprocess32
 BuildRequires:  python2-devel
 BuildRequires:  python2-backports-functools_lru_cache
@@ -108,6 +117,7 @@ Requires:       python2-numpy
 Requires:       python2-pyparsing
 Requires:       python2-cycler >= 0.10.0
 Requires:       python2-dateutil
+Requires:       python2-kiwisolver
 Requires:       python2-backports-functools_lru_cache
 Requires:       python-matplotlib-data = %{version}-%{release}
 %{?backend_subpackage:Requires: python2-matplotlib-%{backend_subpackage}%{?_isa} = %{version}-%{release}}
@@ -252,17 +262,20 @@ BuildRequires:  python3-dateutil
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-gobject
+BuildRequires:  python3-kiwisolver
 BuildRequires:  python3-numpy
 BuildRequires:  python3-pillow
 BuildRequires:  python3-pyparsing
 BuildRequires:  python3-pytz
 BuildRequires:  python3-six
+BuildRequires:  python3-sphinx
 Requires:       dejavu-sans-fonts
 Requires:       dvipng
 Requires:       python-matplotlib-data = %{version}-%{release}
 Requires:       python3-cairo
 Requires:       python3-cycler >= 0.10.0
 Requires:       python3-dateutil
+Requires:       python3-kiwisolver
 Requires:       python3-matplotlib-%{?backend_subpackage}%{!?backend_subpackage:tk}%{?_isa} = %{version}-%{release}
 %if %{run_tests}
 BuildRequires:  python3-pytest
@@ -342,20 +355,16 @@ Requires:       python3-tkinter
 
 # Fedora-specific patches follow:
 %patch1001 -p1
-# Updated test images for FreeType 2.8.
-gzip -dc %SOURCE1000 | tar xvf - --transform='s~^\([^/]\+\)/~lib/\1/tests/baseline_images/~'
-%ifarch i686 armv7hl
-# Apply this because 32-bit output is a bit off.
+# Updated test images for new FreeType.
+gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
+%ifnarch x86_64
 %patch1002 -p1
 %endif
-%ifnarch x86_64
-%patch1003 -p1
-%endif
 %ifarch aarch64 ppc64 ppc64le s390x
-%patch1005 -p1
-%endif
-%ifarch i686
 %patch1004 -p1
+%endif
+%ifarch i686 armv7hl
+%patch1003 -p1
 %endif
 rm -r extern/libqhull
 
@@ -436,13 +445,14 @@ MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python2_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network' -k 'not test_polycollection_close'
+             -m 'not network' -k 'not test_polycollection_close and not test_if_rctemplate'
 
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) -m 'not network'
+         %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
+             -m 'not network' -k 'not test_if_rctemplate'
 %endif # run_tests
 
 %files -n python-matplotlib-data
@@ -459,7 +469,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 
 %files -n python2-matplotlib
 %license LICENSE/
-%doc README.rst CONTRIBUTING.md
+%doc README.rst
 %{python2_sitearch}/*egg-info
 %{python2_sitearch}/matplotlib-*-nspkg.pth
 %{python2_sitearch}/matplotlib/
@@ -513,7 +523,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 
 %files -n python3-matplotlib
 %license LICENSE/
-%doc README.rst CONTRIBUTING.md
+%doc README.rst
 %{python3_sitearch}/*egg-info
 %{python3_sitearch}/matplotlib-*-nspkg.pth
 %{python3_sitearch}/matplotlib/
@@ -559,6 +569,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %changelog
+* Sat Mar 31 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-1
+- Update to latest release
+
 * Tue Mar 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-4
 - Run tests in parallel
 

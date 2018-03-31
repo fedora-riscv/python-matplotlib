@@ -1,27 +1,30 @@
-From cd26dbd863d0cf2cce4d249c4941cf68d6f838ba Mon Sep 17 00:00:00 2001
+From 0e88d3f2ada26de2dc3362f30064551b9ea2322b Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
-Date: Wed, 24 Jan 2018 03:02:19 -0500
-Subject: [PATCH 4/4] Increase some tolerances for non-x86 arches.
+Date: Sat, 31 Mar 2018 00:33:37 -0400
+Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- lib/matplotlib/tests/test_arrow_patches.py | 4 ++--
- lib/matplotlib/tests/test_axes.py          | 5 +++--
- lib/matplotlib/tests/test_collections.py   | 2 +-
- lib/matplotlib/tests/test_cycles.py        | 6 +++---
- lib/matplotlib/tests/test_image.py         | 2 +-
- lib/matplotlib/tests/test_legend.py        | 6 +++---
- lib/matplotlib/tests/test_pickle.py        | 2 +-
- lib/matplotlib/tests/test_scale.py         | 2 +-
- lib/matplotlib/tests/test_streamplot.py    | 2 +-
- lib/matplotlib/tests/test_units.py         | 4 ++--
- 10 files changed, 18 insertions(+), 17 deletions(-)
+ lib/matplotlib/tests/test_arrow_patches.py                        | 4 ++--
+ lib/matplotlib/tests/test_axes.py                                 | 7 ++++---
+ lib/matplotlib/tests/test_collections.py                          | 2 +-
+ lib/matplotlib/tests/test_constrainedlayout.py                    | 2 +-
+ lib/matplotlib/tests/test_cycles.py                               | 6 +++---
+ lib/matplotlib/tests/test_figure.py                               | 2 +-
+ lib/matplotlib/tests/test_image.py                                | 2 +-
+ lib/matplotlib/tests/test_legend.py                               | 6 +++---
+ lib/matplotlib/tests/test_pickle.py                               | 2 +-
+ lib/matplotlib/tests/test_scale.py                                | 2 +-
+ lib/matplotlib/tests/test_streamplot.py                           | 2 +-
+ lib/matplotlib/tests/test_units.py                                | 4 ++--
+ lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py | 2 +-
+ 13 files changed, 22 insertions(+), 21 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_arrow_patches.py b/lib/matplotlib/tests/test_arrow_patches.py
-index 0a5894a30..1f75169ca 100644
+index 44f87c5fe..fb50ae710 100644
 --- a/lib/matplotlib/tests/test_arrow_patches.py
 +++ b/lib/matplotlib/tests/test_arrow_patches.py
-@@ -69,7 +69,7 @@ def __prepare_fancyarrow_dpi_cor_test():
+@@ -68,7 +68,7 @@ def __prepare_fancyarrow_dpi_cor_test():
  
  
  @image_comparison(baseline_images=['fancyarrow_dpi_cor_100dpi'],
@@ -30,7 +33,7 @@ index 0a5894a30..1f75169ca 100644
                    savefig_kwarg=dict(dpi=100))
  def test_fancyarrow_dpi_cor_100dpi():
      """
-@@ -84,7 +84,7 @@ def test_fancyarrow_dpi_cor_100dpi():
+@@ -83,7 +83,7 @@ def test_fancyarrow_dpi_cor_100dpi():
  
  
  @image_comparison(baseline_images=['fancyarrow_dpi_cor_200dpi'],
@@ -40,10 +43,19 @@ index 0a5894a30..1f75169ca 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 6492cc140..3bd1c0fda 100644
+index 77ec92b01..49a4d9290 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -3229,7 +3229,8 @@ def test_vertex_markers():
+@@ -389,7 +389,7 @@ def test_annotate_default_arrow():
+     assert ann.arrow_patch is not None
+ 
+ 
+-@image_comparison(baseline_images=['polar_axes'], style='default')
++@image_comparison(baseline_images=['polar_axes'], style='default', tol=0.01)
+ def test_polar_annotations():
+     # you can specify the xypoint and the xytext in different
+     # positions and coordinate systems, and optionally turn on a
+@@ -3284,7 +3284,8 @@ def test_vertex_markers():
  
  
  @image_comparison(baseline_images=['vline_hline_zorder',
@@ -53,7 +65,7 @@ index 6492cc140..3bd1c0fda 100644
  def test_eb_line_zorder():
      x = list(xrange(10))
  
-@@ -4866,7 +4867,7 @@ def test_title_location_roundtrip():
+@@ -5017,7 +5018,7 @@ def test_title_location_roundtrip():
  
  
  @image_comparison(baseline_images=["loglog"], remove_text=True,
@@ -63,10 +75,10 @@ index 6492cc140..3bd1c0fda 100644
      fig, ax = plt.subplots()
      x = np.arange(1, 11)
 diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
-index c27aeb11a..969bf41cf 100644
+index 291647d17..6b623ef52 100644
 --- a/lib/matplotlib/tests/test_collections.py
 +++ b/lib/matplotlib/tests/test_collections.py
-@@ -444,7 +444,7 @@ def test_barb_limits():
+@@ -443,7 +443,7 @@ def test_barb_limits():
  
  
  @image_comparison(baseline_images=['EllipseCollection_test_image'],
@@ -75,8 +87,21 @@ index c27aeb11a..969bf41cf 100644
                    remove_text=True)
  def test_EllipseCollection():
      # Test basic functionality
+diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
+index 9c36fb247..3834e4e26 100644
+--- a/lib/matplotlib/tests/test_constrainedlayout.py
++++ b/lib/matplotlib/tests/test_constrainedlayout.py
+@@ -223,7 +223,7 @@ def test_constrained_layout9():
+ 
+ 
+ @image_comparison(baseline_images=['constrained_layout10'],
+-        extensions=['png'])
++        extensions=['png'], tol=0.01)
+ def test_constrained_layout10():
+     'Test for handling legend outside axis'
+     fig, axs = plt.subplots(2, 2, constrained_layout=True)
 diff --git a/lib/matplotlib/tests/test_cycles.py b/lib/matplotlib/tests/test_cycles.py
-index eadaf2508..5d1144f5e 100644
+index 95611f36c..0a118b636 100644
 --- a/lib/matplotlib/tests/test_cycles.py
 +++ b/lib/matplotlib/tests/test_cycles.py
 @@ -10,7 +10,7 @@ from cycler import cycler
@@ -106,11 +131,24 @@ index eadaf2508..5d1144f5e 100644
  def test_linestylecycle_basic():
      fig = plt.figure()
      ax = fig.add_subplot(111)
+diff --git a/lib/matplotlib/tests/test_figure.py b/lib/matplotlib/tests/test_figure.py
+index 229ce192c..0e7a10d46 100644
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -14,7 +14,7 @@ import numpy as np
+ import pytest
+ 
+ 
+-@image_comparison(baseline_images=['figure_align_labels'])
++@image_comparison(baseline_images=['figure_align_labels'], tol=0.01)
+ def test_align_labels():
+     # Check the figure.align_labels() command
+     fig = plt.figure(tight_layout=True)
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index fd6430d56..b4190713f 100644
+index 26e3b4a7e..2c7cedf74 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
-@@ -754,7 +754,7 @@ def test_imshow_endianess():
+@@ -784,7 +784,7 @@ def test_imshow_endianess():
  
  
  @image_comparison(baseline_images=['imshow_masked_interpolation'],
@@ -120,10 +158,10 @@ index fd6430d56..b4190713f 100644
  
      cm = copy(plt.get_cmap('viridis'))
 diff --git a/lib/matplotlib/tests/test_legend.py b/lib/matplotlib/tests/test_legend.py
-index e63aa8ef9..d984bcac1 100644
+index 55b8adc77..1784ff966 100644
 --- a/lib/matplotlib/tests/test_legend.py
 +++ b/lib/matplotlib/tests/test_legend.py
-@@ -141,7 +141,7 @@ def test_multiple_keys():
+@@ -145,7 +145,7 @@ def test_multiple_keys():
  
  
  @image_comparison(baseline_images=['rgba_alpha'],
@@ -132,7 +170,7 @@ index e63aa8ef9..d984bcac1 100644
  def test_alpha_rgba():
      import matplotlib.pyplot as plt
  
-@@ -152,7 +152,7 @@ def test_alpha_rgba():
+@@ -156,7 +156,7 @@ def test_alpha_rgba():
  
  
  @image_comparison(baseline_images=['rcparam_alpha'],
@@ -141,7 +179,7 @@ index e63aa8ef9..d984bcac1 100644
  def test_alpha_rcparam():
      import matplotlib.pyplot as plt
  
-@@ -179,7 +179,7 @@ def test_fancy():
+@@ -183,7 +183,7 @@ def test_fancy():
                 ncol=2, shadow=True, title="My legend", numpoints=1)
  
  
@@ -151,23 +189,23 @@ index e63aa8ef9..d984bcac1 100644
      x = np.linspace(1, 100, 100)
      y = x
 diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
-index bd6ac6862..ea8afd807 100644
+index 89a5a512e..99051dee7 100644
 --- a/lib/matplotlib/tests/test_pickle.py
 +++ b/lib/matplotlib/tests/test_pickle.py
-@@ -41,7 +41,7 @@ def test_simple():
-     pickle.dump(fig, BytesIO(), pickle.HIGHEST_PROTOCOL)
+@@ -42,7 +42,7 @@ def test_simple():
  
- 
--@image_comparison(baseline_images=['multi_pickle'],
-+@image_comparison(baseline_images=['multi_pickle'], tol=0.004,
+ @image_comparison(baseline_images=['multi_pickle'],
                    extensions=['png'], remove_text=True,
-                   style='mpl20')
+-                  style='mpl20')
++                  style='mpl20', tol=0.004)
  def test_complete():
+     fig = plt.figure('Figure with a label?', figsize=(10, 6))
+ 
 diff --git a/lib/matplotlib/tests/test_scale.py b/lib/matplotlib/tests/test_scale.py
-index 9b78377b2..4994ba91d 100644
+index c50a0a896..a33fcccf0 100644
 --- a/lib/matplotlib/tests/test_scale.py
 +++ b/lib/matplotlib/tests/test_scale.py
-@@ -75,7 +75,7 @@ def test_extra_kwargs_raise():
+@@ -97,7 +97,7 @@ def test_logscale_transform_repr():
  
  
  @image_comparison(baseline_images=['logscale_nonpos_values'], remove_text=True,
@@ -177,7 +215,7 @@ index 9b78377b2..4994ba91d 100644
      np.random.seed(19680801)
      xs = np.random.normal(size=int(1e3))
 diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index aadcf6bfd..473991268 100644
+index 4f70ce861..4e52ed0c4 100644
 --- a/lib/matplotlib/tests/test_streamplot.py
 +++ b/lib/matplotlib/tests/test_streamplot.py
 @@ -48,7 +48,7 @@ def test_colormap():
@@ -190,10 +228,10 @@ index aadcf6bfd..473991268 100644
      X, Y, U, V = velocity_field()
      speed = np.sqrt(U*U + V*V)
 diff --git a/lib/matplotlib/tests/test_units.py b/lib/matplotlib/tests/test_units.py
-index f72ac2c60..781a3850e 100644
+index 65c8da7ea..c69d1d531 100644
 --- a/lib/matplotlib/tests/test_units.py
 +++ b/lib/matplotlib/tests/test_units.py
-@@ -39,7 +39,7 @@ class Quantity(object):
+@@ -43,7 +43,7 @@ class Quantity(object):
  
  # Tests that the conversion machinery works properly for classes that
  # work as a facade over numpy arrays (like pint)
@@ -202,7 +240,7 @@ index f72ac2c60..781a3850e 100644
                    extensions=['png'], remove_text=False, style='mpl20')
  def test_numpy_facade():
      # Create an instance of the conversion interface and
-@@ -83,7 +83,7 @@ def test_numpy_facade():
+@@ -87,7 +87,7 @@ def test_numpy_facade():
  
  
  # Tests gh-8908
@@ -211,6 +249,19 @@ index f72ac2c60..781a3850e 100644
                    extensions=['png'], remove_text=True, style='mpl20')
  def test_plot_masked_units():
      data = np.linspace(-5, 5)
+diff --git a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+index a7c637428..8fc5b25b1 100644
+--- a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
++++ b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+@@ -91,7 +91,7 @@ def test_custom_transform():
+ 
+ 
+ @image_comparison(baseline_images=['polar_box'],
+-                  extensions=['png'], style='default', tol=0.03)
++                  extensions=['png'], style='default', tol=0.04)
+ def test_polar_box():
+     fig = plt.figure(figsize=(5, 5))
+ 
 -- 
 2.14.3
 

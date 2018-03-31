@@ -1,7 +1,7 @@
-From 69b627b84fa8081748d93d180deb2218b99270a4 Mon Sep 17 00:00:00 2001
+From 69c596604b1dee1b8aeb066907a4543053e375a9 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
-Subject: [PATCH 1/4] matplotlibrc path search fix
+Subject: [PATCH 1/3] matplotlibrc path search fix
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -9,10 +9,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 3ba486af1..b8caf27dc 100644
+index 93397070f..c68b8ca9a 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -635,9 +635,12 @@ def _get_data_path():
+@@ -739,9 +739,12 @@ def _get_data_path():
  
      _file = _decode_filesystem_path(__file__)
      path = os.sep.join([os.path.dirname(_file), 'mpl-data'])
@@ -25,7 +25,7 @@ index 3ba486af1..b8caf27dc 100644
      # setuptools' namespace_packages may highjack this init file
      # so need to try something known to be in matplotlib, not basemap
      import matplotlib.afm
-@@ -731,7 +734,7 @@ def matplotlib_fname():
+@@ -836,7 +839,7 @@ def matplotlib_fname():
              yield matplotlibrc
              yield os.path.join(matplotlibrc, 'matplotlibrc')
          yield os.path.join(_get_configdir(), 'matplotlibrc')
@@ -33,7 +33,7 @@ index 3ba486af1..b8caf27dc 100644
 +        yield '/etc/matplotlibrc'
  
      for fname in gen_candidates():
-         if os.path.isfile(fname):
+         if os.path.exists(fname):
 -- 
 2.14.3
 
