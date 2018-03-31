@@ -1,4 +1,4 @@
-From 10e4a0fbcab2ad59b95e1391d3285aff07e1f473 Mon Sep 17 00:00:00 2001
+From a1975064e7b68e8587904415b2f3c51ff233089d Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 3/3] Increase some tolerances for 32-bit systems.

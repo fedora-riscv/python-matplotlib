@@ -440,19 +440,22 @@ export http_proxy=http://127.0.0.1/
 echo "backend      : %{backend}" > matplotlibrc
 # Full tests are not run because pytest doesn't seem to understand namespace
 # packages in PYTHONPATH.
+# Skips:
+#  * test_polycollection_close: imports mpl_toolkits which is broken as noted
+#    above.
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python2_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network' -k 'not test_polycollection_close and not test_if_rctemplate'
+             -m 'not network' -k 'not test_polycollection_close'
 
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network' -k 'not test_if_rctemplate'
+             -m 'not network'
 %endif # run_tests
 
 %files -n python-matplotlib-data
