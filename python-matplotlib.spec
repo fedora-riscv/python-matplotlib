@@ -443,19 +443,23 @@ echo "backend      : %{backend}" > matplotlibrc
 # Skips:
 #  * test_polycollection_close: imports mpl_toolkits which is broken as noted
 #    above.
+#  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
+#    heavily-loaded builder.
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python2_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network' -k 'not test_polycollection_close'
+             -m 'not network' \
+             -k 'not test_polycollection_close and not test_invisible_Line_rendering'
 
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network'
+             -m 'not network' \
+             -k 'not test_invisible_Line_rendering'
 %endif # run_tests
 
 %files -n python-matplotlib-data
