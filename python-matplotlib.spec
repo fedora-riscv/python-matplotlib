@@ -33,7 +33,11 @@
 #global rctag rc1
 
 # The version of FreeType in this Fedora branch.
+%if %{fedora} >= 29
+%global ftver 2.9
+%else
 %global ftver 2.8
+%endif
 
 Name:           python-matplotlib
 Version:        2.2.2
@@ -579,8 +583,6 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %changelog
 * Sat Mar 31 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-1
 - Update to latest release
-
-* Tue Mar 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-4
 - Run tests in parallel
 
 * Tue Mar 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.1.2-3
