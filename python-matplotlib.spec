@@ -441,6 +441,7 @@ echo "backend      : %{backend}" > matplotlibrc
 # Full tests are not run because pytest doesn't seem to understand namespace
 # packages in PYTHONPATH.
 # Skips:
+#  * test_parasite: imports mpl_toolkits which is broken as noted above.
 #  * test_polycollection_close: imports mpl_toolkits which is broken as noted
 #    above.
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
@@ -451,7 +452,7 @@ PYTHONPATH=%{buildroot}%{python2_sitearch} \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_polycollection_close and not test_invisible_Line_rendering'
+             -k 'not test_invisible_Line_rendering and not test_parasite and not test_polycollection_close'
 
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
