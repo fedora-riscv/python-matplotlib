@@ -41,7 +41,7 @@
 
 Name:           python-matplotlib
 Version:        2.2.2
-Release:        1%{?rctag:.%{rctag}}%{?dist}
+Release:        2%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -453,6 +453,7 @@ echo "backend      : %{backend}" > matplotlibrc
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python2_sitearch} \
+PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
@@ -461,6 +462,7 @@ PYTHONPATH=%{buildroot}%{python2_sitearch} \
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
+PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
@@ -581,6 +583,9 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} \
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %changelog
+* Tue Apr 17 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-2
+- Remove bytecode produced by pytest
+
 * Sat Mar 31 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-1
 - Update to latest release
 - Run tests in parallel
