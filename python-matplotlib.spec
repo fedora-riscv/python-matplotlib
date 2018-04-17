@@ -221,6 +221,14 @@ Requires:       python2-wxpython
 %description -n python2-matplotlib-wx
 %{summary}
 
+%package -n python2-matplotlib-test-data
+Summary:        Test data for python2-matplotlib
+Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
+%{?python_provide:%python_provide python2-matplotlib-test-data}
+
+%description -n python2-matplotlib-test-data
+%{summary}
+
 %package -n python2-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
 %if %{with_html}
@@ -352,6 +360,15 @@ Requires:       python3-tkinter
 
 %description -n python3-matplotlib-tk
 %{summary}
+
+%package -n python3-matplotlib-test-data
+Summary:        Test data for python3-matplotlib
+Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
+%{?python_provide:%python_provide python3-matplotlib-test-data}
+
+%description -n python3-matplotlib-test-data
+%{summary}
+
 
 %prep
 %autosetup -n matplotlib-%{version}%{?rctag} -N
@@ -503,6 +520,10 @@ PYTHONDONTWRITEBYTECODE=1 \
 %exclude %{_pkgdocdir}/*
 %exclude %{_pkgdocdir}/*/*
 
+%files -n python2-matplotlib-test-data
+%{python2_sitearch}/matplotlib/tests/baseline_images/
+%{python2_sitearch}/mpl_toolkits/tests/baseline_images/
+
 %files -n python2-matplotlib-qt4
 %{python2_sitearch}/matplotlib/backends/backend_qt4.*
 %{python2_sitearch}/matplotlib/backends/backend_qt4agg.*
@@ -559,6 +580,10 @@ PYTHONDONTWRITEBYTECODE=1 \
 %exclude %{python3_sitearch}/matplotlib/backends/_tkagg.*
 %exclude %{_pkgdocdir}/*/
 
+%files -n python3-matplotlib-test-data
+%{python3_sitearch}/matplotlib/tests/baseline_images/
+%{python3_sitearch}/mpl_toolkits/tests/baseline_images/
+
 %files -n python3-matplotlib-qt4
 %{python3_sitearch}/matplotlib/backends/backend_qt4.*
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4.*
@@ -585,6 +610,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 %changelog
 * Tue Apr 17 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-2
 - Remove bytecode produced by pytest
+- Add python?-matplotlib-test-data subpackages
 
 * Sat Mar 31 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-1
 - Update to latest release
