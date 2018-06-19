@@ -41,7 +41,7 @@
 
 Name:           python-matplotlib
 Version:        2.2.2
-Release:        2%{?rctag:.%{rctag}}%{?dist}
+Release:        2%{?rctag:.%{rctag}}%{?dist}.1
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -608,6 +608,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %changelog
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.2.2-2.1
+- Rebuilt for Python 3.7
+
 * Tue Apr 17 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-2
 - Remove bytecode produced by pytest
 - Add python?-matplotlib-test-data subpackages
