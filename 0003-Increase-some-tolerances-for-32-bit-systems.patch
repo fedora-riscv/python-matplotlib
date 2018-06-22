@@ -1,32 +1,32 @@
-From a1975064e7b68e8587904415b2f3c51ff233089d Mon Sep 17 00:00:00 2001
+From cc437e276279d2fe81fa3bb22cf6358dcd7ce252 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 3/3] Increase some tolerances for 32-bit systems.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- lib/matplotlib/testing/decorators.py               |  2 +-
- lib/matplotlib/tests/test_artist.py                |  3 +-
- lib/matplotlib/tests/test_axes.py                  | 47 +++++++++++-----------
- lib/matplotlib/tests/test_collections.py           |  2 +-
- lib/matplotlib/tests/test_colorbar.py              | 11 ++---
- lib/matplotlib/tests/test_constrainedlayout.py     |  2 +-
- lib/matplotlib/tests/test_contour.py               |  6 +--
- lib/matplotlib/tests/test_image.py                 |  2 +-
- lib/matplotlib/tests/test_mathtext.py              |  4 +-
- lib/matplotlib/tests/test_patches.py               |  3 +-
- lib/matplotlib/tests/test_patheffects.py           |  2 +-
- lib/matplotlib/tests/test_pickle.py                |  2 +-
- lib/matplotlib/tests/test_quiver.py                |  2 +-
- lib/matplotlib/tests/test_streamplot.py            |  3 +-
- lib/matplotlib/tests/test_transforms.py            |  2 +-
- .../tests/test_axisartist_floating_axes.py         |  4 +-
- .../test_axisartist_grid_helper_curvelinear.py     |  4 +-
- lib/mpl_toolkits/tests/test_mplot3d.py             |  4 +-
- 18 files changed, 52 insertions(+), 53 deletions(-)
+ lib/matplotlib/testing/decorators.py          |  2 +-
+ lib/matplotlib/tests/test_artist.py           |  3 +-
+ lib/matplotlib/tests/test_axes.py             | 47 +++++++++----------
+ lib/matplotlib/tests/test_collections.py      |  2 +-
+ lib/matplotlib/tests/test_colorbar.py         | 11 +++--
+ .../tests/test_constrainedlayout.py           |  2 +-
+ lib/matplotlib/tests/test_contour.py          |  6 +--
+ lib/matplotlib/tests/test_image.py            |  2 +-
+ lib/matplotlib/tests/test_mathtext.py         |  4 +-
+ lib/matplotlib/tests/test_patches.py          |  3 +-
+ lib/matplotlib/tests/test_patheffects.py      |  2 +-
+ lib/matplotlib/tests/test_pickle.py           |  2 +-
+ lib/matplotlib/tests/test_quiver.py           |  2 +-
+ lib/matplotlib/tests/test_streamplot.py       |  3 +-
+ lib/matplotlib/tests/test_transforms.py       |  2 +-
+ .../tests/test_axisartist_floating_axes.py    |  4 +-
+ ...test_axisartist_grid_helper_curvelinear.py |  6 +--
+ lib/mpl_toolkits/tests/test_mplot3d.py        |  4 +-
+ 18 files changed, 53 insertions(+), 54 deletions(-)
 
 diff --git a/lib/matplotlib/testing/decorators.py b/lib/matplotlib/testing/decorators.py
-index 0ce6e6252..9a80eec1a 100644
+index 0ce6e62..9a80eec 100644
 --- a/lib/matplotlib/testing/decorators.py
 +++ b/lib/matplotlib/testing/decorators.py
 @@ -408,7 +408,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
@@ -39,7 +39,7 @@ index 0ce6e6252..9a80eec1a 100644
                       savefig_kwarg=None,
                       # Default of mpl_test_settings fixture and cleanup too.
 diff --git a/lib/matplotlib/tests/test_artist.py b/lib/matplotlib/tests/test_artist.py
-index 8d1a01294..02acbb206 100644
+index 8d1a012..02acbb2 100644
 --- a/lib/matplotlib/tests/test_artist.py
 +++ b/lib/matplotlib/tests/test_artist.py
 @@ -96,7 +96,8 @@ def test_collection_transform_of_none():
@@ -53,7 +53,7 @@ index 8d1a01294..02acbb206 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 77ec92b01..f16e70cfd 100644
+index 77ec92b..f16e70c 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -523,7 +523,7 @@ def test_single_point():
@@ -265,7 +265,7 @@ index 77ec92b01..f16e70cfd 100644
      # Tests issue 5575
      time_index = [pytz.timezone('UTC').localize(datetime.datetime(
 diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
-index 291647d17..265f23fed 100644
+index 291647d..265f23f 100644
 --- a/lib/matplotlib/tests/test_collections.py
 +++ b/lib/matplotlib/tests/test_collections.py
 @@ -467,7 +467,7 @@ def test_EllipseCollection():
@@ -278,7 +278,7 @@ index 291647d17..265f23fed 100644
      from mpl_toolkits.mplot3d import Axes3D
  
 diff --git a/lib/matplotlib/tests/test_colorbar.py b/lib/matplotlib/tests/test_colorbar.py
-index 539ee8c83..ae21e723f 100644
+index 539ee8c..ae21e72 100644
 --- a/lib/matplotlib/tests/test_colorbar.py
 +++ b/lib/matplotlib/tests/test_colorbar.py
 @@ -95,7 +95,7 @@ def _colorbar_extension_length(spacing):
@@ -328,7 +328,7 @@ index 539ee8c83..ae21e723f 100644
      fig = plt.figure(figsize=(8, 6))
      ax1 = fig.add_axes([0.05, 0.85, 0.9, 0.1])
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 9c36fb247..929e38bd8 100644
+index 9c36fb2..929e38b 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -296,7 +296,7 @@ def test_constrained_layout12():
@@ -341,7 +341,7 @@ index 9c36fb247..929e38bd8 100644
  def test_constrained_layout13():
      'Test that padding works.'
 diff --git a/lib/matplotlib/tests/test_contour.py b/lib/matplotlib/tests/test_contour.py
-index 35d33b972..f10483ce4 100644
+index 35d33b9..f10483c 100644
 --- a/lib/matplotlib/tests/test_contour.py
 +++ b/lib/matplotlib/tests/test_contour.py
 @@ -225,7 +225,7 @@ def test_given_colors_levels_and_extends():
@@ -372,7 +372,7 @@ index 35d33b972..f10483ce4 100644
      n = 60
      mask_level = 0.95
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index 26e3b4a7e..269f814bb 100644
+index 26e3b4a..269f814 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
 @@ -784,7 +784,7 @@ def test_imshow_endianess():
@@ -385,7 +385,7 @@ index 26e3b4a7e..269f814bb 100644
  
      cm = copy(plt.get_cmap('viridis'))
 diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
-index cdc1093e1..ac0d8bf05 100644
+index cdc1093..ac0d8bf 100644
 --- a/lib/matplotlib/tests/test_mathtext.py
 +++ b/lib/matplotlib/tests/test_mathtext.py
 @@ -173,7 +173,7 @@ def baseline_images(request, fontset, index):
@@ -407,7 +407,7 @@ index cdc1093e1..ac0d8bf05 100644
      matplotlib.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
 diff --git a/lib/matplotlib/tests/test_patches.py b/lib/matplotlib/tests/test_patches.py
-index ff1abb9c6..cc90e6bb0 100644
+index ff1abb9..cc90e6b 100644
 --- a/lib/matplotlib/tests/test_patches.py
 +++ b/lib/matplotlib/tests/test_patches.py
 @@ -266,9 +266,8 @@ def test_wedge_movement():
@@ -422,7 +422,7 @@ index ff1abb9c6..cc90e6bb0 100644
      ax = plt.axes()
  
 diff --git a/lib/matplotlib/tests/test_patheffects.py b/lib/matplotlib/tests/test_patheffects.py
-index fe7265957..2addc35ed 100644
+index fe72659..2addc35 100644
 --- a/lib/matplotlib/tests/test_patheffects.py
 +++ b/lib/matplotlib/tests/test_patheffects.py
 @@ -121,7 +121,7 @@ def test_SimplePatchShadow_offset():
@@ -435,7 +435,7 @@ index fe7265957..2addc35ed 100644
      x, y = np.meshgrid(np.linspace(0, 10, 150), np.linspace(-5, 5, 100))
      data = np.sin(x) + np.cos(y)
 diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
-index 89a5a512e..a25961284 100644
+index 89a5a51..a259612 100644
 --- a/lib/matplotlib/tests/test_pickle.py
 +++ b/lib/matplotlib/tests/test_pickle.py
 @@ -42,7 +42,7 @@ def test_simple():
@@ -448,7 +448,7 @@ index 89a5a512e..a25961284 100644
      fig = plt.figure('Figure with a label?', figsize=(10, 6))
  
 diff --git a/lib/matplotlib/tests/test_quiver.py b/lib/matplotlib/tests/test_quiver.py
-index a0e1e674f..ede6bfc64 100644
+index a0e1e67..ede6bfc 100644
 --- a/lib/matplotlib/tests/test_quiver.py
 +++ b/lib/matplotlib/tests/test_quiver.py
 @@ -131,7 +131,7 @@ def test_quiver_key_pivot():
@@ -461,7 +461,7 @@ index a0e1e674f..ede6bfc64 100644
      x = np.linspace(-5, 5, 5)
      X, Y = np.meshgrid(x, x)
 diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index 4f70ce861..5bc8184f7 100644
+index 81a51e7..f234923 100644
 --- a/lib/matplotlib/tests/test_streamplot.py
 +++ b/lib/matplotlib/tests/test_streamplot.py
 @@ -39,8 +39,7 @@ def test_startpoints():
@@ -475,7 +475,7 @@ index 4f70ce861..5bc8184f7 100644
      X, Y, U, V = velocity_field()
      plt.streamplot(X, Y, U, V, color=U, density=0.6, linewidth=2,
 diff --git a/lib/matplotlib/tests/test_transforms.py b/lib/matplotlib/tests/test_transforms.py
-index 06985db84..8efaef898 100644
+index 06985db..8efaef8 100644
 --- a/lib/matplotlib/tests/test_transforms.py
 +++ b/lib/matplotlib/tests/test_transforms.py
 @@ -74,7 +74,7 @@ def test_external_transform_api():
@@ -488,7 +488,7 @@ index 06985db84..8efaef898 100644
      # a catch-all for as many as possible plot layouts which handle
      # pre-transforming the data NOTE: The axis range is important in this
 diff --git a/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py b/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py
-index de7226609..af2283541 100644
+index de72266..2676fc8 100644
 --- a/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py
 +++ b/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py
 @@ -24,7 +24,7 @@ def test_subplot():
@@ -505,14 +505,23 @@ index de7226609..af2283541 100644
  
  @image_comparison(baseline_images=['curvelinear4'],
 -                  extensions=['png'], style='default', tol=0.01)
-+                  extensions=['png'], style='default', tol=0.05)
++                  extensions=['png'], style='default', tol=0.055)
  def test_curvelinear4():
      fig = plt.figure(figsize=(5, 5))
      fig.clf()
 diff --git a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
-index a7c637428..61d41d354 100644
+index a7c6374..e22f4ac 100644
 --- a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
 +++ b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+@@ -19,7 +19,7 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import \
+ 
+ 
+ @image_comparison(baseline_images=['custom_transform'],
+-                  extensions=['png'], style='default', tol=0.03)
++                  extensions=['png'], style='default', tol=0.035)
+ def test_custom_transform():
+     class MyTransform(Transform):
+         input_dims = 2
 @@ -91,7 +91,7 @@ def test_custom_transform():
  
  
@@ -532,7 +541,7 @@ index a7c637428..61d41d354 100644
      fig = plt.figure(figsize=(5, 5))
  
 diff --git a/lib/mpl_toolkits/tests/test_mplot3d.py b/lib/mpl_toolkits/tests/test_mplot3d.py
-index 0a506db92..44e1681fc 100644
+index 0a506db..44e1681 100644
 --- a/lib/mpl_toolkits/tests/test_mplot3d.py
 +++ b/lib/mpl_toolkits/tests/test_mplot3d.py
 @@ -225,7 +225,7 @@ def test_text3d():
@@ -554,5 +563,5 @@ index 0a506db92..44e1681fc 100644
      def test_xyz(self):
          fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 -- 
-2.14.3
+2.17.1
 

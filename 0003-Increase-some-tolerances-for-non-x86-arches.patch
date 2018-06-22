@@ -1,27 +1,28 @@
-From b35bcac297de5fbf24a093c0a0121856ba7a7b41 Mon Sep 17 00:00:00 2001
+From f4e678415e0f249d97fe20d07941127fc34a2d54 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- lib/matplotlib/tests/test_arrow_patches.py                        | 4 ++--
- lib/matplotlib/tests/test_axes.py                                 | 7 ++++---
- lib/matplotlib/tests/test_collections.py                          | 2 +-
- lib/matplotlib/tests/test_constrainedlayout.py                    | 2 +-
- lib/matplotlib/tests/test_cycles.py                               | 6 +++---
- lib/matplotlib/tests/test_figure.py                               | 2 +-
- lib/matplotlib/tests/test_image.py                                | 2 +-
- lib/matplotlib/tests/test_legend.py                               | 6 +++---
- lib/matplotlib/tests/test_pickle.py                               | 2 +-
- lib/matplotlib/tests/test_scale.py                                | 2 +-
- lib/matplotlib/tests/test_streamplot.py                           | 2 +-
- lib/matplotlib/tests/test_units.py                                | 4 ++--
- lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py | 2 +-
- 13 files changed, 22 insertions(+), 21 deletions(-)
+ lib/matplotlib/tests/test_arrow_patches.py                 | 4 ++--
+ lib/matplotlib/tests/test_axes.py                          | 7 ++++---
+ lib/matplotlib/tests/test_backends_interactive.py          | 2 +-
+ lib/matplotlib/tests/test_collections.py                   | 2 +-
+ lib/matplotlib/tests/test_constrainedlayout.py             | 2 +-
+ lib/matplotlib/tests/test_cycles.py                        | 6 +++---
+ lib/matplotlib/tests/test_figure.py                        | 2 +-
+ lib/matplotlib/tests/test_image.py                         | 2 +-
+ lib/matplotlib/tests/test_legend.py                        | 6 +++---
+ lib/matplotlib/tests/test_pickle.py                        | 2 +-
+ lib/matplotlib/tests/test_scale.py                         | 2 +-
+ lib/matplotlib/tests/test_streamplot.py                    | 2 +-
+ lib/matplotlib/tests/test_units.py                         | 4 ++--
+ .../tests/test_axisartist_grid_helper_curvelinear.py       | 2 +-
+ 14 files changed, 23 insertions(+), 22 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_arrow_patches.py b/lib/matplotlib/tests/test_arrow_patches.py
-index 44f87c5fe..fb50ae710 100644
+index 44f87c5..fb50ae7 100644
 --- a/lib/matplotlib/tests/test_arrow_patches.py
 +++ b/lib/matplotlib/tests/test_arrow_patches.py
 @@ -68,7 +68,7 @@ def __prepare_fancyarrow_dpi_cor_test():
@@ -43,7 +44,7 @@ index 44f87c5fe..fb50ae710 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 77ec92b01..49a4d9290 100644
+index 77ec92b..49a4d92 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -389,7 +389,7 @@ def test_annotate_default_arrow():
@@ -74,8 +75,18 @@ index 77ec92b01..49a4d9290 100644
  def test_loglog():
      fig, ax = plt.subplots()
      x = np.arange(1, 11)
+diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
+index bd1cc5f..7d11f18 100644
+--- a/lib/matplotlib/tests/test_backends_interactive.py
++++ b/lib/matplotlib/tests/test_backends_interactive.py
+@@ -55,4 +55,4 @@ def test_backend(backend):
+     environ["MPLBACKEND"] = backend
+     proc = Popen([sys.executable, "-c", _test_script], env=environ)
+     # Empirically, 1s is not enough on Travis.
+-    assert proc.wait(timeout=10) == 0
++    assert proc.wait(timeout=30) == 0
 diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
-index 291647d17..6b623ef52 100644
+index 291647d..6b623ef 100644
 --- a/lib/matplotlib/tests/test_collections.py
 +++ b/lib/matplotlib/tests/test_collections.py
 @@ -443,7 +443,7 @@ def test_barb_limits():
@@ -88,7 +99,7 @@ index 291647d17..6b623ef52 100644
  def test_EllipseCollection():
      # Test basic functionality
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 9c36fb247..3834e4e26 100644
+index 9c36fb2..3834e4e 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -223,7 +223,7 @@ def test_constrained_layout9():
@@ -101,7 +112,7 @@ index 9c36fb247..3834e4e26 100644
      'Test for handling legend outside axis'
      fig, axs = plt.subplots(2, 2, constrained_layout=True)
 diff --git a/lib/matplotlib/tests/test_cycles.py b/lib/matplotlib/tests/test_cycles.py
-index 95611f36c..0a118b636 100644
+index 95611f3..0a118b6 100644
 --- a/lib/matplotlib/tests/test_cycles.py
 +++ b/lib/matplotlib/tests/test_cycles.py
 @@ -10,7 +10,7 @@ from cycler import cycler
@@ -132,7 +143,7 @@ index 95611f36c..0a118b636 100644
      fig = plt.figure()
      ax = fig.add_subplot(111)
 diff --git a/lib/matplotlib/tests/test_figure.py b/lib/matplotlib/tests/test_figure.py
-index 229ce192c..0e7a10d46 100644
+index 229ce19..0e7a10d 100644
 --- a/lib/matplotlib/tests/test_figure.py
 +++ b/lib/matplotlib/tests/test_figure.py
 @@ -14,7 +14,7 @@ import numpy as np
@@ -145,7 +156,7 @@ index 229ce192c..0e7a10d46 100644
      # Check the figure.align_labels() command
      fig = plt.figure(tight_layout=True)
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index 26e3b4a7e..2c7cedf74 100644
+index 26e3b4a..2c7cedf 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
 @@ -784,7 +784,7 @@ def test_imshow_endianess():
@@ -158,7 +169,7 @@ index 26e3b4a7e..2c7cedf74 100644
  
      cm = copy(plt.get_cmap('viridis'))
 diff --git a/lib/matplotlib/tests/test_legend.py b/lib/matplotlib/tests/test_legend.py
-index 55b8adc77..1784ff966 100644
+index 55b8adc..1784ff9 100644
 --- a/lib/matplotlib/tests/test_legend.py
 +++ b/lib/matplotlib/tests/test_legend.py
 @@ -145,7 +145,7 @@ def test_multiple_keys():
@@ -189,7 +200,7 @@ index 55b8adc77..1784ff966 100644
      x = np.linspace(1, 100, 100)
      y = x
 diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
-index 89a5a512e..99051dee7 100644
+index 89a5a51..99051de 100644
 --- a/lib/matplotlib/tests/test_pickle.py
 +++ b/lib/matplotlib/tests/test_pickle.py
 @@ -42,7 +42,7 @@ def test_simple():
@@ -202,7 +213,7 @@ index 89a5a512e..99051dee7 100644
      fig = plt.figure('Figure with a label?', figsize=(10, 6))
  
 diff --git a/lib/matplotlib/tests/test_scale.py b/lib/matplotlib/tests/test_scale.py
-index c50a0a896..a33fcccf0 100644
+index c50a0a8..a33fccc 100644
 --- a/lib/matplotlib/tests/test_scale.py
 +++ b/lib/matplotlib/tests/test_scale.py
 @@ -97,7 +97,7 @@ def test_logscale_transform_repr():
@@ -215,7 +226,7 @@ index c50a0a896..a33fcccf0 100644
      np.random.seed(19680801)
      xs = np.random.normal(size=int(1e3))
 diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index 4f70ce861..4e52ed0c4 100644
+index 81a51e7..b77fee2 100644
 --- a/lib/matplotlib/tests/test_streamplot.py
 +++ b/lib/matplotlib/tests/test_streamplot.py
 @@ -48,7 +48,7 @@ def test_colormap():
@@ -228,7 +239,7 @@ index 4f70ce861..4e52ed0c4 100644
      X, Y, U, V = velocity_field()
      speed = np.sqrt(U*U + V*V)
 diff --git a/lib/matplotlib/tests/test_units.py b/lib/matplotlib/tests/test_units.py
-index 65c8da7ea..c69d1d531 100644
+index 65c8da7..c69d1d5 100644
 --- a/lib/matplotlib/tests/test_units.py
 +++ b/lib/matplotlib/tests/test_units.py
 @@ -43,7 +43,7 @@ class Quantity(object):
@@ -250,7 +261,7 @@ index 65c8da7ea..c69d1d531 100644
  def test_plot_masked_units():
      data = np.linspace(-5, 5)
 diff --git a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
-index a7c637428..8fc5b25b1 100644
+index a7c6374..8fc5b25 100644
 --- a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
 +++ b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
 @@ -91,7 +91,7 @@ def test_custom_transform():
@@ -263,5 +274,5 @@ index a7c637428..8fc5b25b1 100644
      fig = plt.figure(figsize=(5, 5))
  
 -- 
-2.14.3
+2.17.1
 
