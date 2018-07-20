@@ -41,7 +41,7 @@
 
 Name:           python-matplotlib
 Version:        2.2.2
-Release:        3%{?rctag:.%{rctag}}%{?dist}.1
+Release:        4%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -434,7 +434,7 @@ MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data \
 export http_proxy=http://127.0.0.1/
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data/ \
-  %{__python} setup.py install -O1 --skip-build --root=%{buildroot}
+  %{__python2} setup.py install -O1 --skip-build --root=%{buildroot}
 chmod +x %{buildroot}%{python2_sitearch}/matplotlib/dates.py
 mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_datadir}/matplotlib
 mv %{buildroot}%{python2_sitearch}/matplotlib/mpl-data/matplotlibrc \
@@ -608,6 +608,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %changelog
+* Fri Jul 20 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-4
+- Don't use unversioned Python in build (#1605766)
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.2-3.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
