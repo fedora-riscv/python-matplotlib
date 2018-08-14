@@ -8,8 +8,8 @@
 # happen.
 %global run_tests               1
 
-# the default backend; one of GTK GTKAgg GTKCairo GTK3Agg GTK3Cairo
-# CocoaAgg MacOSX Qt4Agg Qt5Agg TkAgg WX WXAgg Agg Cairo GDK PS PDF SVG
+# the default backend; one of GTK3Agg GTK3Cairo MacOSX Qt4Agg Qt5Agg TkAgg
+# WXAgg Agg Cairo PS PDF SVG
 %global backend                 TkAgg
 
 %if "%{backend}" == "TkAgg"
@@ -84,166 +84,6 @@ six graphical user interface toolkits.
 Matplotlib tries to make easy things easy and hard things possible.
 You can generate plots, histograms, power spectra, bar charts,
 errorcharts, scatterplots, etc, with just a few lines of code.
-
-%package -n python2-matplotlib
-Summary:        Python 2D plotting library
-BuildRequires:  python2-numpy
-BuildRequires:  python2-pyparsing
-BuildRequires:  python2-dateutil
-BuildRequires:  python2-kiwisolver
-BuildRequires:  python2-pyside
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-six
-BuildRequires:  python2-sphinx
-BuildRequires:  python2-subprocess32
-BuildRequires:  python2-devel
-BuildRequires:  python2-backports-functools_lru_cache
-BuildRequires:  python2-pillow
-BuildRequires:  python2-pytz
-%if %{with_html}
-BuildRequires:  %{_bindir}/pdftops
-# circular dependency: python2-basemap requires matplotlib
-BuildRequires:  python2-basemap
-BuildRequires:  python2-ipython-sphinx
-BuildRequires:  python2-numpydoc
-BuildRequires:  python2-scikit-image
-BuildRequires:  python2-colorspacious
-BuildRequires:  python2-cycler >= 0.10.0
-%endif
-%if %{run_tests}
-BuildRequires:  python2-pytest
-BuildRequires:  python2-pytest-xdist
-BuildRequires:  python2-cycler >= 0.10.0
-BuildRequires:  python2-mock
-%endif
-Requires:       dejavu-sans-fonts
-Requires:       dvipng
-Requires:       python2-numpy
-Requires:       python2-pyparsing
-Requires:       python2-cycler >= 0.10.0
-Requires:       python2-dateutil
-Requires:       python2-kiwisolver
-Requires:       python2-backports-functools_lru_cache
-Requires:       python-matplotlib-data = %{version}-%{release}
-%{?backend_subpackage:Requires: python2-matplotlib-%{backend_subpackage}%{?_isa} = %{version}-%{release}}
-Recommends:     python2-pillow
-Requires:       python2-six
-Requires:       python2-subprocess32
-Requires:       python2-pytz
-%if !%{with_bundled_fonts}
-Requires:       stix-math-fonts
-%else
-Provides:       bundled(stix-math-fonts)
-%endif
-%{?python_provide:%python_provide python2-matplotlib}
-Provides:       bundled(agg) = 2.4
-Provides:       bundled(ttconv)
-Provides:       bundled(js-jquery1) = 1.11.3
-Provides:       bundled(js-jquery1-ui) = 1.11.4
-Provides:       bundled(texlive-helvetic)
-
-%description -n python2-matplotlib
-Matplotlib is a python 2D plotting library which produces publication
-quality figures in a variety of hardcopy formats and interactive
-environments across platforms. matplotlib can be used in python
-scripts, the python and ipython shell, web application servers, and
-six graphical user interface toolkits.
-
-Matplotlib tries to make easy things easy and hard things possible.
-You can generate plots, histograms, power spectra, bar charts,
-errorcharts, scatterplots, etc, with just a few lines of code.
-
-%package -n python2-matplotlib-qt4
-Summary:        Qt4 backend for python-matplotlib
-BuildRequires:  PyQt4-devel
-Requires:       python2-PyQt4
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-Requires:       python2-matplotlib-qt5
-%{?python_provide:%python_provide python2-matplotlib-qt4}
-
-%description -n python2-matplotlib-qt4
-%{summary}
-
-%package -n python2-matplotlib-qt5
-Summary:        Qt5 backend for python-matplotlib
-BuildRequires:  python2-qt5
-Requires:       python2-qt5
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python2-matplotlib-qt5}
-
-%description -n python2-matplotlib-qt5
-%{summary}
-
-%package -n python2-matplotlib-gtk
-Summary:        GTK backend for python-matplotlib
-BuildRequires:  gtk2-devel
-BuildRequires:  pycairo-devel
-BuildRequires:  pygtk2-devel
-Requires:       pycairo
-Requires:       pygtk2
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python2-matplotlib-gtk}
-
-%description -n python2-matplotlib-gtk
-%{summary}
-
-%package -n python2-matplotlib-gtk3
-Summary:        GTK3 backend for python-matplotlib
-# This should be converted to typelib(Gtk) when supported
-BuildRequires:  gtk3
-BuildRequires:  pygobject3-base
-Requires:       gtk3%{?_isa}
-Requires:       pygobject3-base%{?_isa}
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python2-matplotlib-gtk3}
-
-%description -n python2-matplotlib-gtk3
-%{summary}
-
-%package -n python2-matplotlib-tk
-Summary:        Tk backend for python-matplotlib
-BuildRequires:  tcl-devel
-BuildRequires:  tkinter
-BuildRequires:  tk-devel
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-Requires:       tkinter
-%{?python_provide:%python_provide python2-matplotlib-tk}
-
-%description -n python2-matplotlib-tk
-%{summary}
-
-%package -n python2-matplotlib-wx
-Summary:        wxPython backend for python-matplotlib
-BuildRequires:  wxPython-devel
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-Requires:       python2-wxpython
-%{?python_provide:%python_provide python2-matplotlib-wx}
-
-%description -n python2-matplotlib-wx
-%{summary}
-
-%package -n python2-matplotlib-test-data
-Summary:        Test data for python2-matplotlib
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python2-matplotlib-test-data}
-
-%description -n python2-matplotlib-test-data
-%{summary}
-
-%package -n python2-matplotlib-doc
-Summary:        Documentation files for python-matplotlib
-%if %{with_html}
-BuildRequires:  dvipng
-BuildRequires:  graphviz
-BuildRequires:  python2-sphinx
-BuildRequires:  tex(latex)
-BuildRequires:  tex-preview
-%endif
-Requires:       python2-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python2-matplotlib-doc}
-
-%description -n python2-matplotlib-doc
-%{summary}
 
 %package -n python-matplotlib-data
 Summary:        Data used by python-matplotlib
@@ -338,7 +178,6 @@ Requires:       python3-qt5
 %description -n python3-matplotlib-qt5
 %{summary}
 
-# gtk2 never worked in Python 3 afaict, so no need for -gtk subpackage
 %package -n     python3-matplotlib-gtk3
 Summary:        GTK3 backend for python3-matplotlib
 # This should be converted to typelib(Gtk) when supported
@@ -360,6 +199,21 @@ Requires:       python3-tkinter
 %{?python_provide:%python_provide python3-matplotlib-tk}
 
 %description -n python3-matplotlib-tk
+%{summary}
+
+%package -n python3-matplotlib-doc
+Summary:        Documentation files for python-matplotlib
+%if %{with_html}
+BuildRequires:  dvipng
+BuildRequires:  graphviz
+BuildRequires:  python3-sphinx
+BuildRequires:  tex(latex)
+BuildRequires:  tex-preview
+%endif
+Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
+%{?python_provide:%python_provide python3-matplotlib-doc}
+
+%description -n python3-matplotlib-doc
 %{summary}
 
 %package -n python3-matplotlib-test-data
@@ -409,48 +263,38 @@ sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
 
 %build
 export http_proxy=http://127.0.0.1/
+
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data \
-  xvfb-run %{__python2} setup.py build
+  xvfb-run %{__python3} setup.py build
 %if %{with_html}
 # Need to make built matplotlib libs available for the sphinx extensions:
 pushd doc
     MPLCONFIGDIR=$PWD/.. \
     MATPLOTLIBDATA=$PWD/../lib/matplotlib/mpl-data \
     PYTHONPATH=`realpath ../build/lib.linux*` \
-        %{__python2} make.py html
+        %{__python3} make.py html
 popd
 %endif
 # Ensure all example files are non-executable so that the -doc
 # package doesn't drag in dependencies
 find examples -name '*.py' -exec chmod a-x '{}' \;
 
-MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data \
-  xvfb-run %{__python3} setup.py build
-# documentation cannot be built with python3 due to syntax errors
-# https://github.com/matplotlib/matplotlib/issues/5805
-
 %install
 export http_proxy=http://127.0.0.1/
-MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data/ \
-  %{__python2} setup.py install -O1 --skip-build --root=%{buildroot}
-chmod +x %{buildroot}%{python2_sitearch}/matplotlib/dates.py
-mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_datadir}/matplotlib
-mv %{buildroot}%{python2_sitearch}/matplotlib/mpl-data/matplotlibrc \
-   %{buildroot}%{_sysconfdir}
-mv %{buildroot}%{python2_sitearch}/matplotlib/mpl-data \
-   %{buildroot}%{_datadir}/matplotlib
-%if !%{with_bundled_fonts}
-rm -rf %{buildroot}%{_datadir}/matplotlib/mpl-data/fonts
-%endif
 
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data/ \
     %{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
 chmod +x %{buildroot}%{python3_sitearch}/matplotlib/dates.py
-rm -fr %{buildroot}%{python3_sitearch}/matplotlib/mpl-data
+mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_datadir}/matplotlib
+mv %{buildroot}%{python3_sitearch}/matplotlib/mpl-data/matplotlibrc \
+   %{buildroot}%{_sysconfdir}
+mv %{buildroot}%{python3_sitearch}/matplotlib/mpl-data \
+   %{buildroot}%{_datadir}/matplotlib
+%if !%{with_bundled_fonts}
+rm -rf %{buildroot}%{_datadir}/matplotlib/mpl-data/fonts
+%endif
 
 %if %{run_tests}
 %check
@@ -460,23 +304,9 @@ rm -rf build*/
 export http_proxy=http://127.0.0.1/
 # This should match the default backend
 echo "backend      : %{backend}" > matplotlibrc
-# Full tests are not run because pytest doesn't seem to understand namespace
-# packages in PYTHONPATH.
 # Skips:
-#  * test_parasite: imports mpl_toolkits which is broken as noted above.
-#  * test_polycollection_close: imports mpl_toolkits which is broken as noted
-#    above.
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
 #    heavily-loaded builder.
-MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
-PYTHONPATH=%{buildroot}%{python2_sitearch} \
-PYTHONDONTWRITEBYTECODE=1 \
-     xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not test_parasite and not test_polycollection_close and not test_nose_image_comparison'
-
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
@@ -487,13 +317,6 @@ PYTHONDONTWRITEBYTECODE=1 \
              -k 'not test_invisible_Line_rendering and not test_nose_image_comparison'
 
 # We run these separately because they have issues when run in parallel.
-MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
-PYTHONPATH=%{buildroot}%{python2_sitearch} \
-PYTHONDONTWRITEBYTECODE=1 \
-     xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python2} -m pytest --pyargs matplotlib -ra \
-             -k 'test_nose_image_comparison'
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
@@ -515,59 +338,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{_datadir}/matplotlib/mpl-data/fonts/
 %endif
 
-%files -n python2-matplotlib
-%license LICENSE/
-%doc README.rst
-%{python2_sitearch}/*egg-info
-%{python2_sitearch}/matplotlib-*-nspkg.pth
-%{python2_sitearch}/matplotlib/
-%exclude %{python2_sitearch}/matplotlib/tests/baseline_images/*
-%{python2_sitearch}/mpl_toolkits/
-%exclude %{python2_sitearch}/mpl_toolkits/tests/baseline_images/*
-%{python2_sitearch}/pylab.py*
-%exclude %{python2_sitearch}/matplotlib/backends/backend_qt4*
-%exclude %{python2_sitearch}/matplotlib/backends/backend_qt5*
-%exclude %{python2_sitearch}/matplotlib/backends/backend_gtk*
-%exclude %{python2_sitearch}/matplotlib/backends/_gtkagg.*
-%exclude %{python2_sitearch}/matplotlib/backends/backend_tkagg.*
-%exclude %{python2_sitearch}/matplotlib/backends/tkagg.*
-%exclude %{python2_sitearch}/matplotlib/backends/_tkagg.so
-%exclude %{python2_sitearch}/matplotlib/backends/backend_wx.*
-%exclude %{python2_sitearch}/matplotlib/backends/backend_wxagg.*
-%exclude %{_pkgdocdir}/*
-%exclude %{_pkgdocdir}/*/*
-
-%files -n python2-matplotlib-test-data
-%{python2_sitearch}/matplotlib/tests/baseline_images/
-%{python2_sitearch}/mpl_toolkits/tests/baseline_images/
-
-%files -n python2-matplotlib-qt4
-%{python2_sitearch}/matplotlib/backends/backend_qt4.*
-%{python2_sitearch}/matplotlib/backends/backend_qt4agg.*
-
-%files -n python2-matplotlib-qt5
-%{python2_sitearch}/matplotlib/backends/backend_qt5.*
-%{python2_sitearch}/matplotlib/backends/backend_qt5agg.*
-
-%files -n python2-matplotlib-gtk
-%{python2_sitearch}/matplotlib/backends/backend_gtk.py*
-%{python2_sitearch}/matplotlib/backends/backend_gtkagg.py*
-%{python2_sitearch}/matplotlib/backends/backend_gtkcairo.py*
-%{python2_sitearch}/matplotlib/backends/_gtkagg.so
-
-%files -n python2-matplotlib-gtk3
-%{python2_sitearch}/matplotlib/backends/backend_gtk3*.py*
-
-%files -n python2-matplotlib-tk
-%{python2_sitearch}/matplotlib/backends/backend_tkagg.py*
-%{python2_sitearch}/matplotlib/backends/tkagg.py*
-%{python2_sitearch}/matplotlib/backends/_tkagg.so
-
-%files -n python2-matplotlib-wx
-%{python2_sitearch}/matplotlib/backends/backend_wx.*
-%{python2_sitearch}/matplotlib/backends/backend_wxagg.*
-
-%files -n python2-matplotlib-doc
+%files -n python3-matplotlib-doc
 %doc examples
 %if %{with_html}
 %doc doc/build/html/*
