@@ -34,14 +34,14 @@
 
 # The version of FreeType in this Fedora branch.
 %if %{fedora} >= 29
-%global ftver 2.9
+%global ftver 2.9.1
 %else
 %global ftver 2.8
 %endif
 
 Name:           python-matplotlib
-Version:        2.2.2
-Release:        4%{?rctag:.%{rctag}}%{?dist}
+Version:        2.2.3
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -608,7 +608,11 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/matplotlib/backends/__pycache__/tkagg.*
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
+
 %changelog
+* Mon Aug 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.3-1
+- Update to latest version
+
 * Fri Jul 20 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.2-4
 - Don't use unversioned Python in build (#1605766)
 - Add missing texlive-cm BR
