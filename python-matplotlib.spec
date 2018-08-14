@@ -67,6 +67,8 @@ Patch1003:      0003-Increase-some-tolerances-for-32-bit-systems.patch
 # Image tolerances for 64-bit (but not x86_64) systems: aarch64 ppc64(le) s390x
 Patch1004:      0003-Increase-some-tolerances-for-non-x86-arches.patch
 
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
 BuildRequires:  qhull-devel
