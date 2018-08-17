@@ -1,4 +1,4 @@
-From b8a97810843ff739cb98cb5159843f2836dbd8b3 Mon Sep 17 00:00:00 2001
+From 943a2ccfd21f7b94d1bdf9d665c123687c7cdfd2 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 3/3] Increase some tolerances for 32-bit systems.
@@ -7,29 +7,29 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
  lib/matplotlib/testing/decorators.py          |  2 +-
  lib/matplotlib/tests/test_artist.py           |  3 +-
- lib/matplotlib/tests/test_axes.py             | 47 +++++++++----------
+ lib/matplotlib/tests/test_axes.py             | 46 ++++++++++---------
  lib/matplotlib/tests/test_collections.py      |  2 +-
  lib/matplotlib/tests/test_colorbar.py         | 11 +++--
  .../tests/test_constrainedlayout.py           |  2 +-
- lib/matplotlib/tests/test_contour.py          |  6 +--
+ lib/matplotlib/tests/test_contour.py          |  8 ++--
  lib/matplotlib/tests/test_image.py            |  2 +-
  lib/matplotlib/tests/test_mathtext.py         |  4 +-
  lib/matplotlib/tests/test_patches.py          |  3 +-
  lib/matplotlib/tests/test_patheffects.py      |  2 +-
  lib/matplotlib/tests/test_pickle.py           |  2 +-
  lib/matplotlib/tests/test_quiver.py           |  2 +-
- lib/matplotlib/tests/test_streamplot.py       |  3 +-
+ lib/matplotlib/tests/test_streamplot.py       |  2 +-
  lib/matplotlib/tests/test_transforms.py       |  2 +-
  .../tests/test_axisartist_floating_axes.py    |  4 +-
  ...test_axisartist_grid_helper_curvelinear.py |  6 +--
  lib/mpl_toolkits/tests/test_mplot3d.py        |  4 +-
- 18 files changed, 53 insertions(+), 54 deletions(-)
+ 18 files changed, 56 insertions(+), 51 deletions(-)
 
 diff --git a/lib/matplotlib/testing/decorators.py b/lib/matplotlib/testing/decorators.py
-index 0ce6e6252..9a80eec1a 100644
+index 85b8d5e87..f3fc47c68 100644
 --- a/lib/matplotlib/testing/decorators.py
 +++ b/lib/matplotlib/testing/decorators.py
-@@ -408,7 +408,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
+@@ -338,7 +338,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
      return decorator
  
  
@@ -39,10 +39,10 @@ index 0ce6e6252..9a80eec1a 100644
                       savefig_kwarg=None,
                       # Default of mpl_test_settings fixture and cleanup too.
 diff --git a/lib/matplotlib/tests/test_artist.py b/lib/matplotlib/tests/test_artist.py
-index e6aff72bf..b60305bcf 100644
+index 283db9abe..2ae11142c 100644
 --- a/lib/matplotlib/tests/test_artist.py
 +++ b/lib/matplotlib/tests/test_artist.py
-@@ -96,7 +96,8 @@ def test_collection_transform_of_none():
+@@ -94,7 +94,8 @@ def test_collection_transform_of_none():
      assert isinstance(c._transOffset, mtransforms.IdentityTransform)
  
  
@@ -53,29 +53,19 @@ index e6aff72bf..b60305bcf 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 2fa6c2c94..8c589f514 100644
+index a5b7331d3..03673d1d3 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -555,7 +555,7 @@ def test_single_point():
-     plt.plot('b', 'b', 'o', data=data)
+@@ -553,7 +553,7 @@ def test_single_point():
  
  
--@image_comparison(baseline_images=['single_date'])
-+@image_comparison(baseline_images=['single_date'], tol=1.97)
+ @image_comparison(baseline_images=['single_date'], extensions=['png'],
+-        style='mpl20')
++        style='mpl20', tol=1.97)
  def test_single_date():
      time1 = [721964.0]
      data1 = [-65.54]
-@@ -739,8 +739,7 @@ def test_polar_rlabel_position():
-     ax.tick_params(rotation='auto')
- 
- 
--@image_comparison(baseline_images=['polar_theta_wedge'], style='default',
--                  tol=0.01 if six.PY2 else 0)
-+@image_comparison(baseline_images=['polar_theta_wedge'], style='default')
- def test_polar_theta_limits():
-     r = np.arange(0, 3.0, 0.01)
-     theta = 2*np.pi*r
-@@ -1023,7 +1022,7 @@ def test_fill_between_interpolate():
+@@ -1027,7 +1027,7 @@ def test_fill_between_interpolate():
  
  
  @image_comparison(baseline_images=['fill_between_interpolate_decreasing'],
@@ -84,25 +74,27 @@ index 2fa6c2c94..8c589f514 100644
  def test_fill_between_interpolate_decreasing():
      p = np.array([724.3, 700, 655])
      t = np.array([9.4, 7, 2.2])
-@@ -1105,7 +1104,7 @@ def test_pcolormesh():
+@@ -1109,7 +1109,8 @@ def test_pcolormesh():
  
  
  @image_comparison(baseline_images=['pcolormesh_datetime_axis'],
--                  extensions=['png'], remove_text=False)
-+                  extensions=['png'], remove_text=False, tol=0.19)
+-                  extensions=['png'], remove_text=False, style='mpl20')
++                  extensions=['png'], remove_text=False, style='mpl20',
++                  tol=0.19)
  def test_pcolormesh_datetime_axis():
      fig = plt.figure()
      fig.subplots_adjust(hspace=0.4, top=0.98, bottom=.15)
-@@ -1131,7 +1130,7 @@ def test_pcolormesh_datetime_axis():
+@@ -1135,7 +1136,8 @@ def test_pcolormesh_datetime_axis():
  
  
  @image_comparison(baseline_images=['pcolor_datetime_axis'],
--                  extensions=['png'], remove_text=False)
-+                  extensions=['png'], remove_text=False, tol=0.19)
+-                  extensions=['png'], remove_text=False, style='mpl20')
++                  extensions=['png'], remove_text=False, style='mpl20',
++                  tol=0.19)
  def test_pcolor_datetime_axis():
      fig = plt.figure()
      fig.subplots_adjust(hspace=0.4, top=0.98, bottom=.15)
-@@ -1188,7 +1187,7 @@ def test_canonical():
+@@ -1192,7 +1194,7 @@ def test_canonical():
  
  
  @image_comparison(baseline_images=['arc_angles'], remove_text=True,
@@ -111,7 +103,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_arc_angles():
      from matplotlib import patches
      # Ellipse parameters
-@@ -2450,7 +2449,7 @@ def test_boxplot_mod_artist_after_plotting():
+@@ -2533,7 +2535,7 @@ def test_boxplot_mod_artist_after_plotting():
  
  @image_comparison(baseline_images=['violinplot_vert_baseline',
                                     'violinplot_vert_baseline'],
@@ -120,7 +112,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_vert_violinplot_baseline():
      # First 9 digits of frac(sqrt(2))
      np.random.seed(414213562)
-@@ -2468,7 +2467,7 @@ def test_vert_violinplot_baseline():
+@@ -2551,7 +2553,7 @@ def test_vert_violinplot_baseline():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showmeans'],
@@ -129,7 +121,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_vert_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(3))
-@@ -2479,7 +2478,7 @@ def test_vert_violinplot_showmeans():
+@@ -2562,7 +2564,7 @@ def test_vert_violinplot_showmeans():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showextrema'],
@@ -138,7 +130,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_vert_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(5))
-@@ -2490,7 +2489,7 @@ def test_vert_violinplot_showextrema():
+@@ -2573,7 +2575,7 @@ def test_vert_violinplot_showextrema():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showmedians'],
@@ -147,7 +139,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_vert_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(7))
-@@ -2501,7 +2500,7 @@ def test_vert_violinplot_showmedians():
+@@ -2584,7 +2586,7 @@ def test_vert_violinplot_showmedians():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showall'],
@@ -156,7 +148,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_vert_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(11))
-@@ -2512,7 +2511,7 @@ def test_vert_violinplot_showall():
+@@ -2595,7 +2597,7 @@ def test_vert_violinplot_showall():
  
  
  @image_comparison(baseline_images=['violinplot_vert_custompoints_10'],
@@ -165,7 +157,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_vert_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(13))
-@@ -2523,7 +2522,7 @@ def test_vert_violinplot_custompoints_10():
+@@ -2606,7 +2608,7 @@ def test_vert_violinplot_custompoints_10():
  
  
  @image_comparison(baseline_images=['violinplot_vert_custompoints_200'],
@@ -174,7 +166,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_vert_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(17))
-@@ -2534,7 +2533,7 @@ def test_vert_violinplot_custompoints_200():
+@@ -2617,7 +2619,7 @@ def test_vert_violinplot_custompoints_200():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_baseline'],
@@ -183,7 +175,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_baseline():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(19))
-@@ -2545,7 +2544,7 @@ def test_horiz_violinplot_baseline():
+@@ -2628,7 +2630,7 @@ def test_horiz_violinplot_baseline():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showmedians'],
@@ -192,7 +184,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(23))
-@@ -2556,7 +2555,7 @@ def test_horiz_violinplot_showmedians():
+@@ -2639,7 +2641,7 @@ def test_horiz_violinplot_showmedians():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showmeans'],
@@ -201,7 +193,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(29))
-@@ -2567,7 +2566,7 @@ def test_horiz_violinplot_showmeans():
+@@ -2650,7 +2652,7 @@ def test_horiz_violinplot_showmeans():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showextrema'],
@@ -210,7 +202,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(31))
-@@ -2578,7 +2577,7 @@ def test_horiz_violinplot_showextrema():
+@@ -2661,7 +2663,7 @@ def test_horiz_violinplot_showextrema():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showall'],
@@ -219,7 +211,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(37))
-@@ -2589,7 +2588,7 @@ def test_horiz_violinplot_showall():
+@@ -2672,7 +2674,7 @@ def test_horiz_violinplot_showall():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_custompoints_10'],
@@ -228,7 +220,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(41))
-@@ -2600,7 +2599,7 @@ def test_horiz_violinplot_custompoints_10():
+@@ -2683,7 +2685,7 @@ def test_horiz_violinplot_custompoints_10():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_custompoints_200'],
@@ -237,7 +229,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(43))
-@@ -3947,7 +3946,7 @@ def test_psd_noise():
+@@ -4031,7 +4033,7 @@ def test_psd_noise():
  
  
  @image_comparison(baseline_images=['csd_freqs'], remove_text=True,
@@ -246,7 +238,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_csd_freqs():
      '''test axes.csd with sinusoidal stimuli'''
      n = 10000
-@@ -4806,7 +4805,7 @@ def test_rc_spines():
+@@ -4924,7 +4926,7 @@ def test_rc_spines():
  
  
  @image_comparison(baseline_images=['rc_grid'], extensions=['png'],
@@ -255,7 +247,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_rc_grid():
      fig = plt.figure()
      rc_dict0 = {
-@@ -5301,7 +5300,7 @@ def test_date_timezone_y():
+@@ -5443,7 +5445,7 @@ def test_date_timezone_y():
  
  
  @image_comparison(baseline_images=['date_timezone_x_and_y'],
@@ -263,12 +255,12 @@ index 2fa6c2c94..8c589f514 100644
 +                  extensions=['png'], tol=3.05)
  def test_date_timezone_x_and_y():
      # Tests issue 5575
-     time_index = [pytz.timezone('UTC').localize(datetime.datetime(
+     UTC = datetime.timezone.utc
 diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
-index 291647d17..265f23fed 100644
+index 6812ee1ad..5e5f19aac 100644
 --- a/lib/matplotlib/tests/test_collections.py
 +++ b/lib/matplotlib/tests/test_collections.py
-@@ -467,7 +467,7 @@ def test_EllipseCollection():
+@@ -466,7 +466,7 @@ def test_EllipseCollection():
  
  
  @image_comparison(baseline_images=['polycollection_close'],
@@ -278,10 +270,10 @@ index 291647d17..265f23fed 100644
      from mpl_toolkits.mplot3d import Axes3D
  
 diff --git a/lib/matplotlib/tests/test_colorbar.py b/lib/matplotlib/tests/test_colorbar.py
-index 12a9bed3b..86d2358fb 100644
+index 2230c20e7..10974be95 100644
 --- a/lib/matplotlib/tests/test_colorbar.py
 +++ b/lib/matplotlib/tests/test_colorbar.py
-@@ -95,7 +95,7 @@ def _colorbar_extension_length(spacing):
+@@ -93,7 +93,7 @@ def _colorbar_extension_length(spacing):
  @image_comparison(
          baseline_images=['colorbar_extensions_shape_uniform',
                           'colorbar_extensions_shape_proportional'],
@@ -290,7 +282,7 @@ index 12a9bed3b..86d2358fb 100644
  def test_colorbar_extension_shape():
      '''Test rectangular colorbar extensions.'''
      # Create figures for uniform and proportionally spaced colorbars.
-@@ -105,7 +105,7 @@ def test_colorbar_extension_shape():
+@@ -103,7 +103,7 @@ def test_colorbar_extension_shape():
  
  @image_comparison(baseline_images=['colorbar_extensions_uniform',
                                     'colorbar_extensions_proportional'],
@@ -299,7 +291,7 @@ index 12a9bed3b..86d2358fb 100644
  def test_colorbar_extension_length():
      '''Test variable length colorbar extensions.'''
      # Create figures for uniform and proportionally spaced colorbars.
-@@ -119,7 +119,7 @@ def test_colorbar_extension_length():
+@@ -117,7 +117,7 @@ def test_colorbar_extension_length():
                                     'cbar_sharing',
                                     ],
                    extensions=['png'], remove_text=True,
@@ -308,7 +300,7 @@ index 12a9bed3b..86d2358fb 100644
  def test_colorbar_positioning():
      data = np.arange(1200).reshape(30, 40)
      levels = [0, 200, 400, 600, 800, 1000, 1200]
-@@ -173,7 +173,7 @@ def test_colorbar_positioning():
+@@ -171,7 +171,7 @@ def test_colorbar_positioning():
  
  @image_comparison(baseline_images=['cbar_with_subplots_adjust'],
                    extensions=['png'], remove_text=True,
@@ -317,7 +309,7 @@ index 12a9bed3b..86d2358fb 100644
  def test_gridspec_make_colorbar():
      plt.figure()
      data = np.arange(1200).reshape(30, 40)
-@@ -232,7 +232,8 @@ def test_colorbarbase():
+@@ -230,7 +230,8 @@ def test_colorbarbase():
  
  @image_comparison(
      baseline_images=['colorbar_closed_patch'],
@@ -328,10 +320,10 @@ index 12a9bed3b..86d2358fb 100644
      fig = plt.figure(figsize=(8, 6))
      ax1 = fig.add_axes([0.05, 0.85, 0.9, 0.1])
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index fcf633a08..cad431771 100644
+index 0803504ce..b3a615d5a 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
-@@ -295,7 +295,7 @@ def test_constrained_layout12():
+@@ -246,7 +246,7 @@ def test_constrained_layout12():
      ax.set_xlabel('x-label')
  
  
@@ -341,28 +333,30 @@ index fcf633a08..cad431771 100644
  def test_constrained_layout13():
      'Test that padding works.'
 diff --git a/lib/matplotlib/tests/test_contour.py b/lib/matplotlib/tests/test_contour.py
-index 42903ac68..f03a5d0af 100644
+index 0acaf6580..3837162f0 100644
 --- a/lib/matplotlib/tests/test_contour.py
 +++ b/lib/matplotlib/tests/test_contour.py
-@@ -217,7 +217,7 @@ def test_given_colors_levels_and_extends():
+@@ -216,7 +216,8 @@ def test_given_colors_levels_and_extends():
  
  
  @image_comparison(baseline_images=['contour_datetime_axis'],
--                  extensions=['png'], remove_text=False)
-+                  extensions=['png'], remove_text=False, tol=0.18)
+-                  extensions=['png'], remove_text=False, style='mpl20')
++                  extensions=['png'], remove_text=False, style='mpl20',
++                  tol=0.18)
  def test_contour_datetime_axis():
      fig = plt.figure()
      fig.subplots_adjust(hspace=0.4, top=0.98, bottom=.15)
-@@ -243,7 +243,7 @@ def test_contour_datetime_axis():
+@@ -242,7 +243,8 @@ def test_contour_datetime_axis():
  
  
  @image_comparison(baseline_images=['contour_test_label_transforms'],
--                  extensions=['png'], remove_text=True)
-+                  extensions=['png'], remove_text=True, tol=1.38)
+-                  extensions=['png'], remove_text=True, style='mpl20')
++                  extensions=['png'], remove_text=True, style='mpl20',
++                  tol=1.38)
  def test_labels():
      # Adapted from pylab_examples example code: contour_demo.py
      # see issues #2475, #2843, and #2818 for explanation
-@@ -274,7 +274,7 @@ def test_labels():
+@@ -273,7 +275,7 @@ def test_labels():
  
  @image_comparison(baseline_images=['contour_corner_mask_False',
                                     'contour_corner_mask_True'],
@@ -372,23 +366,23 @@ index 42903ac68..f03a5d0af 100644
      n = 60
      mask_level = 0.95
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index e6da25789..ed3ab63c9 100644
+index 893108258..b409e9453 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
-@@ -768,7 +768,7 @@ def test_imshow_endianess():
+@@ -757,7 +757,7 @@ def test_imshow_endianess():
  
  
  @image_comparison(baseline_images=['imshow_masked_interpolation'],
--                  remove_text=True, style='mpl20')
-+                  remove_text=True, style='mpl20', tol=0.25)
+-                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0),
++                  tol=0.25,
+                   remove_text=True, style='mpl20')
  def test_imshow_masked_interpolation():
  
-     cm = copy(plt.get_cmap('viridis'))
 diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
-index cdc1093e1..ac0d8bf05 100644
+index a05c8b3c8..b6f11281f 100644
 --- a/lib/matplotlib/tests/test_mathtext.py
 +++ b/lib/matplotlib/tests/test_mathtext.py
-@@ -173,7 +173,7 @@ def baseline_images(request, fontset, index):
+@@ -169,7 +169,7 @@ def baseline_images(request, fontset, index):
                           ['cm', 'stix', 'stixsans', 'dejavusans',
                            'dejavuserif'])
  @pytest.mark.parametrize('baseline_images', ['mathtext'], indirect=True)
@@ -397,7 +391,7 @@ index cdc1093e1..ac0d8bf05 100644
  def test_mathtext_rendering(baseline_images, fontset, index, test):
      matplotlib.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
-@@ -187,7 +187,7 @@ def test_mathtext_rendering(baseline_images, fontset, index, test):
+@@ -183,7 +183,7 @@ def test_mathtext_rendering(baseline_images, fontset, index, test):
                           ['cm', 'stix', 'stixsans', 'dejavusans',
                            'dejavuserif'])
  @pytest.mark.parametrize('baseline_images', ['mathfont'], indirect=True)
@@ -407,10 +401,10 @@ index cdc1093e1..ac0d8bf05 100644
      matplotlib.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
 diff --git a/lib/matplotlib/tests/test_patches.py b/lib/matplotlib/tests/test_patches.py
-index ff1abb9c6..cc90e6bb0 100644
+index 89a77e258..2e5c16f75 100644
 --- a/lib/matplotlib/tests/test_patches.py
 +++ b/lib/matplotlib/tests/test_patches.py
-@@ -266,9 +266,8 @@ def test_wedge_movement():
+@@ -260,9 +260,8 @@ def test_wedge_movement():
          assert getattr(w, attr) == new_v
  
  
@@ -422,36 +416,36 @@ index ff1abb9c6..cc90e6bb0 100644
      ax = plt.axes()
  
 diff --git a/lib/matplotlib/tests/test_patheffects.py b/lib/matplotlib/tests/test_patheffects.py
-index fe7265957..2addc35ed 100644
+index 6e80d8d98..0f158eb9e 100644
 --- a/lib/matplotlib/tests/test_patheffects.py
 +++ b/lib/matplotlib/tests/test_patheffects.py
-@@ -121,7 +121,7 @@ def test_SimplePatchShadow_offset():
+@@ -119,7 +119,7 @@ def test_SimplePatchShadow_offset():
      assert pe._offset == (4, 5)
  
  
--@image_comparison(baseline_images=['collection'], tol=0.02)
-+@image_comparison(baseline_images=['collection'], tol=0.084)
+-@image_comparison(baseline_images=['collection'], tol=0.02, style='mpl20')
++@image_comparison(baseline_images=['collection'], tol=0.084, style='mpl20')
  def test_collection():
      x, y = np.meshgrid(np.linspace(0, 10, 150), np.linspace(-5, 5, 100))
      data = np.sin(x) + np.cos(y)
 diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
-index 89a5a512e..a25961284 100644
+index 9cb806c6f..c0ccf5f8c 100644
 --- a/lib/matplotlib/tests/test_pickle.py
 +++ b/lib/matplotlib/tests/test_pickle.py
-@@ -42,7 +42,7 @@ def test_simple():
+@@ -44,7 +44,7 @@ def test_simple():
  
  @image_comparison(baseline_images=['multi_pickle'],
                    extensions=['png'], remove_text=True,
--                  style='mpl20')
-+                  style='mpl20', tol=0.11)
+-                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0),
++                  tol=0.11,
+                   style='mpl20')
  def test_complete():
      fig = plt.figure('Figure with a label?', figsize=(10, 6))
- 
 diff --git a/lib/matplotlib/tests/test_quiver.py b/lib/matplotlib/tests/test_quiver.py
-index a0e1e674f..ede6bfc64 100644
+index 4470e02fa..70aa1e718 100644
 --- a/lib/matplotlib/tests/test_quiver.py
 +++ b/lib/matplotlib/tests/test_quiver.py
-@@ -131,7 +131,7 @@ def test_quiver_key_pivot():
+@@ -130,7 +130,7 @@ def test_quiver_key_pivot():
  
  
  @image_comparison(baseline_images=['barbs_test_image'],
@@ -461,37 +455,36 @@ index a0e1e674f..ede6bfc64 100644
      x = np.linspace(-5, 5, 5)
      X, Y = np.meshgrid(x, x)
 diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index 4f70ce861..5bc8184f7 100644
+index e261513df..907841494 100644
 --- a/lib/matplotlib/tests/test_streamplot.py
 +++ b/lib/matplotlib/tests/test_streamplot.py
-@@ -39,8 +39,7 @@ def test_startpoints():
-     plt.plot(start_x, start_y, 'ok')
+@@ -40,7 +40,7 @@ def test_startpoints():
  
  
--@image_comparison(baseline_images=['streamplot_colormap'],
--                  tol=.02)
-+@image_comparison(baseline_images=['streamplot_colormap'])
+ @image_comparison(baseline_images=['streamplot_colormap'],
+-                  tol=.04, remove_text=True, style='mpl20')
++                  remove_text=True, style='mpl20')
  def test_colormap():
      X, Y, U, V = velocity_field()
      plt.streamplot(X, Y, U, V, color=U, density=0.6, linewidth=2,
 diff --git a/lib/matplotlib/tests/test_transforms.py b/lib/matplotlib/tests/test_transforms.py
-index 06985db84..8efaef898 100644
+index 6275d5b54..a5c03f0a3 100644
 --- a/lib/matplotlib/tests/test_transforms.py
 +++ b/lib/matplotlib/tests/test_transforms.py
-@@ -74,7 +74,7 @@ def test_external_transform_api():
+@@ -70,7 +70,7 @@ def test_external_transform_api():
  
  
  @image_comparison(baseline_images=['pre_transform_data'],
--                  tol=0.08)
-+                  tol=0.155)
+-                  tol=0.08, remove_text=True, style='mpl20')
++                  tol=0.155, remove_text=True, style='mpl20')
  def test_pre_transform_plotting():
      # a catch-all for as many as possible plot layouts which handle
      # pre-transforming the data NOTE: The axis range is important in this
 diff --git a/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py b/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py
-index de7226609..2676fc842 100644
+index 929c0368a..e6e5ca1ff 100644
 --- a/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py
 +++ b/lib/mpl_toolkits/tests/test_axisartist_floating_axes.py
-@@ -24,7 +24,7 @@ def test_subplot():
+@@ -21,7 +21,7 @@ def test_subplot():
  
  
  @image_comparison(baseline_images=['curvelinear3'],
@@ -500,20 +493,20 @@ index de7226609..2676fc842 100644
  def test_curvelinear3():
      fig = plt.figure(figsize=(5, 5))
      fig.clf()
-@@ -80,7 +80,7 @@ def test_curvelinear3():
+@@ -77,7 +77,7 @@ def test_curvelinear3():
  
  
  @image_comparison(baseline_images=['curvelinear4'],
--                  extensions=['png'], style='default', tol=0.01)
+-                  extensions=['png'], style='default', tol=0.015)
 +                  extensions=['png'], style='default', tol=0.055)
  def test_curvelinear4():
      fig = plt.figure(figsize=(5, 5))
      fig.clf()
 diff --git a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
-index a7c637428..e22f4ac3e 100644
+index 0f5e86322..590430315 100644
 --- a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
 +++ b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
-@@ -19,7 +19,7 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import \
+@@ -17,7 +17,7 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import \
  
  
  @image_comparison(baseline_images=['custom_transform'],
@@ -522,16 +515,16 @@ index a7c637428..e22f4ac3e 100644
  def test_custom_transform():
      class MyTransform(Transform):
          input_dims = 2
-@@ -91,7 +91,7 @@ def test_custom_transform():
+@@ -85,7 +85,7 @@ def test_custom_transform():
  
  
  @image_comparison(baseline_images=['polar_box'],
--                  extensions=['png'], style='default', tol=0.03)
-+                  extensions=['png'], style='default', tol=0.08)
+-                  tol={'aarch64': 0.04}.get(platform.machine(), 0.03),
++                  tol=0.08,
+                   extensions=['png'], style='default')
  def test_polar_box():
      fig = plt.figure(figsize=(5, 5))
- 
-@@ -152,7 +152,7 @@ def test_polar_box():
+@@ -147,7 +147,7 @@ def test_polar_box():
  
  
  @image_comparison(baseline_images=['axis_direction'],
@@ -541,10 +534,10 @@ index a7c637428..e22f4ac3e 100644
      fig = plt.figure(figsize=(5, 5))
  
 diff --git a/lib/mpl_toolkits/tests/test_mplot3d.py b/lib/mpl_toolkits/tests/test_mplot3d.py
-index 0a506db92..44e1681fc 100644
+index 8d2815408..816a26c35 100644
 --- a/lib/mpl_toolkits/tests/test_mplot3d.py
 +++ b/lib/mpl_toolkits/tests/test_mplot3d.py
-@@ -225,7 +225,7 @@ def test_text3d():
+@@ -241,7 +241,7 @@ def test_text3d():
      ax.set_zlabel('Z axis')
  
  
@@ -553,7 +546,7 @@ index 0a506db92..44e1681fc 100644
  def test_trisurf3d():
      n_angles = 36
      n_radii = 8
-@@ -704,7 +704,7 @@ class TestVoxels(object):
+@@ -720,7 +720,7 @@ class TestVoxels(object):
      @image_comparison(
          baseline_images=['voxels-xyz'],
          extensions=['png'],

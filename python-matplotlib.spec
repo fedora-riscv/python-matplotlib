@@ -30,7 +30,7 @@
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
 
-#global rctag rc1
+%global rctag rc1
 
 # The version of FreeType in this Fedora branch.
 %if %{fedora} >= 29
@@ -40,8 +40,8 @@
 %endif
 
 Name:           python-matplotlib
-Version:        2.2.3
-Release:        1%{?rctag:.%{rctag}}%{?dist}
+Version:        3.0.0
+Release:        0.1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -57,7 +57,7 @@ Patch0001:      0001-Force-using-system-qhull.patch
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches-non-x86
 # Updated test images for new FreeType.
-Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{version}-with-freetype-%{ftver}/matplotlib-%{version}-with-freetype-%{ftver}.tar.gz
+Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{version}%{?rctag}-with-freetype-%{ftver}/matplotlib-%{version}%{?rctag}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Image tolerances for anything but x86_64:
@@ -234,7 +234,7 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
-gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
+gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{version}%{?rctag}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 %ifnarch x86_64
 %patch1002 -p1
 %endif
@@ -316,16 +316,7 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not test_nose_image_comparison'
-
-# We run these separately because they have issues when run in parallel.
-MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
-PYTHONPATH=%{buildroot}%{python3_sitearch} \
-PYTHONDONTWRITEBYTECODE=1 \
-     xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python3} tests.py -ra \
-             -k 'test_nose_image_comparison'
+             -k 'not test_invisible_Line_rendering'
 %endif # run_tests
 
 %files -n python-matplotlib-data
