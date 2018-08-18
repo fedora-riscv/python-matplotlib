@@ -475,7 +475,7 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python2} -m pytest --pyargs matplotlib -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not test_parasite and not test_polycollection_close'
+             -k 'not test_invisible_Line_rendering and not test_parasite and not test_polycollection_close and not test_nose_image_comparison'
 
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
@@ -484,7 +484,23 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering'
+             -k 'not test_invisible_Line_rendering and not test_nose_image_comparison'
+
+# We run these separately because they have issues when run in parallel.
+MPLCONFIGDIR=$PWD \
+MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
+PYTHONPATH=%{buildroot}%{python2_sitearch} \
+PYTHONDONTWRITEBYTECODE=1 \
+     xvfb-run -a -s "-screen 0 640x480x24" \
+         %{__python2} -m pytest --pyargs matplotlib -ra \
+             -k 'test_nose_image_comparison'
+MPLCONFIGDIR=$PWD \
+MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
+PYTHONPATH=%{buildroot}%{python3_sitearch} \
+PYTHONDONTWRITEBYTECODE=1 \
+     xvfb-run -a -s "-screen 0 640x480x24" \
+         %{__python3} tests.py -ra \
+             -k 'test_nose_image_comparison'
 %endif # run_tests
 
 %files -n python-matplotlib-data
