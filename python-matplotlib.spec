@@ -33,11 +33,7 @@
 %global rctag rc1
 
 # The version of FreeType in this Fedora branch.
-%if %{fedora} >= 29
 %global ftver 2.9.1
-%else
-%global ftver 2.8
-%endif
 
 Name:           python-matplotlib
 Version:        3.0.0
