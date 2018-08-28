@@ -20,6 +20,10 @@
 %  else
 %    if "%{backend}" == "Qt5Agg"
 %global backend_subpackage qt5
+%    else
+%      if "%{backend}" == "WXAgg"
+%global backend_subpackage wx
+%      endif
 %    endif
 %  endif
 %endif
@@ -199,6 +203,16 @@ Requires:       python3-tkinter
 %description -n python3-matplotlib-tk
 %{summary}
 
+%package -n     python3-matplotlib-wx
+Summary:        WX backend for python3-matplotlib
+BuildRequires:  python3-wxpython4
+Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
+Requires:       python3-wxpython4
+%{?python_provide:%python_provide python3-matplotlib-wx}
+
+%description -n python3-matplotlib-wx
+%{summary}
+
 %package -n python3-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
 %if %{with_html}
@@ -344,17 +358,25 @@ PYTHONDONTWRITEBYTECODE=1 \
 %exclude %{python3_sitearch}/mpl_toolkits/tests/baseline_images/*
 %{python3_sitearch}/pylab.py*
 %{python3_sitearch}/__pycache__/*
-%exclude %{python3_sitearch}/matplotlib/backends/backend_qt4*
+%exclude %{python3_sitearch}/matplotlib/backends/backend_qt4*.py
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4*
-%exclude %{python3_sitearch}/matplotlib/backends/backend_qt5*
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5*
-%exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*
+#exclude #{python3_sitearch}/matplotlib/backends/backend_qt5*.py
+#exclude #{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5*
+%exclude %{python3_sitearch}/matplotlib/backends/_gtk3_compat.py
+%exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
+%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/_gtk3_compat.*
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_gtk*
-%exclude %{python3_sitearch}/matplotlib/backends/backend_tkagg.*
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_tkagg.*
-%exclude %{python3_sitearch}/matplotlib/backends/tkagg.*
+%exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
+%exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
+%exclude %{python3_sitearch}/matplotlib/backends/tkagg.py
+%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/_backend_tk.*
+%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_tk*.*
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/tkagg.*
 %exclude %{python3_sitearch}/matplotlib/backends/_tkagg.*
+%exclude %{python3_sitearch}/matplotlib/backends/backend_wx*
+%exclude %{python3_sitearch}/matplotlib/backends/wx_compat.*
+%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_wx*
+%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/wx_compat.*
 %exclude %{_pkgdocdir}/*/
 
 %files -n python3-matplotlib-test-data
@@ -362,27 +384,39 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/mpl_toolkits/tests/baseline_images/
 
 %files -n python3-matplotlib-qt4
-%{python3_sitearch}/matplotlib/backends/backend_qt4.*
+%{python3_sitearch}/matplotlib/backends/backend_qt4.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4.*
-%{python3_sitearch}/matplotlib/backends/backend_qt4agg.*
+%{python3_sitearch}/matplotlib/backends/backend_qt4agg.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4agg.*
 
+# This subpackage is empty because the Qt4 backend imports it, so we leave
+# these files in the default package, and only use this one for dependencies.
 %files -n python3-matplotlib-qt5
-%{python3_sitearch}/matplotlib/backends/backend_qt5.*
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5.*
-%{python3_sitearch}/matplotlib/backends/backend_qt5agg.*
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5agg.*
+#{python3_sitearch}/matplotlib/backends/backend_qt5.py
+#{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5.*
+#{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
+#{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5agg.*
 
 %files -n python3-matplotlib-gtk3
-%{python3_sitearch}/matplotlib/backends/backend_gtk*
+%{python3_sitearch}/matplotlib/backends/backend_gtk*.py
+%{python3_sitearch}/matplotlib/backends/_gtk3_compat.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_gtk*
+%{python3_sitearch}/matplotlib/backends/__pycache__/_gtk3_compat.*
 
 %files -n python3-matplotlib-tk
-%{python3_sitearch}/matplotlib/backends/backend_tkagg.py*
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_tkagg.*
-%{python3_sitearch}/matplotlib/backends/tkagg.*
+%{python3_sitearch}/matplotlib/backends/backend_tk*.py
+%{python3_sitearch}/matplotlib/backends/_backend_tk.py
+%{python3_sitearch}/matplotlib/backends/tkagg.py
+%{python3_sitearch}/matplotlib/backends/__pycache__/backend_tk*.*
+%{python3_sitearch}/matplotlib/backends/__pycache__/_backend_tk.*
 %{python3_sitearch}/matplotlib/backends/__pycache__/tkagg.*
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
+
+%files -n python3-matplotlib-wx
+%{python3_sitearch}/matplotlib/backends/backend_wx*.py
+%{python3_sitearch}/matplotlib/backends/wx_compat.py
+%{python3_sitearch}/matplotlib/backends/__pycache__/backend_wx*
+%{python3_sitearch}/matplotlib/backends/__pycache__/wx_compat.*
 
 
 %changelog
