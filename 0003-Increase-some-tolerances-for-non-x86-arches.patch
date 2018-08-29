@@ -1,4 +1,4 @@
-From ddc79a1ed71d0f566c21a01d72d7c8a107cf567d Mon Sep 17 00:00:00 2001
+From 9c6a5fc4cd346f0befa11ff1a82b6f24c6de4b71 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
