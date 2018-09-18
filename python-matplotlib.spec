@@ -34,14 +34,14 @@
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
 
-%global rctag rc2
+#global rctag rc1
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.9.1
 
 Name:           python-matplotlib
 Version:        3.0.0
-Release:        0.2%{?rctag:.%{rctag}}%{?dist}
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT

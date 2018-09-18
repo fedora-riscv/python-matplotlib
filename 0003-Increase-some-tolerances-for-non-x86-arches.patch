@@ -1,4 +1,4 @@
-From 9c6a5fc4cd346f0befa11ff1a82b6f24c6de4b71 Mon Sep 17 00:00:00 2001
+From 642f104f23c78af5d6010916961ec62779290ea5 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
@@ -44,7 +44,7 @@ index f678fbed3..bac0cb802 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index a5b7331d3..71b1bc734 100644
+index 6afed91f3..755be5570 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -386,7 +386,7 @@ def test_annotate_default_arrow():
@@ -56,7 +56,7 @@ index a5b7331d3..71b1bc734 100644
  def test_polar_annotations():
      # you can specify the xypoint and the xytext in different
      # positions and coordinate systems, and optionally turn on a
-@@ -3351,7 +3351,7 @@ def test_vertex_markers():
+@@ -3348,7 +3348,7 @@ def test_vertex_markers():
  
  @image_comparison(baseline_images=['vline_hline_zorder',
                                     'errorbar_zorder'],
@@ -65,7 +65,7 @@ index a5b7331d3..71b1bc734 100644
  def test_eb_line_zorder():
      x = list(range(10))
  
-@@ -5123,7 +5123,7 @@ def test_title_location_roundtrip():
+@@ -5120,7 +5120,7 @@ def test_title_location_roundtrip():
  
  @image_comparison(baseline_images=["loglog"], remove_text=True,
                    extensions=['png'],
@@ -75,10 +75,10 @@ index a5b7331d3..71b1bc734 100644
      fig, ax = plt.subplots()
      x = np.arange(1, 11)
 diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
-index 10458dddf..ef2ae5db5 100644
+index 7ba47be93..bf05c5286 100644
 --- a/lib/matplotlib/tests/test_backends_interactive.py
 +++ b/lib/matplotlib/tests/test_backends_interactive.py
-@@ -102,7 +102,7 @@ fig.canvas.mpl_connect("draw_event", lambda event: timer.start())
+@@ -101,7 +101,7 @@ fig.canvas.mpl_connect("draw_event", lambda event: timer.start())
  
  plt.show()
  """
@@ -171,7 +171,7 @@ index 893108258..cf7975071 100644
  def test_imshow_masked_interpolation():
  
 diff --git a/lib/matplotlib/tests/test_legend.py b/lib/matplotlib/tests/test_legend.py
-index 4f92f044f..ba1143cb1 100644
+index d508d6f41..9147ef336 100644
 --- a/lib/matplotlib/tests/test_legend.py
 +++ b/lib/matplotlib/tests/test_legend.py
 @@ -108,7 +108,7 @@ def test_multiple_keys():

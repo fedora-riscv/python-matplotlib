@@ -1,4 +1,4 @@
-From c7eb73b3a73d2aaced7c63a314f0ef724fa4c416 Mon Sep 17 00:00:00 2001
+From a9c30f31914db1afc25a7e56ab0a02633b7b1f37 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 3/3] Increase some tolerances for 32-bit systems.
@@ -57,7 +57,7 @@ index 283db9abe..2ae11142c 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index a5b7331d3..2549ff16f 100644
+index 6afed91f3..e931e7a4a 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -553,7 +553,7 @@ def test_single_point():
@@ -233,7 +233,7 @@ index a5b7331d3..2549ff16f 100644
  def test_horiz_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(43))
-@@ -3350,8 +3352,7 @@ def test_vertex_markers():
+@@ -3347,8 +3349,7 @@ def test_vertex_markers():
  
  
  @image_comparison(baseline_images=['vline_hline_zorder',
@@ -243,7 +243,7 @@ index a5b7331d3..2549ff16f 100644
  def test_eb_line_zorder():
      x = list(range(10))
  
-@@ -4031,7 +4032,7 @@ def test_psd_noise():
+@@ -4028,7 +4029,7 @@ def test_psd_noise():
  
  
  @image_comparison(baseline_images=['csd_freqs'], remove_text=True,
@@ -252,7 +252,7 @@ index a5b7331d3..2549ff16f 100644
  def test_csd_freqs():
      '''test axes.csd with sinusoidal stimuli'''
      n = 10000
-@@ -4924,7 +4925,7 @@ def test_rc_spines():
+@@ -4921,7 +4922,7 @@ def test_rc_spines():
  
  
  @image_comparison(baseline_images=['rc_grid'], extensions=['png'],
@@ -261,7 +261,7 @@ index a5b7331d3..2549ff16f 100644
  def test_rc_grid():
      fig = plt.figure()
      rc_dict0 = {
-@@ -5443,7 +5444,7 @@ def test_date_timezone_y():
+@@ -5440,7 +5441,7 @@ def test_date_timezone_y():
  
  
  @image_comparison(baseline_images=['date_timezone_x_and_y'],
@@ -284,7 +284,7 @@ index 6812ee1ad..5e5f19aac 100644
      from mpl_toolkits.mplot3d import Axes3D
  
 diff --git a/lib/matplotlib/tests/test_colorbar.py b/lib/matplotlib/tests/test_colorbar.py
-index 2230c20e7..10974be95 100644
+index 56a829418..949eaf1b7 100644
 --- a/lib/matplotlib/tests/test_colorbar.py
 +++ b/lib/matplotlib/tests/test_colorbar.py
 @@ -93,7 +93,7 @@ def _colorbar_extension_length(spacing):
@@ -435,7 +435,7 @@ index 893108258..b409e9453 100644
  def test_imshow_masked_interpolation():
  
 diff --git a/lib/matplotlib/tests/test_legend.py b/lib/matplotlib/tests/test_legend.py
-index 4f92f044f..5c128f85d 100644
+index d508d6f41..69286069d 100644
 --- a/lib/matplotlib/tests/test_legend.py
 +++ b/lib/matplotlib/tests/test_legend.py
 @@ -108,7 +108,6 @@ def test_multiple_keys():
