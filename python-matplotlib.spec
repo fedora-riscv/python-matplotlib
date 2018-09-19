@@ -124,7 +124,6 @@ BuildRequires:  python3-numpy
 BuildRequires:  python3-pillow
 BuildRequires:  python3-pyparsing
 BuildRequires:  python3-pytz
-BuildRequires:  python3-six
 BuildRequires:  python3-sphinx
 Requires:       dejavu-sans-fonts
 Requires:       dvipng
@@ -141,8 +140,6 @@ BuildRequires:  python3-pytest-xdist
 Requires:       python3-numpy
 Recommends:     python3-pillow
 Requires:       python3-pyparsing
-Requires:       python3-pytz
-Requires:       python3-six
 %if !%{with_bundled_fonts}
 Requires:       stix-math-fonts
 %else
