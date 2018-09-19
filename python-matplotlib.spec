@@ -257,7 +257,7 @@ gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{version}%{?rctag}-
 rm -r extern/libqhull
 
 # Copy setup.cfg to the builddir
-sed 's/\(backend = \).*/\1%{backend}/' >setup.cfg <%{SOURCE1}
+cp -p %{SOURCE1} setup.cfg
 
 # Keep this until next version, and increment if changing from
 # USE_FONTCONFIG to False or True so that cache is regenerated
