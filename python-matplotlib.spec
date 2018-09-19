@@ -314,13 +314,12 @@ rm -rf %{buildroot}%{_datadir}/matplotlib/mpl-data/fonts
 rm -rf build*/
 
 export http_proxy=http://127.0.0.1/
-# This should match the default backend
-echo "backend      : %{backend}" > matplotlibrc
 # Skips:
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
 #    heavily-loaded builder.
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
+MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
 PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
