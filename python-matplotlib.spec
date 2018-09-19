@@ -328,7 +328,17 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering'
+             -k 'not test_invisible_Line_rendering and not backend_qt5'
+# Run Qt5Agg tests separately to not conflict with Qt4 tests.
+MPLCONFIGDIR=$PWD \
+MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
+MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
+PYTHONPATH=%{buildroot}%{python3_sitearch} \
+PYTHONDONTWRITEBYTECODE=1 \
+     xvfb-run -a -s "-screen 0 640x480x24" \
+         %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
+             -m 'not network' \
+             matplotlib.tests.test_backend_qt5
 %endif # run_tests
 
 %files -n python-matplotlib-data
