@@ -429,6 +429,11 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Sep 19 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.0.0-1
+- Update to latest version
+- Drop Python 2 subpackages
+- Stop setting a default backend (allow Matplotlib to choose automatically)
+
 * Mon Aug 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 2.2.3-1
 - Update to latest version
 
