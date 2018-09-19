@@ -89,25 +89,25 @@ Matplotlib tries to make easy things easy and hard things possible.
 You can generate plots, histograms, power spectra, bar charts,
 errorcharts, scatterplots, etc, with just a few lines of code.
 
-%package -n python-matplotlib-data
+%package -n python3-matplotlib-data
 Summary:        Data used by python-matplotlib
 BuildArch:      noarch
 %if %{with_bundled_fonts}
-Requires:       python-matplotlib-data-fonts = %{version}-%{release}
+Requires:       python3-matplotlib-data-fonts = %{version}-%{release}
 %endif
-%{?python_provide:%python_provide python-matplotlib-data}
+%{?python_provide:%python_provide python3-matplotlib-data}
 
-%description -n python-matplotlib-data
+%description -n python3-matplotlib-data
 %{summary}
 
 %if %{with_bundled_fonts}
-%package -n python-matplotlib-data-fonts
+%package -n python3-matplotlib-data-fonts
 Summary:        Fonts used by python-matplotlib
 BuildArch:      noarch
-Requires:       python-matplotlib-data = %{version}-%{release}
-%{?python_provide:%python_provide python-matplotlib-data-fonts}
+Requires:       python3-matplotlib-data = %{version}-%{release}
+%{?python_provide:%python_provide python3-matplotlib-data-fonts}
 
-%description -n python-matplotlib-data-fonts
+%description -n python3-matplotlib-data-fonts
 %{summary}
 %endif
 
@@ -127,7 +127,7 @@ BuildRequires:  python3-pytz
 BuildRequires:  python3-sphinx
 Requires:       dejavu-sans-fonts
 Requires:       dvipng
-Requires:       python-matplotlib-data = %{version}-%{release}
+Requires:       python3-matplotlib-data = %{version}-%{release}
 Requires:       python3-cairo
 Requires:       python3-cycler >= 0.10.0
 Requires:       python3-dateutil
@@ -338,7 +338,7 @@ PYTHONDONTWRITEBYTECODE=1 \
              matplotlib.tests.test_backend_qt5
 %endif # run_tests
 
-%files -n python-matplotlib-data
+%files -n python3-matplotlib-data
 %{_sysconfdir}/matplotlibrc
 %{_datadir}/matplotlib/mpl-data/
 %if %{with_bundled_fonts}
@@ -346,7 +346,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 %endif
 
 %if %{with_bundled_fonts}
-%files -n python-matplotlib-data-fonts
+%files -n python3-matplotlib-data-fonts
 %{_datadir}/matplotlib/mpl-data/fonts/
 %endif
 
