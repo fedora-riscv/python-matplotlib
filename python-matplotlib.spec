@@ -103,6 +103,9 @@ Requires:       python3-matplotlib-data-fonts = %{version}-%{release}
 %if %{with_bundled_fonts}
 %package -n python3-matplotlib-data-fonts
 Summary:        Fonts used by python-matplotlib
+# STIX and Computer Modern is OFL
+# DejaVu is Bitstream Vera and Public Domain
+License:        OFL and Bitstream Vera and Public Domain
 BuildArch:      noarch
 Requires:       python3-matplotlib-data = %{version}-%{release}
 %{?python_provide:%python_provide python3-matplotlib-data-fonts}
