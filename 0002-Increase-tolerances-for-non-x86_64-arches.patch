@@ -1,4 +1,4 @@
-From 9b67dee47af3705cacc41d639f31a9bc99934111 Mon Sep 17 00:00:00 2001
+From d34f76c48da2ee2e743be8b456753368bef624da Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 23 Jan 2018 20:27:17 -0500
 Subject: [PATCH 2/3] Increase tolerances for non-x86_64 arches.
@@ -23,10 +23,10 @@ index 17c0d1967..e261513df 100644
  def test_masks_and_nans():
      X, Y, U, V = velocity_field()
 diff --git a/lib/mpl_toolkits/tests/test_axes_grid1.py b/lib/mpl_toolkits/tests/test_axes_grid1.py
-index 896ba503f..bd48bee72 100644
+index 2ac9d7d08..89f72fa86 100644
 --- a/lib/mpl_toolkits/tests/test_axes_grid1.py
 +++ b/lib/mpl_toolkits/tests/test_axes_grid1.py
-@@ -359,7 +359,7 @@ def test_zooming_with_inverted_axes():
+@@ -360,7 +360,7 @@ def test_zooming_with_inverted_axes():
  
  
  @image_comparison(baseline_images=['anchored_direction_arrows'],

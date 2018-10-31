@@ -1,4 +1,4 @@
-From 642f104f23c78af5d6010916961ec62779290ea5 Mon Sep 17 00:00:00 2001
+From dbab6d1e9cf6a18b3464e0d568f1f1468af6c009 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
@@ -18,8 +18,8 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  lib/matplotlib/tests/test_scale.py                          | 2 +-
  lib/matplotlib/tests/test_streamplot.py                     | 2 +-
  lib/matplotlib/tests/test_units.py                          | 4 ++--
- .../tests/test_axisartist_grid_helper_curvelinear.py        | 2 +-
- 14 files changed, 22 insertions(+), 22 deletions(-)
+ .../tests/test_axisartist_grid_helper_curvelinear.py        | 4 ++--
+ 14 files changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_arrow_patches.py b/lib/matplotlib/tests/test_arrow_patches.py
 index f678fbed3..bac0cb802 100644
@@ -44,7 +44,7 @@ index f678fbed3..bac0cb802 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 6afed91f3..755be5570 100644
+index 3c9b7dfc5..2373010eb 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -386,7 +386,7 @@ def test_annotate_default_arrow():
@@ -56,7 +56,7 @@ index 6afed91f3..755be5570 100644
  def test_polar_annotations():
      # you can specify the xypoint and the xytext in different
      # positions and coordinate systems, and optionally turn on a
-@@ -3348,7 +3348,7 @@ def test_vertex_markers():
+@@ -3369,7 +3369,7 @@ def test_vertex_markers():
  
  @image_comparison(baseline_images=['vline_hline_zorder',
                                     'errorbar_zorder'],
@@ -65,7 +65,7 @@ index 6afed91f3..755be5570 100644
  def test_eb_line_zorder():
      x = list(range(10))
  
-@@ -5120,7 +5120,7 @@ def test_title_location_roundtrip():
+@@ -5141,7 +5141,7 @@ def test_title_location_roundtrip():
  
  @image_comparison(baseline_images=["loglog"], remove_text=True,
                    extensions=['png'],
@@ -75,10 +75,10 @@ index 6afed91f3..755be5570 100644
      fig, ax = plt.subplots()
      x = np.arange(1, 11)
 diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
-index 7ba47be93..bf05c5286 100644
+index 0cb17c9d1..4fb8fb76c 100644
 --- a/lib/matplotlib/tests/test_backends_interactive.py
 +++ b/lib/matplotlib/tests/test_backends_interactive.py
-@@ -101,7 +101,7 @@ fig.canvas.mpl_connect("draw_event", lambda event: timer.start())
+@@ -103,7 +103,7 @@ fig.canvas.mpl_connect("draw_event", lambda event: timer.start())
  
  plt.show()
  """
@@ -101,7 +101,7 @@ index 6812ee1ad..582aabb5c 100644
  def test_EllipseCollection():
      # Test basic functionality
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 0803504ce..63e3c6781 100644
+index e282cb6ad..f1844fd86 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -173,7 +173,7 @@ def test_constrained_layout9():
@@ -241,19 +241,19 @@ index e261513df..c8c8faf99 100644
  def test_linewidth():
      X, Y, U, V = velocity_field()
 diff --git a/lib/matplotlib/tests/test_units.py b/lib/matplotlib/tests/test_units.py
-index 20840d7b8..ddddcdc44 100644
+index fec498af3..12a8d8a3e 100644
 --- a/lib/matplotlib/tests/test_units.py
 +++ b/lib/matplotlib/tests/test_units.py
-@@ -41,7 +41,7 @@ class Quantity(object):
+@@ -75,7 +75,7 @@ def quantity_converter():
  # Tests that the conversion machinery works properly for classes that
  # work as a facade over numpy arrays (like pint)
  @image_comparison(baseline_images=['plot_pint'],
 -                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0),
 +                  tol=0.003,
                    extensions=['png'], remove_text=False, style='mpl20')
- def test_numpy_facade():
-     # Create an instance of the conversion interface and
-@@ -86,7 +86,7 @@ def test_numpy_facade():
+ def test_numpy_facade(quantity_converter):
+     # Register the class
+@@ -100,7 +100,7 @@ def test_numpy_facade(quantity_converter):
  
  # Tests gh-8908
  @image_comparison(baseline_images=['plot_masked_units'],
@@ -263,9 +263,18 @@ index 20840d7b8..ddddcdc44 100644
  def test_plot_masked_units():
      data = np.linspace(-5, 5)
 diff --git a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
-index 0f5e86322..83c1054a4 100644
+index 32e1c884d..741d197b5 100644
 --- a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
 +++ b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+@@ -17,7 +17,7 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import \
+ 
+ 
+ @image_comparison(baseline_images=['custom_transform'],
+-                  extensions=['png'], style='default', tol=0.03)
++                  extensions=['png'], style='default', tol=0.04)
+ def test_custom_transform():
+     class MyTransform(Transform):
+         input_dims = 2
 @@ -85,7 +85,7 @@ def test_custom_transform():
  
  

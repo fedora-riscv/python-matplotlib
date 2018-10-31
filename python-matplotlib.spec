@@ -40,8 +40,8 @@
 %global ftver 2.9.1
 
 Name:           python-matplotlib
-Version:        3.0.0
-Release:        2%{?rctag:.%{rctag}}%{?dist}
+Version:        3.0.1
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -52,8 +52,6 @@ Source1:        setup.cfg
 # Because the qhull package stopped shipping pkgconfig files.
 # https://src.fedoraproject.org/rpms/qhull/pull-request/1
 Patch0001:      0001-Force-using-system-qhull.patch
-# https://github.com/matplotlib/matplotlib/pull/12157
-Patch0002:      12157.patch
 
 # Fedora-specific patches; see:
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches
@@ -244,7 +242,6 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %prep
 %autosetup -n matplotlib-%{version}%{?rctag} -N
 %patch0001 -p1
-%patch0002 -p1
 
 # Fedora-specific patches follow:
 %patch1001 -p1
