@@ -36,11 +36,14 @@
 
 #global rctag rc1
 
+# Updated test images for new FreeType.
+%global mpl_images_version 3.0.1
+
 # The version of FreeType in this Fedora branch.
 %global ftver 2.9.1
 
 Name:           python-matplotlib
-Version:        3.0.1
+Version:        3.0.2
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
@@ -53,11 +56,14 @@ Source1:        setup.cfg
 # https://src.fedoraproject.org/rpms/qhull/pull-request/1
 Patch0001:      0001-Force-using-system-qhull.patch
 
+# https://github.com/matplotlib/matplotlib/pull/12790
+Patch0002:      0001-Remove-ticks-and-titles-from-tight-bbox-tests.patch
+
 # Fedora-specific patches; see:
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches-non-x86
 # Updated test images for new FreeType.
-Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{version}%{?rctag}-with-freetype-%{ftver}/matplotlib-%{version}%{?rctag}-with-freetype-%{ftver}.tar.gz
+Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_version}-with-freetype-%{ftver}/matplotlib-%{mpl_images_version}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Image tolerances for anything but x86_64:
@@ -243,10 +249,12 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %autosetup -n matplotlib-%{version}%{?rctag} -N
 %patch0001 -p1
 
+%patch0002 -p1
+
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
-gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{version}%{?rctag}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
+gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 %ifnarch x86_64
 %patch1002 -p1
 %endif

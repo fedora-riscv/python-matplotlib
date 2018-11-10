@@ -1,4 +1,4 @@
-From dbab6d1e9cf6a18b3464e0d568f1f1468af6c009 Mon Sep 17 00:00:00 2001
+From fe4dfe11f191f52fe4126a174658e13943abbf5f Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
@@ -44,7 +44,7 @@ index f678fbed3..bac0cb802 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 3c9b7dfc5..2373010eb 100644
+index 629517406..c5b5a12ea 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -386,7 +386,7 @@ def test_annotate_default_arrow():
@@ -75,10 +75,10 @@ index 3c9b7dfc5..2373010eb 100644
      fig, ax = plt.subplots()
      x = np.arange(1, 11)
 diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
-index 0cb17c9d1..4fb8fb76c 100644
+index 00cbf5db9..33e6fb21a 100644
 --- a/lib/matplotlib/tests/test_backends_interactive.py
 +++ b/lib/matplotlib/tests/test_backends_interactive.py
-@@ -103,7 +103,7 @@ fig.canvas.mpl_connect("draw_event", lambda event: timer.start())
+@@ -105,7 +105,7 @@ fig.canvas.mpl_connect("draw_event", lambda event: timer.start())
  
  plt.show()
  """
@@ -101,7 +101,7 @@ index 6812ee1ad..582aabb5c 100644
  def test_EllipseCollection():
      # Test basic functionality
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index e282cb6ad..f1844fd86 100644
+index de8161ea7..2af2d6a42 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -173,7 +173,7 @@ def test_constrained_layout9():

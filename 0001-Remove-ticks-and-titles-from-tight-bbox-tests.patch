@@ -1,0 +1,75 @@
+From 9ef2402bac96bbfc0fd9a21f56d8c4b3aae6e9a1 Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Sat, 10 Nov 2018 04:29:36 -0500
+Subject: [PATCH] Remove ticks and titles from tight bbox tests.
+
+These text elements may shift with different versions of FreeType,
+making the tight bbox results unstable when building against external
+newer versions.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_axes.py         | 6 ++++--
+ lib/mpl_toolkits/tests/test_axes_grid1.py | 8 +++++---
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
+index 5bc1b54bb..f6e3f733b 100644
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -16,7 +16,8 @@ import pytest
+ import warnings
+ 
+ import matplotlib
+-from matplotlib.testing.decorators import image_comparison, check_figures_equal
++from matplotlib.testing.decorators import (
++    image_comparison, check_figures_equal, remove_ticks_and_titles)
+ import matplotlib.pyplot as plt
+ import matplotlib.markers as mmarkers
+ import matplotlib.patches as mpatches
+@@ -5913,9 +5914,10 @@ def test_cartopy_backcompat():
+ 
+ def test_gettightbbox_ignoreNaN():
+     fig, ax = plt.subplots()
++    remove_ticks_and_titles(fig)
+     t = ax.text(np.NaN, 1, 'Boo')
+     renderer = fig.canvas.get_renderer()
+-    np.testing.assert_allclose(ax.get_tightbbox(renderer).width, 532.444444)
++    np.testing.assert_allclose(ax.get_tightbbox(renderer).width, 496)
+ 
+ 
+ def test_scatter_series_non_zero_index(pd):
+diff --git a/lib/mpl_toolkits/tests/test_axes_grid1.py b/lib/mpl_toolkits/tests/test_axes_grid1.py
+index 537a8a2c8..2a630bb14 100644
+--- a/lib/mpl_toolkits/tests/test_axes_grid1.py
++++ b/lib/mpl_toolkits/tests/test_axes_grid1.py
+@@ -1,6 +1,7 @@
+ import matplotlib
+ import matplotlib.pyplot as plt
+-from matplotlib.testing.decorators import image_comparison
++from matplotlib.testing.decorators import (
++    image_comparison, remove_ticks_and_titles)
+ 
+ from mpl_toolkits.axes_grid1 import host_subplot
+ from mpl_toolkits.axes_grid1 import make_axes_locatable
+@@ -409,7 +410,6 @@ def test_image_grid():
+ 
+ 
+ def test_gettightbbox():
+-
+     fig, ax = plt.subplots(figsize=(8, 6))
+ 
+     l, = ax.plot([1, 2, 3], [0, 1, 0])
+@@ -418,6 +418,8 @@ def test_gettightbbox():
+     ax_zoom.plot([1, 2, 3], [0, 1, 0])
+ 
+     mark_inset(ax, ax_zoom, loc1=1, loc2=3, fc="none", ec='0.3')
++
++    remove_ticks_and_titles(fig)
+     bbox = fig.get_tightbbox(fig.canvas.get_renderer())
+     np.testing.assert_array_almost_equal(bbox.extents,
+-            [-18.022743, -14.118056,   7.332813,   5.4625])
++                                         [-17.7, -13.9, 7.2, 5.4])
+-- 
+2.17.1
+
