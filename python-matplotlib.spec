@@ -439,6 +439,12 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Tue Nov 13 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.0.2-1
+- Update to latest version
+
+* Wed Oct 31 2018 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.0.1-1
+- Update to latest version
+
 * Fri Sep 21 2018 Miro Hrončok <mhroncok@redhat.com> - 3.0.0-2
 - Obsolete old python-matplotlib-data* to prevent conflicts and provide an upgrade path
 
