@@ -284,6 +284,7 @@ sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
 
 
 %build
+%set_build_flags
 export http_proxy=http://127.0.0.1/
 
 MPLCONFIGDIR=$PWD \
