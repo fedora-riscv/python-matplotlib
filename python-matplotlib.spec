@@ -43,8 +43,8 @@
 %global ftver 2.9.1
 
 Name:           python-matplotlib
-Version:        3.0.2
-Release:        1%{?rctag:.%{rctag}}%{?dist}.1
+Version:        3.0.3
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -56,8 +56,8 @@ Source1:        setup.cfg
 # https://src.fedoraproject.org/rpms/qhull/pull-request/1
 Patch0001:      0001-Force-using-system-qhull.patch
 
-# https://github.com/matplotlib/matplotlib/pull/12790
-Patch0002:      0001-Remove-ticks-and-titles-from-tight-bbox-tests.patch
+# Don't attempt to download jQuery and jQuery UI
+Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
 # Fedora-specific patches; see:
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches
@@ -229,6 +229,10 @@ BuildRequires:  graphviz
 BuildRequires:  python3-sphinx
 BuildRequires:  tex(latex)
 BuildRequires:  tex-preview
+BuildRequires:  js-jquery >= 3.2.1
+BuildRequires:  xstatic-jquery-ui-common
+Requires:       js-jquery >= 3.2.1
+Requires:       xstatic-jquery-ui-common
 %endif
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %{?python_provide:%python_provide python3-matplotlib-doc}
@@ -440,6 +444,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Sat Mar 02 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.0.3-1
+- Update to latest version
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.2-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 

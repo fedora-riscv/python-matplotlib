@@ -1,4 +1,4 @@
-From fe4dfe11f191f52fe4126a174658e13943abbf5f Mon Sep 17 00:00:00 2001
+From 179885bd9a442bc171e562a8997abde2824997fa Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
@@ -44,10 +44,10 @@ index f678fbed3..bac0cb802 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 629517406..c5b5a12ea 100644
+index c0e0e560d..0021bbda4 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -386,7 +386,7 @@ def test_annotate_default_arrow():
+@@ -387,7 +387,7 @@ def test_annotate_default_arrow():
      assert ann.arrow_patch is not None
  
  
@@ -56,7 +56,7 @@ index 629517406..c5b5a12ea 100644
  def test_polar_annotations():
      # you can specify the xypoint and the xytext in different
      # positions and coordinate systems, and optionally turn on a
-@@ -3369,7 +3369,7 @@ def test_vertex_markers():
+@@ -3370,7 +3370,7 @@ def test_vertex_markers():
  
  @image_comparison(baseline_images=['vline_hline_zorder',
                                     'errorbar_zorder'],
@@ -65,7 +65,7 @@ index 629517406..c5b5a12ea 100644
  def test_eb_line_zorder():
      x = list(range(10))
  
-@@ -5141,7 +5141,7 @@ def test_title_location_roundtrip():
+@@ -5142,7 +5142,7 @@ def test_title_location_roundtrip():
  
  @image_comparison(baseline_images=["loglog"], remove_text=True,
                    extensions=['png'],
@@ -145,7 +145,7 @@ index 8184d3eee..73b0f216d 100644
  def test_linestylecycle_basic():
      fig, ax = plt.subplots()
 diff --git a/lib/matplotlib/tests/test_figure.py b/lib/matplotlib/tests/test_figure.py
-index 7cb5af621..128cae5ec 100644
+index 4c688eb05..63f562770 100644
 --- a/lib/matplotlib/tests/test_figure.py
 +++ b/lib/matplotlib/tests/test_figure.py
 @@ -14,7 +14,7 @@ import pytest
@@ -158,10 +158,10 @@ index 7cb5af621..128cae5ec 100644
      # Check the figure.align_labels() command
      fig = plt.figure(tight_layout=True)
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index 893108258..cf7975071 100644
+index c0ffc061a..ca15df113 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
-@@ -757,7 +757,7 @@ def test_imshow_endianess():
+@@ -766,7 +766,7 @@ def test_imshow_endianess():
  
  
  @image_comparison(baseline_images=['imshow_masked_interpolation'],
@@ -285,5 +285,5 @@ index 32e1c884d..741d197b5 100644
  def test_polar_box():
      fig = plt.figure(figsize=(5, 5))
 -- 
-2.17.1
+2.20.1
 
