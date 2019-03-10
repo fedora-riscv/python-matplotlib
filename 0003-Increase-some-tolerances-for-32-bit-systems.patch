@@ -1,4 +1,4 @@
-From b8a97810843ff739cb98cb5159843f2836dbd8b3 Mon Sep 17 00:00:00 2001
+From bcb05f18d78d2a467ddc9cdb0e6bcebd41116ee5 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 3/3] Increase some tolerances for 32-bit systems.
@@ -26,10 +26,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  18 files changed, 53 insertions(+), 54 deletions(-)
 
 diff --git a/lib/matplotlib/testing/decorators.py b/lib/matplotlib/testing/decorators.py
-index 0ce6e6252..9a80eec1a 100644
+index d008446dc..2d930cacc 100644
 --- a/lib/matplotlib/testing/decorators.py
 +++ b/lib/matplotlib/testing/decorators.py
-@@ -408,7 +408,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
+@@ -418,7 +418,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
      return decorator
  
  
@@ -53,7 +53,7 @@ index e6aff72bf..b60305bcf 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 2fa6c2c94..8c589f514 100644
+index dde856669..5cfd4151a 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -555,7 +555,7 @@ def test_single_point():
@@ -237,7 +237,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_horiz_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(43))
-@@ -3947,7 +3946,7 @@ def test_psd_noise():
+@@ -3944,7 +3943,7 @@ def test_psd_noise():
  
  
  @image_comparison(baseline_images=['csd_freqs'], remove_text=True,
@@ -246,7 +246,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_csd_freqs():
      '''test axes.csd with sinusoidal stimuli'''
      n = 10000
-@@ -4806,7 +4805,7 @@ def test_rc_spines():
+@@ -4803,7 +4802,7 @@ def test_rc_spines():
  
  
  @image_comparison(baseline_images=['rc_grid'], extensions=['png'],
@@ -255,7 +255,7 @@ index 2fa6c2c94..8c589f514 100644
  def test_rc_grid():
      fig = plt.figure()
      rc_dict0 = {
-@@ -5301,7 +5300,7 @@ def test_date_timezone_y():
+@@ -5298,7 +5297,7 @@ def test_date_timezone_y():
  
  
  @image_comparison(baseline_images=['date_timezone_x_and_y'],
@@ -372,10 +372,10 @@ index 42903ac68..f03a5d0af 100644
      n = 60
      mask_level = 0.95
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index e6da25789..ed3ab63c9 100644
+index c8a23347f..5a23ded19 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
-@@ -768,7 +768,7 @@ def test_imshow_endianess():
+@@ -761,7 +761,7 @@ def test_imshow_endianess():
  
  
  @image_comparison(baseline_images=['imshow_masked_interpolation'],
@@ -385,7 +385,7 @@ index e6da25789..ed3ab63c9 100644
  
      cm = copy(plt.get_cmap('viridis'))
 diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
-index cdc1093e1..ac0d8bf05 100644
+index af6701a0f..151b061a5 100644
 --- a/lib/matplotlib/tests/test_mathtext.py
 +++ b/lib/matplotlib/tests/test_mathtext.py
 @@ -173,7 +173,7 @@ def baseline_images(request, fontset, index):
@@ -541,10 +541,10 @@ index a7c637428..e22f4ac3e 100644
      fig = plt.figure(figsize=(5, 5))
  
 diff --git a/lib/mpl_toolkits/tests/test_mplot3d.py b/lib/mpl_toolkits/tests/test_mplot3d.py
-index 0a506db92..44e1681fc 100644
+index d6e57b9b4..c3ac37a7f 100644
 --- a/lib/mpl_toolkits/tests/test_mplot3d.py
 +++ b/lib/mpl_toolkits/tests/test_mplot3d.py
-@@ -225,7 +225,7 @@ def test_text3d():
+@@ -226,7 +226,7 @@ def test_text3d():
      ax.set_zlabel('Z axis')
  
  
@@ -553,7 +553,7 @@ index 0a506db92..44e1681fc 100644
  def test_trisurf3d():
      n_angles = 36
      n_radii = 8
-@@ -704,7 +704,7 @@ class TestVoxels(object):
+@@ -705,7 +705,7 @@ class TestVoxels(object):
      @image_comparison(
          baseline_images=['voxels-xyz'],
          extensions=['png'],
@@ -563,5 +563,5 @@ index 0a506db92..44e1681fc 100644
      def test_xyz(self):
          fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 -- 
-2.17.1
+2.20.1
 

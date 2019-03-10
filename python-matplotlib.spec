@@ -32,6 +32,9 @@
 
 #global rctag rc1
 
+# Updated test images for new FreeType.
+%global mpl_images_version 2.2.3
+
 # The version of FreeType in this Fedora branch.
 %if %{fedora} >= 29
 %global ftver 2.9.1
@@ -40,7 +43,7 @@
 %endif
 
 Name:           python-matplotlib
-Version:        2.2.3
+Version:        2.2.4
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
@@ -53,11 +56,14 @@ Source1:        setup.cfg
 # https://src.fedoraproject.org/rpms/qhull/pull-request/1
 Patch0001:      0001-Force-using-system-qhull.patch
 
+# Don't attempt to download jQuery and jQuery UI
+Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
+
 # Fedora-specific patches; see:
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches
 # https://github.com/QuLogic/matplotlib/tree/fedora-patches-non-x86
 # Updated test images for new FreeType.
-Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{version}-with-freetype-%{ftver}/matplotlib-%{version}-with-freetype-%{ftver}.tar.gz
+Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_version}-with-freetype-%{ftver}/matplotlib-%{mpl_images_version}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Image tolerances for anything but x86_64:
@@ -375,10 +381,12 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %autosetup -n matplotlib-%{version}%{?rctag} -N
 %patch0001 -p1
 
+%patch0002 -p1
+
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
-gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
+gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 %ifnarch x86_64
 %patch1002 -p1
 %endif

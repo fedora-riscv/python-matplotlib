@@ -1,4 +1,4 @@
-From ece1f936ba4c130cf82d3954a5e677d96ca3a854 Mon Sep 17 00:00:00 2001
+From 95035beb712088f9b66aae9cc810a1a94685d0da Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 23 Jan 2018 20:27:17 -0500
 Subject: [PATCH 2/3] Increase tolerances for non-x86_64 arches.
@@ -23,5 +23,5 @@ index 81a51e711..4f70ce861 100644
      X, Y, U, V = velocity_field()
      mask = np.zeros(U.shape, dtype=bool)
 -- 
-2.17.1
+2.20.1
 

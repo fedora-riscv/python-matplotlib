@@ -1,4 +1,4 @@
-From 3e2bfee4e8ce28fffa7e9cd0a054429af2e2ebe3 Mon Sep 17 00:00:00 2001
+From 8f2ae0000d8f593fc82243b056ecf57c81059a42 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 3/3] Increase some tolerances for non-x86 arches.
@@ -44,7 +44,7 @@ index 44f87c5fe..fb50ae710 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 2fa6c2c94..f785e3e89 100644
+index dde856669..de1632fc4 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -389,7 +389,7 @@ def test_annotate_default_arrow():
@@ -56,7 +56,7 @@ index 2fa6c2c94..f785e3e89 100644
  def test_polar_annotations():
      # you can specify the xypoint and the xytext in different
      # positions and coordinate systems, and optionally turn on a
-@@ -3267,7 +3267,8 @@ def test_vertex_markers():
+@@ -3264,7 +3264,8 @@ def test_vertex_markers():
  
  
  @image_comparison(baseline_images=['vline_hline_zorder',
@@ -66,7 +66,7 @@ index 2fa6c2c94..f785e3e89 100644
  def test_eb_line_zorder():
      x = list(xrange(10))
  
-@@ -5000,7 +5001,7 @@ def test_title_location_roundtrip():
+@@ -4997,7 +4998,7 @@ def test_title_location_roundtrip():
  
  
  @image_comparison(baseline_images=["loglog"], remove_text=True,
@@ -76,10 +76,10 @@ index 2fa6c2c94..f785e3e89 100644
      fig, ax = plt.subplots()
      x = np.arange(1, 11)
 diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
-index df7a5d08a..3567d7f3d 100644
+index 8cd4585bf..29b2c4b46 100644
 --- a/lib/matplotlib/tests/test_backends_interactive.py
 +++ b/lib/matplotlib/tests/test_backends_interactive.py
-@@ -55,4 +55,4 @@ def test_backend(backend):
+@@ -57,4 +57,4 @@ def test_backend(backend):
      environ["MPLBACKEND"] = backend
      proc = Popen([sys.executable, "-c", _test_script], env=environ)
      # Empirically, 1s is not enough on Travis.
@@ -156,10 +156,10 @@ index 69752e17d..e7c57d470 100644
      # Check the figure.align_labels() command
      fig = plt.figure(tight_layout=True)
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index e6da25789..626e9eb94 100644
+index c8a23347f..afb36587c 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
-@@ -768,7 +768,7 @@ def test_imshow_endianess():
+@@ -761,7 +761,7 @@ def test_imshow_endianess():
  
  
  @image_comparison(baseline_images=['imshow_masked_interpolation'],
@@ -274,5 +274,5 @@ index a7c637428..8fc5b25b1 100644
      fig = plt.figure(figsize=(5, 5))
  
 -- 
-2.17.1
+2.20.1
 
