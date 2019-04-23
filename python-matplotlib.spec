@@ -60,8 +60,8 @@ Patch0001:      0001-Force-using-system-qhull.patch
 Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
 # Fedora-specific patches; see:
-# https://github.com/QuLogic/matplotlib/tree/fedora-patches
-# https://github.com/QuLogic/matplotlib/tree/fedora-patches-non-x86
+# https://github.com/fedora-python/matplotlib/tree/fedora-patches
+# https://github.com/fedora-python/matplotlib/tree/fedora-patches-non-x86
 # Updated test images for new FreeType.
 Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_version}-with-freetype-%{ftver}/matplotlib-%{mpl_images_version}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
@@ -72,6 +72,8 @@ Patch1002:      0002-Increase-tolerances-for-non-x86_64-arches.patch
 Patch1003:      0003-Increase-some-tolerances-for-32-bit-systems.patch
 # Image tolerances for 64-bit (but not x86_64) systems: aarch64 ppc64(le) s390x
 Patch1004:      0003-Increase-some-tolerances-for-non-x86-arches.patch
+# Support pytest 4 (from a3b9ef7c7c8750ff65d9341fb20811b2c4c99a73)
+Patch1005:      0004-Avoid-triggering-deprecation-warnings-with-pytest-3..patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -269,6 +271,8 @@ gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{mpl_images_version
 %patch1003 -p1
 %endif
 rm -r extern/libqhull
+
+%patch1005 -p1
 
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
