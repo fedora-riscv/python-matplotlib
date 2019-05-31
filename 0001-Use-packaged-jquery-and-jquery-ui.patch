@@ -1,4 +1,4 @@
-From fede0d8731c1301720f16e2d46df8275e8ecf9e8 Mon Sep 17 00:00:00 2001
+From a587261dcf6821dd03e1956cc1644a3a7aaa4031 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 2 Mar 2019 18:18:29 -0500
 Subject: [PATCH] Use packaged jquery and jquery-ui.
@@ -45,19 +45,19 @@ index 4d5a366fb..c11c86618 100644
      <script src="{{ prefix }}/js/mpl.js"></script>
      <script>
 diff --git a/setup.py b/setup.py
-index 94c8106d3..42ae7e294 100644
+index d5ff91c43..a2b82f692 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -28,8 +28,6 @@ from zipfile import ZipFile
+@@ -26,8 +26,6 @@ from zipfile import ZipFile
  
- from setuptools import setup
+ from setuptools import setup, Extension
  from setuptools.command.build_ext import build_ext as BuildExtCommand
 -from setuptools.command.develop import develop as DevelopCommand
 -from setuptools.command.install_lib import install_lib as InstallLibCommand
  from setuptools.command.test import test as TestCommand
  
  # The setuptools version of sdist adds a setup.cfg file to the tree.
-@@ -121,50 +119,6 @@ cmdclass['test'] = NoopTestCommand
+@@ -123,50 +121,6 @@ cmdclass['test'] = NoopTestCommand
  cmdclass['build_ext'] = BuildExtraLibraries
  
  
@@ -67,7 +67,7 @@ index 94c8106d3..42ae7e294 100644
 -    url = "https://jqueryui.com/resources/download/jquery-ui-1.12.1.zip"
 -    sha = 'f8233674366ab36b2c34c577ec77a3d70cac75d2e387d8587f3836345c0f624d'
 -    if not os.path.exists(os.path.join(dest, "jquery-ui-1.12.1")):
--        _makedirs(dest, exist_ok=True)
+-        os.makedirs(dest, exist_ok=True)
 -        try:
 -            buff = download_or_cache(url, sha)
 -        except Exception:
@@ -109,5 +109,5 @@ index 94c8106d3..42ae7e294 100644
  # however, this is needed on Windows to avoid creating infinite subprocesses
  # when using multiprocessing.
 -- 
-2.20.1
+2.21.0
 

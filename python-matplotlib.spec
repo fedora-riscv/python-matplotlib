@@ -34,17 +34,17 @@
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
 
-#global rctag rc1
+#global rctag rc2
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.0.1
+%global mpl_images_version 3.1.1
 
 # The version of FreeType in this Fedora branch.
-%global ftver 2.9.1
+%global ftver 2.10.0
 
 Name:           python-matplotlib
-Version:        3.0.3
-Release:        2%{?rctag:.%{rctag}}%{?dist}.1
+Version:        3.1.1
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -59,6 +59,7 @@ Patch0001:      0001-Force-using-system-qhull.patch
 # Don't attempt to download jQuery and jQuery UI
 Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
+
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches-non-x86
@@ -66,14 +67,14 @@ Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_version}-with-freetype-%{ftver}/matplotlib-%{mpl_images_version}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
+# Increase tolerances for new FreeType everywhere:
+Patch1002:      0002-Set-FreeType-version-to-2.10.0-and-update-tolerances.patch
 # Image tolerances for anything but x86_64:
-Patch1002:      0002-Increase-tolerances-for-non-x86_64-arches.patch
+Patch1003:      0003-Increase-tolerances-for-non-x86_64-arches.patch
 # Image tolerances for 32-bit systems: i686 armv7hl
-Patch1003:      0003-Increase-some-tolerances-for-32-bit-systems.patch
+Patch1004:      0004-Increase-some-tolerances-for-32-bit-systems.patch
 # Image tolerances for 64-bit (but not x86_64) systems: aarch64 ppc64(le) s390x
-Patch1004:      0003-Increase-some-tolerances-for-non-x86-arches.patch
-# Support pytest 4 (from a3b9ef7c7c8750ff65d9341fb20811b2c4c99a73)
-Patch1005:      0004-Avoid-triggering-deprecation-warnings-with-pytest-3..patch
+Patch1005:      0004-Increase-some-tolerances-for-non-x86-arches.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -260,19 +261,18 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
+%patch1002 -p1
 gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 %ifnarch x86_64
-%patch1002 -p1
-%endif
-%ifarch aarch64 ppc64 ppc64le s390x
-%patch1004 -p1
-%endif
-%ifarch i686 armv7hl
 %patch1003 -p1
 %endif
-rm -r extern/libqhull
-
+%ifarch aarch64 ppc64 ppc64le s390x
 %patch1005 -p1
+%endif
+%ifarch i686 armv7hl
+%patch1004 -p1
+%endif
+rm -r extern/libqhull
 
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
@@ -296,13 +296,11 @@ sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
 export http_proxy=http://127.0.0.1/
 
 MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data \
   xvfb-run %{__python3} setup.py build
 %if %{with_html}
 # Need to make built matplotlib libs available for the sphinx extensions:
 pushd doc
     MPLCONFIGDIR=$PWD/.. \
-    MATPLOTLIBDATA=$PWD/../lib/matplotlib/mpl-data \
     PYTHONPATH=`realpath ../build/lib.linux*` \
         %{__python3} make.py html
 popd
@@ -315,7 +313,6 @@ find examples -name '*.py' -exec chmod a-x '{}' \;
 export http_proxy=http://127.0.0.1/
 
 MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=$PWD/lib/matplotlib/mpl-data/ \
     %{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
 chmod +x %{buildroot}%{python3_sitearch}/matplotlib/dates.py
 mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_datadir}/matplotlib
@@ -338,24 +335,21 @@ export http_proxy=http://127.0.0.1/
 #    heavily-loaded builder.
 #  * test_tinypages fails due to new Sphinx warning
 MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
 PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not backend_qt5 and not test_tinypages'
+             -k 'not test_invisible_Line_rendering and not Qt5Agg'
 # Run Qt5Agg tests separately to not conflict with Qt4 tests.
 MPLCONFIGDIR=$PWD \
-MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
 PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network' \
-             matplotlib.tests.test_backend_qt5
+             -m 'not network' -k 'Qt5Agg'
 %endif
 
 %files -n python3-matplotlib-data
@@ -391,9 +385,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4*
 #exclude #{python3_sitearch}/matplotlib/backends/backend_qt5*.py
 #exclude #{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5*
-%exclude %{python3_sitearch}/matplotlib/backends/_gtk3_compat.py
 %exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/_gtk3_compat.*
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_gtk*
 %exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
 %exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
@@ -428,9 +420,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 %files -n python3-matplotlib-gtk3
 %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
-%{python3_sitearch}/matplotlib/backends/_gtk3_compat.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_gtk*
-%{python3_sitearch}/matplotlib/backends/__pycache__/_gtk3_compat.*
 
 %files -n python3-matplotlib-tk
 %{python3_sitearch}/matplotlib/backends/backend_tk*.py
@@ -449,6 +439,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Thu Aug 08 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.1.1-1
+- Update to latest version
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.3-2.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
