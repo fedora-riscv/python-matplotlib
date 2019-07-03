@@ -356,7 +356,7 @@ PYTHONDONTWRITEBYTECODE=1 \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
              matplotlib.tests.test_backend_qt5
-%endif # run_tests
+%endif
 
 %files -n python3-matplotlib-data
 %{_sysconfdir}/matplotlibrc
