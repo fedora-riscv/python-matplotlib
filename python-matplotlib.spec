@@ -44,7 +44,7 @@
 
 Name:           python-matplotlib
 Version:        3.0.3
-Release:        1%{?rctag:.%{rctag}}%{?dist}
+Release:        2%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -99,7 +99,7 @@ BuildArch:      noarch
 %if %{with_bundled_fonts}
 Requires:       python3-matplotlib-data-fonts = %{version}-%{release}
 %endif
-Obsoletes:      python-matplotlib-data < 2.2.3-2
+Obsoletes:      python-matplotlib-data < 3
 %{?python_provide:%python_provide python3-matplotlib-data}
 
 %description -n python3-matplotlib-data
@@ -113,7 +113,7 @@ Summary:        Fonts used by python-matplotlib
 License:        OFL and Bitstream Vera and Public Domain
 BuildArch:      noarch
 Requires:       python3-matplotlib-data = %{version}-%{release}
-Obsoletes:      python-matplotlib-data-fonts < 2.2.3-2
+Obsoletes:      python-matplotlib-data-fonts < 3
 %{?python_provide:%python_provide python3-matplotlib-data-fonts}
 
 %description -n python3-matplotlib-data-fonts
@@ -444,6 +444,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Jul  3 2019 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 3.0.3-2
+- Update Obsoletes to be later than the last python2 builds (#1726490)
+
 * Sat Mar 02 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.0.3-1
 - Update to latest version
 
