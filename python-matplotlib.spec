@@ -44,7 +44,7 @@
 
 Name:           python-matplotlib
 Version:        3.0.3
-Release:        2%{?rctag:.%{rctag}}%{?dist}
+Release:        2%{?rctag:.%{rctag}}%{?dist}.1
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -449,6 +449,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 3.0.3-2.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Wed Jul  3 2019 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 3.0.3-2
 - Update Obsoletes to be later than the last python2 builds (#1726490)
 
