@@ -339,6 +339,8 @@ export http_proxy=http://127.0.0.1/
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
 #    heavily-loaded builder.
 #  * test_tinypages fails due to new Sphinx warning
+#  * wxagg is broken on ppc64le:
+#    https://bugzilla.redhat.com/show_bug.cgi?id=1738752
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
@@ -346,7 +348,11 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
+%ifarch ppc64le
+             -k 'not test_invisible_Line_rendering and not Qt5Agg and not wxagg'
+%else
              -k 'not test_invisible_Line_rendering and not Qt5Agg'
+%endif
 # Run Qt5Agg tests separately to not conflict with Qt4 tests.
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
