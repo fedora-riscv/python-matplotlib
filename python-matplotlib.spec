@@ -59,6 +59,9 @@ Patch0001:      0001-Force-using-system-qhull.patch
 # Don't attempt to download jQuery and jQuery UI
 Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
+# Fix tests with NumPy 1.17.
+# https://github.com/matplotlib/matplotlib/pull/14901
+Patch0003:      1230e83b6793e5ccda8543f3584eb8bc2dc657e2.patch
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
@@ -257,6 +260,8 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %patch0001 -p1
 
 %patch0002 -p1
+
+%patch0003 -p1
 
 # Fedora-specific patches follow:
 %patch1001 -p1

@@ -1,0 +1,23 @@
+From 8b398bf086d426bd9071a4cde5186c5f86a5fc8e Mon Sep 17 00:00:00 2001
+From: Thomas A Caswell <tcaswell@gmail.com>
+Date: Sun, 28 Jul 2019 13:37:39 -0400
+Subject: [PATCH] Backport PR #14901: Fix GH14900: numpy 1.17.0 breaks
+ test_colors.
+
+---
+ lib/matplotlib/colors.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/matplotlib/colors.py b/lib/matplotlib/colors.py
+index 1e47c00c79b..585381d9a7a 100644
+--- a/lib/matplotlib/colors.py
++++ b/lib/matplotlib/colors.py
+@@ -1685,7 +1685,7 @@ def shade_normals(self, normals, fraction=1.):
+             # visually appears better than a "hard" clip.
+             intensity -= imin
+             intensity /= (imax - imin)
+-        intensity = np.clip(intensity, 0, 1, intensity)
++        intensity = np.clip(intensity, 0, 1)
+ 
+         return intensity
+ 
