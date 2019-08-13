@@ -81,6 +81,7 @@ Patch1005:      0004-Increase-some-tolerances-for-non-x86-arches.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
+BuildRequires:  glibc-langpack-en
 BuildRequires:  freetype-devel
 BuildRequires:  libpng-devel
 BuildRequires:  qhull-devel
