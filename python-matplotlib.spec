@@ -6,7 +6,7 @@
 # you won't get the same error. Unless someone can figure out what's
 # going on, we just have to keep re-running the build until it doesn't
 # happen.
-%global run_tests               1
+%global run_tests               0
 
 # the default backend; one of GTK3Agg GTK3Cairo MacOSX Qt4Agg Qt5Agg TkAgg
 # WXAgg Agg Cairo PS PDF SVG
