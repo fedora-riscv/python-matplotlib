@@ -44,7 +44,7 @@
 
 Name:           python-matplotlib
 Version:        3.1.1
-Release:        1%{?rctag:.%{rctag}}%{?dist}.1
+Release:        2%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -62,6 +62,10 @@ Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 # Fix tests with NumPy 1.17.
 # https://github.com/matplotlib/matplotlib/pull/14901
 Patch0003:      1230e83b6793e5ccda8543f3584eb8bc2dc657e2.patch
+
+# Fix np.bool_ -> bool deprecation warnings on Python 3.8.
+# https://github.com/matplotlib/matplotlib/pull/15168
+Patch0004:      4651a1253ca5dc597550c5cd746f30dabee770bc.patch
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
@@ -264,6 +268,8 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 
 %patch0003 -p1
 
+%patch0004 -p1
+
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
@@ -451,6 +457,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Fri Sep 06 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.1.1-2
+- Backport bool deprecation fix for Python 3.8
+
 * Sun Aug 18 2019 Miro Hrončok <mhroncok@redhat.com> - 3.1.1-1.1
 - Rebuilt for Python 3.8
 
