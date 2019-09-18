@@ -1,5 +1,14 @@
 %global with_html               0
 
+# No qt4 or wx for EL8
+%if 0%{rhel} >= 8
+%bcond_with qt4
+%bcond_with wx
+%else
+%bcond_without qt4
+%bcond_without wx
+%endif
+
 # It seems like there's some kind of weird occasional error where a
 # build (often aarch64 or ppc64) will fail in one of the Stix font
 # tests with a huge RMS difference, but if you run the same build again,
@@ -44,7 +53,7 @@
 
 Name:           python-matplotlib
 Version:        3.0.3
-Release:        2%{?rctag:.%{rctag}}%{?dist}
+Release:        3%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -169,6 +178,7 @@ Matplotlib tries to make easy things easy and hard things possible.
 You can generate plots, histograms, power spectra, bar charts,
 errorcharts, scatterplots, etc, with just a few lines of code.
 
+%if %{with qt4}
 %package -n     python3-matplotlib-qt4
 Summary:        Qt4 backend for python3-matplotlib
 BuildRequires:  python3-PyQt4-devel
@@ -179,6 +189,7 @@ Requires:       python3-PyQt4
 
 %description -n python3-matplotlib-qt4
 %{summary}
+%endif
 
 %package -n     python3-matplotlib-qt5
 Summary:        Qt5 backend for python3-matplotlib
@@ -213,6 +224,7 @@ Requires:       python3-tkinter
 %description -n python3-matplotlib-tk
 %{summary}
 
+%if %{with wx}
 %package -n     python3-matplotlib-wx
 Summary:        WX backend for python3-matplotlib
 BuildRequires:  python3-wxpython4
@@ -222,6 +234,7 @@ Requires:       python3-wxpython4
 
 %description -n python3-matplotlib-wx
 %{summary}
+%endif
 
 %package -n python3-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
@@ -272,7 +285,10 @@ gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{mpl_images_version
 %endif
 rm -r extern/libqhull
 
+# Old pytest in EL8
+%if ! ( 0%{?rhel} >= 8 )
 %patch1005 -p1
+%endif
 
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
@@ -412,11 +428,13 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/matplotlib/tests/baseline_images/
 %{python3_sitearch}/mpl_toolkits/tests/baseline_images/
 
+%if %{with qt4}
 %files -n python3-matplotlib-qt4
 %{python3_sitearch}/matplotlib/backends/backend_qt4.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4.*
 %{python3_sitearch}/matplotlib/backends/backend_qt4agg.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4agg.*
+%endif
 
 # This subpackage is empty because the Qt4 backend imports it, so we leave
 # these files in the default package, and only use this one for dependencies.
@@ -441,14 +459,19 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/matplotlib/backends/__pycache__/tkagg.*
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
+%if %{with wx}
 %files -n python3-matplotlib-wx
 %{python3_sitearch}/matplotlib/backends/backend_wx*.py
 %{python3_sitearch}/matplotlib/backends/wx_compat.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_wx*
 %{python3_sitearch}/matplotlib/backends/__pycache__/wx_compat.*
+%endif
 
 
 %changelog
+* Tue Sep 17 2019 Orion Poplawski <orion@nwra.com> - 3.0.3-3
+- Disable qt4 and wx for EPEL8
+
 * Wed Jul  3 2019 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 3.0.3-2
 - Update Obsoletes to be later than the last python2 builds (#1726490)
 
