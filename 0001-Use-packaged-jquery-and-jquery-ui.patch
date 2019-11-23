@@ -1,14 +1,14 @@
-From a587261dcf6821dd03e1956cc1644a3a7aaa4031 Mon Sep 17 00:00:00 2001
+From c2af74bf18d46d03ec34bfda32afe1a99511ac9f Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 2 Mar 2019 18:18:29 -0500
 Subject: [PATCH] Use packaged jquery and jquery-ui.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- .../backends/web_backend/all_figures.html     |  6 +--
- .../backends/web_backend/single_figure.html   |  6 +--
- setup.py                                      | 46 -------------------
- 3 files changed, 6 insertions(+), 52 deletions(-)
+ .../backends/web_backend/all_figures.html     |  6 +-
+ .../backends/web_backend/single_figure.html   |  6 +-
+ setup.py                                      | 56 -------------------
+ 3 files changed, 6 insertions(+), 62 deletions(-)
 
 diff --git a/lib/matplotlib/backends/web_backend/all_figures.html b/lib/matplotlib/backends/web_backend/all_figures.html
 index 41f48dc6d..69097eb4f 100644
@@ -45,10 +45,10 @@ index 4d5a366fb..c11c86618 100644
      <script src="{{ prefix }}/js/mpl.js"></script>
      <script>
 diff --git a/setup.py b/setup.py
-index d5ff91c43..a2b82f692 100644
+index adabf1753..57d6b91b4 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -26,8 +26,6 @@ from zipfile import ZipFile
+@@ -27,8 +27,6 @@ from zipfile import ZipFile
  
  from setuptools import setup, Extension
  from setuptools.command.build_ext import build_ext as BuildExtCommand
@@ -57,11 +57,21 @@ index d5ff91c43..a2b82f692 100644
  from setuptools.command.test import test as TestCommand
  
  # The setuptools version of sdist adds a setup.cfg file to the tree.
-@@ -123,50 +121,6 @@ cmdclass['test'] = NoopTestCommand
+@@ -124,60 +122,6 @@ cmdclass['test'] = NoopTestCommand
  cmdclass['build_ext'] = BuildExtraLibraries
  
  
 -def _download_jquery_to(dest):
+-    if os.path.exists(os.path.join(dest, "jquery-ui-1.12.1")):
+-        return
+-
+-    # If we are installing from an sdist, use the already downloaded jquery-ui
+-    sdist_src = os.path.join(
+-        "lib/matplotlib/backends/web_backend", "jquery-ui-1.12.1")
+-    if os.path.exists(sdist_src):
+-        shutil.copytree(sdist_src, os.path.join(dest, "jquery-ui-1.12.1"))
+-        return
+-
 -    # Note: When bumping the jquery-ui version, also update the versions in
 -    # single_figure.html and all_figures.html.
 -    url = "https://jqueryui.com/resources/download/jquery-ui-1.12.1.zip"

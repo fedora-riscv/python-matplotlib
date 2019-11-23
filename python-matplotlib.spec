@@ -43,8 +43,8 @@
 %global ftver 2.10.0
 
 Name:           python-matplotlib
-Version:        3.1.1
-Release:        2%{?rctag:.%{rctag}}%{?dist}
+Version:        3.1.2
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -59,13 +59,11 @@ Patch0001:      0001-Force-using-system-qhull.patch
 # Don't attempt to download jQuery and jQuery UI
 Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
-# Fix tests with NumPy 1.17.
-# https://github.com/matplotlib/matplotlib/pull/14901
-Patch0003:      1230e83b6793e5ccda8543f3584eb8bc2dc657e2.patch
-
-# Fix np.bool_ -> bool deprecation warnings on Python 3.8.
-# https://github.com/matplotlib/matplotlib/pull/15168
-Patch0004:      4651a1253ca5dc597550c5cd746f30dabee770bc.patch
+# Fix WebAgg test
+# https://github.com/matplotlib/matplotlib/pull/15737
+Patch0003:      0001-Fix-env-override-in-WebAgg-backend-test.patch
+# https://github.com/matplotlib/matplotlib/pull/15763
+Patch0004:      0001-Skip-webagg-test-if-tornado-is-not-available.patch
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
@@ -155,6 +153,8 @@ Requires:       python3-kiwisolver
 Requires:       python3-matplotlib-%{?backend_subpackage}%{!?backend_subpackage:tk}%{?_isa} = %{version}-%{release}
 %if %{run_tests}
 BuildRequires:  python3-pytest
+BuildRequires:  python3-pytest-rerunfailures
+BuildRequires:  python3-pytest-timeout
 BuildRequires:  python3-pytest-xdist
 %endif
 Requires:       python3-numpy
@@ -457,6 +457,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Fri Nov 22 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.1.2-1
+- Update to latest version
+
 * Fri Sep 06 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.1.1-2
 - Backport bool deprecation fix for Python 3.8
 
