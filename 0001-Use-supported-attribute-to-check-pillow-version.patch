@@ -1,0 +1,27 @@
+From 3369e3bc24f98f430593a5d15d8e6d6deb14356e Mon Sep 17 00:00:00 2001
+From: Thomas A Caswell <tcaswell@gmail.com>
+Date: Fri, 3 Jan 2020 20:24:07 -0500
+Subject: [PATCH] FIX: use supported attribute to check pillow version
+
+the PILLOW_VERSION attribute was deprecated in pillow 5.2 and removed
+in pillow 7.0.  The __version__ attribute is present in the minimum
+version we check (3.4).
+
+closes #16083
+---
+ lib/matplotlib/backend_bases.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/matplotlib/backend_bases.py b/lib/matplotlib/backend_bases.py
+index 5f73911670d..650446cbdb2 100644
+--- a/lib/matplotlib/backend_bases.py
++++ b/lib/matplotlib/backend_bases.py
+@@ -54,7 +54,7 @@
+ from matplotlib.path import Path
+ 
+ try:
+-    from PIL import PILLOW_VERSION
++    from PIL import __version__ as PILLOW_VERSION
+     from distutils.version import LooseVersion
+     if LooseVersion(PILLOW_VERSION) >= "3.4":
+         _has_pil = True

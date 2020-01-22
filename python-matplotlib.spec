@@ -64,6 +64,9 @@ Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 Patch0003:      0001-Fix-env-override-in-WebAgg-backend-test.patch
 # https://github.com/matplotlib/matplotlib/pull/15763
 Patch0004:      0001-Skip-webagg-test-if-tornado-is-not-available.patch
+# https://github.com/matplotlib/matplotlib/pull/16086
+Patch0005:      0001-Use-supported-attribute-to-check-pillow-version.patch
+
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
@@ -269,6 +272,8 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %patch0003 -p1
 
 %patch0004 -p1
+
+%patch0005 -p1
 
 # Fedora-specific patches follow:
 %patch1001 -p1
