@@ -1,4 +1,4 @@
-From b3b02bdfe6db629bc68a87a472b5f88d988bf5f2 Mon Sep 17 00:00:00 2001
+From 83ec21942e1b7d80000d801595c57a653eefa243 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 23 Jan 2018 20:27:17 -0500
 Subject: [PATCH 3/4] Increase tolerances for non-x86_64 arches.
@@ -36,5 +36,5 @@ index 95b1ae5a3..e054196b4 100644
  def test_anchored_direction_arrows():
      fig, ax = plt.subplots()
 -- 
-2.21.0
+2.21.1
 

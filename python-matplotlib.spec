@@ -43,7 +43,7 @@
 %global ftver 2.10.0
 
 Name:           python-matplotlib
-Version:        3.1.2
+Version:        3.1.3
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
@@ -59,15 +59,9 @@ Patch0001:      0001-Force-using-system-qhull.patch
 # Don't attempt to download jQuery and jQuery UI
 Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
-# Fix WebAgg test
-# https://github.com/matplotlib/matplotlib/pull/15737
-Patch0003:      0001-Fix-env-override-in-WebAgg-backend-test.patch
-# https://github.com/matplotlib/matplotlib/pull/15763
-Patch0004:      0001-Skip-webagg-test-if-tornado-is-not-available.patch
-
 # Fedora-specific patches; see:
-# https://github.com/fedora-python/matplotlib/tree/fedora-patches
-# https://github.com/fedora-python/matplotlib/tree/fedora-patches-non-x86
+# https://github.com/fedora-python/matplotlib/tree/fedora-patches-v3.1.x
+# https://github.com/fedora-python/matplotlib/tree/fedora-patches-non-x86-v3.1.x
 # Updated test images for new FreeType.
 Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_version}-with-freetype-%{ftver}/matplotlib-%{mpl_images_version}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
@@ -266,10 +260,6 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 
 %patch0002 -p1
 
-%patch0003 -p1
-
-%patch0004 -p1
-
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
@@ -457,6 +447,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Fri Feb 14 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.1.3-1
+- Update to latest version
+
 * Fri Nov 22 2019 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.1.2-1
 - Update to latest version
 

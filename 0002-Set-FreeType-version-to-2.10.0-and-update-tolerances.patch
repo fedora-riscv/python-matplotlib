@@ -1,4 +1,4 @@
-From 53e911c1eb6b840036acfd6b630439bc55b4bdca Mon Sep 17 00:00:00 2001
+From 939fcad1ab9dc4986bd86842f616dc50cb6398e2 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 4 May 2019 04:36:45 -0400
 Subject: [PATCH 2/4] Set FreeType version to 2.10.0 and update tolerances.
@@ -26,10 +26,10 @@ index 7a4115491..1bf9d3e03 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 8ff5ac45d..25f5695f3 100644
+index 356b9ad42..84a1956ee 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -6198,7 +6198,7 @@ def test_normal_axes():
+@@ -6207,7 +6207,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -38,7 +38,7 @@ index 8ff5ac45d..25f5695f3 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -6216,7 +6216,7 @@ def test_normal_axes():
+@@ -6225,7 +6225,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -47,7 +47,7 @@ index 8ff5ac45d..25f5695f3 100644
  
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
-@@ -6341,7 +6341,7 @@ def test_get_tightbbox_polar():
+@@ -6350,7 +6350,7 @@ def test_get_tightbbox_polar():
      fig.canvas.draw()
      bb = ax.get_tightbbox(fig.canvas.get_renderer())
      assert_allclose(bb.extents,
@@ -110,5 +110,5 @@ index 3e8b382cc..2a3fc3ee7 100644
  
  
 -- 
-2.21.0
+2.21.1
 

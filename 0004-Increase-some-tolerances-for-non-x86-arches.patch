@@ -1,4 +1,4 @@
-From 559f45bb0334b2c920f288a2a010b11c0dba9a49 Mon Sep 17 00:00:00 2001
+From 390e418a5da886ce1b4358f454342c6af311b00a Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 4/4] Increase some tolerances for non-x86 arches.
@@ -43,7 +43,7 @@ index de596a9e0..9f12effa6 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 1168ef983..ab553e29e 100644
+index 84a1956ee..eeafd816f 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -395,7 +395,7 @@ def test_annotate_default_arrow():
@@ -55,7 +55,7 @@ index 1168ef983..ab553e29e 100644
  def test_polar_annotations():
      # you can specify the xypoint and the xytext in different
      # positions and coordinate systems, and optionally turn on a
-@@ -3502,7 +3502,7 @@ def test_vertex_markers():
+@@ -3519,7 +3519,7 @@ def test_vertex_markers():
  
  @image_comparison(baseline_images=['vline_hline_zorder',
                                     'errorbar_zorder'],
@@ -78,7 +78,7 @@ index ad23abe3f..7b9660f2b 100644
  
  @pytest.mark.parametrize("backend", _get_testable_interactive_backends())
 diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
-index c12ed7004..bc741678f 100644
+index 773093100..9cce4ed9f 100644
 --- a/lib/matplotlib/tests/test_collections.py
 +++ b/lib/matplotlib/tests/test_collections.py
 @@ -442,7 +442,7 @@ def test_barb_limits():
@@ -91,7 +91,7 @@ index c12ed7004..bc741678f 100644
  def test_EllipseCollection():
      # Test basic functionality
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index df3e5cf18..2d0d0f02a 100644
+index e9ae292f6..8e1fcb36f 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -173,7 +173,7 @@ def test_constrained_layout9():
@@ -148,7 +148,7 @@ index 6ecb3edbe..207659648 100644
      # Check the figure.align_labels() command
      fig = plt.figure(tight_layout=True)
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index ae803000d..0091fc03f 100644
+index 22cd78d46..76149bce4 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
 @@ -810,7 +810,7 @@ def test_imshow_endianess():
@@ -262,5 +262,5 @@ index 32e1c884d..741d197b5 100644
  def test_polar_box():
      fig = plt.figure(figsize=(5, 5))
 -- 
-2.21.0
+2.21.1
 

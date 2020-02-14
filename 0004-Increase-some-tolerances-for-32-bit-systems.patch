@@ -1,4 +1,4 @@
-From fb6a3a64fe6f5b314c1c54bbef745b78ee512417 Mon Sep 17 00:00:00 2001
+From d9fada8cc0ef89142222f4c163ec9dd155662cb6 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 4/4] Increase some tolerances for 32-bit systems.
@@ -57,7 +57,7 @@ index 9bf15d0b9..5339dd2eb 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 25f5695f3..f6ddc4e95 100644
+index 84a1956ee..50eb0e6a4 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -562,7 +562,7 @@ def test_single_point():
@@ -107,7 +107,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_arc_angles():
      from matplotlib import patches
      # Ellipse parameters
-@@ -2635,7 +2637,7 @@ def test_boxplot_mod_artist_after_plotting():
+@@ -2644,7 +2646,7 @@ def test_boxplot_mod_artist_after_plotting():
  
  @image_comparison(baseline_images=['violinplot_vert_baseline',
                                     'violinplot_vert_baseline'],
@@ -116,7 +116,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_vert_violinplot_baseline():
      # First 9 digits of frac(sqrt(2))
      np.random.seed(414213562)
-@@ -2653,7 +2655,7 @@ def test_vert_violinplot_baseline():
+@@ -2662,7 +2664,7 @@ def test_vert_violinplot_baseline():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showmeans'],
@@ -125,7 +125,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_vert_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(3))
-@@ -2664,7 +2666,7 @@ def test_vert_violinplot_showmeans():
+@@ -2673,7 +2675,7 @@ def test_vert_violinplot_showmeans():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showextrema'],
@@ -134,7 +134,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_vert_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(5))
-@@ -2675,7 +2677,7 @@ def test_vert_violinplot_showextrema():
+@@ -2684,7 +2686,7 @@ def test_vert_violinplot_showextrema():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showmedians'],
@@ -143,7 +143,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_vert_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(7))
-@@ -2686,7 +2688,7 @@ def test_vert_violinplot_showmedians():
+@@ -2695,7 +2697,7 @@ def test_vert_violinplot_showmedians():
  
  
  @image_comparison(baseline_images=['violinplot_vert_showall'],
@@ -152,7 +152,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_vert_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(11))
-@@ -2697,7 +2699,7 @@ def test_vert_violinplot_showall():
+@@ -2706,7 +2708,7 @@ def test_vert_violinplot_showall():
  
  
  @image_comparison(baseline_images=['violinplot_vert_custompoints_10'],
@@ -161,7 +161,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_vert_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(13))
-@@ -2708,7 +2710,7 @@ def test_vert_violinplot_custompoints_10():
+@@ -2717,7 +2719,7 @@ def test_vert_violinplot_custompoints_10():
  
  
  @image_comparison(baseline_images=['violinplot_vert_custompoints_200'],
@@ -170,7 +170,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_vert_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(17))
-@@ -2719,7 +2721,7 @@ def test_vert_violinplot_custompoints_200():
+@@ -2728,7 +2730,7 @@ def test_vert_violinplot_custompoints_200():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_baseline'],
@@ -179,7 +179,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_horiz_violinplot_baseline():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(19))
-@@ -2730,7 +2732,7 @@ def test_horiz_violinplot_baseline():
+@@ -2739,7 +2741,7 @@ def test_horiz_violinplot_baseline():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showmedians'],
@@ -188,7 +188,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_horiz_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(23))
-@@ -2741,7 +2743,7 @@ def test_horiz_violinplot_showmedians():
+@@ -2750,7 +2752,7 @@ def test_horiz_violinplot_showmedians():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showmeans'],
@@ -197,7 +197,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_horiz_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(29))
-@@ -2752,7 +2754,7 @@ def test_horiz_violinplot_showmeans():
+@@ -2761,7 +2763,7 @@ def test_horiz_violinplot_showmeans():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showextrema'],
@@ -206,7 +206,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_horiz_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(31))
-@@ -2763,7 +2765,7 @@ def test_horiz_violinplot_showextrema():
+@@ -2772,7 +2774,7 @@ def test_horiz_violinplot_showextrema():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_showall'],
@@ -215,7 +215,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_horiz_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(37))
-@@ -2774,7 +2776,7 @@ def test_horiz_violinplot_showall():
+@@ -2783,7 +2785,7 @@ def test_horiz_violinplot_showall():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_custompoints_10'],
@@ -224,7 +224,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_horiz_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(41))
-@@ -2785,7 +2787,7 @@ def test_horiz_violinplot_custompoints_10():
+@@ -2794,7 +2796,7 @@ def test_horiz_violinplot_custompoints_10():
  
  
  @image_comparison(baseline_images=['violinplot_horiz_custompoints_200'],
@@ -233,7 +233,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_horiz_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(43))
-@@ -3509,8 +3511,7 @@ def test_vertex_markers():
+@@ -3518,8 +3520,7 @@ def test_vertex_markers():
  
  
  @image_comparison(baseline_images=['vline_hline_zorder',
@@ -243,7 +243,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_eb_line_zorder():
      x = list(range(10))
  
-@@ -4190,7 +4191,7 @@ def test_psd_noise():
+@@ -4199,7 +4200,7 @@ def test_psd_noise():
  
  
  @image_comparison(baseline_images=['csd_freqs'], remove_text=True,
@@ -252,7 +252,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_csd_freqs():
      '''test axes.csd with sinusoidal stimuli'''
      n = 10000
-@@ -5108,7 +5109,7 @@ def test_rc_spines():
+@@ -5117,7 +5118,7 @@ def test_rc_spines():
  
  
  @image_comparison(baseline_images=['rc_grid'], extensions=['png'],
@@ -261,7 +261,7 @@ index 25f5695f3..f6ddc4e95 100644
  def test_rc_grid():
      fig = plt.figure()
      rc_dict0 = {
-@@ -5670,7 +5671,7 @@ def test_date_timezone_y():
+@@ -5679,7 +5680,7 @@ def test_date_timezone_y():
  
  
  @image_comparison(baseline_images=['date_timezone_x_and_y'],
@@ -654,5 +654,5 @@ index 4bfb6f8ff..a6eee9ff6 100644
      def test_xyz(self):
          fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 -- 
-2.21.0
+2.21.1
 
