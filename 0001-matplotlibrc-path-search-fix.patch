@@ -1,23 +1,34 @@
-From 7a2146f4de31667bf977ba11598078f76beaf89c Mon Sep 17 00:00:00 2001
+From 4fa2feb3b74904723c038c80303cddb52b68718d Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
 Subject: [PATCH 1/4] matplotlibrc path search fix
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- lib/matplotlib/__init__.py            | 19 ++++---------------
- lib/matplotlib/tests/test_rcparams.py | 18 ++++++++++++------
- 2 files changed, 16 insertions(+), 21 deletions(-)
+ lib/matplotlib/__init__.py            | 30 ++++-----------------------
+ lib/matplotlib/tests/test_rcparams.py | 15 ++++++++++----
+ 2 files changed, 15 insertions(+), 30 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 825303171..7a4115491 100644
+index c4dba5f29..c56f5ca14 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -624,18 +624,8 @@ def _get_data_path():
+@@ -631,32 +631,11 @@ def _get_data_path():
+             "3.1", name="MATPLOTLIBDATA", obj_type="environment variable")
          return path
  
-     def get_candidate_paths():
--        yield Path(__file__).with_name('mpl-data')
+-    path = Path(__file__).with_name("mpl-data")
++    path = (Path(__file__).parent.parent.parent.parent.parent /
++            'share/matplotlib/mpl-data')
+     if path.is_dir():
+         return str(path)
+ 
+-    cbook.warn_deprecated(
+-        "3.2", message="Matplotlib installs where the data is not in the "
+-        "mpl-data subdirectory of the package are deprecated since %(since)s "
+-        "and support for them will be removed %(removal)s.")
+-
+-    def get_candidate_paths():
 -        # setuptools' namespace_packages may hijack this init file
 -        # so need to try something known to be in Matplotlib, not basemap.
 -        import matplotlib.afm
@@ -29,22 +40,25 @@ index 825303171..7a4115491 100644
 -            yield Path(sys.executable).parent.with_name('mpl-data')
 -            # Try again assuming sys.path[0] is a dir not a exe.
 -            yield Path(sys.path[0]) / 'mpl-data'
-+        yield (Path(__file__).parent.parent.parent.parent.parent /
-+               'share/matplotlib/mpl-data')
+-
+-    for path in get_candidate_paths():
+-        if path.is_dir():
+-            return str(path)
+-
+     raise RuntimeError('Could not find the matplotlib data files')
  
-     for path in get_candidate_paths():
-         if path.is_dir():
-@@ -678,8 +668,7 @@ def matplotlib_fname():
+ 
+@@ -694,8 +673,7 @@ def matplotlib_fname():
            is not defined)
      - On other platforms,
-         - ``$HOME/.matplotlib/matplotlibrc`` if ``$HOME`` is defined
+       - ``$HOME/.matplotlib/matplotlibrc`` if ``$HOME`` is defined
 -    - Lastly, it looks in ``$MATPLOTLIBDATA/matplotlibrc``, which should always
 -      exist.
 +    - Lastly, it looks in ``/etc/matplotlibrc``, which should always exist.
      """
  
      def gen_candidates():
-@@ -692,7 +681,7 @@ def matplotlib_fname():
+@@ -708,7 +686,7 @@ def matplotlib_fname():
              yield matplotlibrc
              yield os.path.join(matplotlibrc, 'matplotlibrc')
          yield os.path.join(get_configdir(), 'matplotlibrc')
@@ -54,18 +68,10 @@ index 825303171..7a4115491 100644
      for fname in gen_candidates():
          if os.path.exists(fname) and not os.path.isdir(fname):
 diff --git a/lib/matplotlib/tests/test_rcparams.py b/lib/matplotlib/tests/test_rcparams.py
-index d8fe73ceb..c3aeb58ef 100644
+index 87dfbeceb..54885da47 100644
 --- a/lib/matplotlib/tests/test_rcparams.py
 +++ b/lib/matplotlib/tests/test_rcparams.py
-@@ -1,6 +1,7 @@
- from collections import OrderedDict
- import copy
- import os
-+from pathlib import Path
- from unittest import mock
- import warnings
- 
-@@ -457,11 +458,17 @@ def test_rcparams_reset_after_fail():
+@@ -460,10 +460,17 @@ def test_rcparams_reset_after_fail():
          assert mpl.rcParams['text.usetex'] is False
  
  
@@ -80,13 +86,12 @@ index d8fe73ceb..c3aeb58ef 100644
 +def test_if_rctemplate_is_up_to_date(mplrc):
      # This tests if the matplotlibrc.template file contains all valid rcParams.
      deprecated = {*mpl._all_deprecated, *mpl._deprecated_remain_as_none}
--    path_to_rc = os.path.join(mpl.get_data_path(), 'matplotlibrc')
--    with open(path_to_rc, "r") as f:
-+    with open(mplrc, "r") as f:
-         rclines = f.readlines()
+-    with cbook._get_data_path('matplotlibrc').open() as file:
++    with mplrc.open() as file:
+         rclines = file.readlines()
      missing = {}
      for k, v in mpl.defaultParams.items():
-@@ -484,11 +491,10 @@ def test_if_rctemplate_is_up_to_date():
+@@ -483,10 +490,10 @@ def test_if_rctemplate_is_up_to_date():
                           .format(missing.items()))
  
  
@@ -94,12 +99,11 @@ index d8fe73ceb..c3aeb58ef 100644
 +def test_if_rctemplate_would_be_valid(tmpdir, mplrc):
      # This tests if the matplotlibrc.template file would result in a valid
      # rc file if all lines are uncommented.
--    path_to_rc = os.path.join(mpl.get_data_path(), 'matplotlibrc')
--    with open(path_to_rc, "r") as f:
-+    with open(mplrc, "r") as f:
-         rclines = f.readlines()
+-    with cbook._get_data_path('matplotlibrc').open() as file:
++    with mplrc.open() as file:
+         rclines = file.readlines()
      newlines = []
      for line in rclines:
 -- 
-2.21.0
+2.21.1
 

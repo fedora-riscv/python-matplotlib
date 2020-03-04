@@ -37,14 +37,14 @@
 #global rctag rc2
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.1.1
+%global mpl_images_version 3.2.0
 
 # The version of FreeType in this Fedora branch.
-%global ftver 2.10.0
+%global ftver 2.10.1
 
 Name:           python-matplotlib
-Version:        3.1.2
-Release:        1%{?rctag:.%{rctag}}%{?dist}.1
+Version:        3.2.0
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -59,15 +59,6 @@ Patch0001:      0001-Force-using-system-qhull.patch
 # Don't attempt to download jQuery and jQuery UI
 Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
-# Fix WebAgg test
-# https://github.com/matplotlib/matplotlib/pull/15737
-Patch0003:      0001-Fix-env-override-in-WebAgg-backend-test.patch
-# https://github.com/matplotlib/matplotlib/pull/15763
-Patch0004:      0001-Skip-webagg-test-if-tornado-is-not-available.patch
-# https://github.com/matplotlib/matplotlib/pull/16086
-Patch0005:      0001-Use-supported-attribute-to-check-pillow-version.patch
-
-
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches-non-x86
@@ -76,7 +67,7 @@ Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_vers
 # Search in /etc/matplotlibrc:
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
-Patch1002:      0002-Set-FreeType-version-to-2.10.0-and-update-tolerances.patch
+Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 # Image tolerances for anything but x86_64:
 Patch1003:      0003-Increase-tolerances-for-non-x86_64-arches.patch
 # Image tolerances for 32-bit systems: i686 armv7hl
@@ -95,11 +86,11 @@ BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  zlib-devel
 
 %description
-Matplotlib is a python 2D plotting library which produces publication
+Matplotlib is a Python 2D plotting library which produces publication
 quality figures in a variety of hardcopy formats and interactive
-environments across platforms. matplotlib can be used in python
-scripts, the python and ipython shell, web application servers, and
-six graphical user interface toolkits.
+environments across platforms. Matplotlib can be used in Python
+scripts, the Python and IPython shell, web application servers, and
+various graphical user interface toolkits.
 
 Matplotlib tries to make easy things easy and hard things possible.
 You can generate plots, histograms, power spectra, bar charts,
@@ -171,11 +162,11 @@ Provides:       bundled(stix-math-fonts)
 %{?python_provide:%python_provide python3-matplotlib}
 
 %description -n python3-matplotlib
-Matplotlib is a python 2D plotting library which produces publication
+Matplotlib is a Python 2D plotting library which produces publication
 quality figures in a variety of hardcopy formats and interactive
-environments across platforms. matplotlib can be used in python
-scripts, the python and ipython shell, web application servers, and
-six graphical user interface toolkits.
+environments across platforms. Matplotlib can be used in Python
+scripts, the Python and IPython shell, web application servers, and
+various graphical user interface toolkits.
 
 Matplotlib tries to make easy things easy and hard things possible.
 You can generate plots, histograms, power spectra, bar charts,
@@ -269,12 +260,6 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 
 %patch0002 -p1
 
-%patch0003 -p1
-
-%patch0004 -p1
-
-%patch0005 -p1
-
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
@@ -293,19 +278,6 @@ rm -r extern/libqhull
 
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
-
-# Keep this until next version, and increment if changing from
-# USE_FONTCONFIG to False or True so that cache is regenerated
-# if updated from a version enabling fontconfig to one not
-# enabling it, or vice versa
-if [ %{version} = 1.4.3 ]; then
-    sed -i 's/\(__version__ = 200\)/\1.1/' lib/matplotlib/font_manager.py
-fi
-
-%if !%{with_bundled_fonts}
-# Use fontconfig by default
-sed -i 's/\(USE_FONTCONFIG = \)False/\1True/' lib/matplotlib/font_manager.py
-%endif
 
 
 %build
@@ -350,7 +322,6 @@ export http_proxy=http://127.0.0.1/
 # Skips:
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
 #    heavily-loaded builder.
-#  * test_tinypages fails due to new Sphinx warning
 #  * wxagg is broken on ppc64le:
 #    https://bugzilla.redhat.com/show_bug.cgi?id=1738752
 MPLCONFIGDIR=$PWD \
@@ -448,20 +419,19 @@ PYTHONDONTWRITEBYTECODE=1 \
 %files -n python3-matplotlib-tk
 %{python3_sitearch}/matplotlib/backends/backend_tk*.py
 %{python3_sitearch}/matplotlib/backends/_backend_tk.py
-%{python3_sitearch}/matplotlib/backends/tkagg.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_tk*.*
 %{python3_sitearch}/matplotlib/backends/__pycache__/_backend_tk.*
-%{python3_sitearch}/matplotlib/backends/__pycache__/tkagg.*
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %files -n python3-matplotlib-wx
 %{python3_sitearch}/matplotlib/backends/backend_wx*.py
-%{python3_sitearch}/matplotlib/backends/wx_compat.py
 %{python3_sitearch}/matplotlib/backends/__pycache__/backend_wx*
-%{python3_sitearch}/matplotlib/backends/__pycache__/wx_compat.*
 
 
 %changelog
+* Tue Mar 03 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.2.0-1
+- Update to latest version
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 3.1.2-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 

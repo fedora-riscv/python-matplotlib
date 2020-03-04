@@ -1,40 +1,42 @@
-From b3b02bdfe6db629bc68a87a472b5f88d988bf5f2 Mon Sep 17 00:00:00 2001
+From 743d1b3370b37c6e4798c941867a43d1118f771b Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 23 Jan 2018 20:27:17 -0500
 Subject: [PATCH 3/4] Increase tolerances for non-x86_64 arches.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- lib/matplotlib/tests/test_streamplot.py   | 2 +-
+ lib/matplotlib/tests/test_streamplot.py   | 4 ++--
  lib/mpl_toolkits/tests/test_axes_grid1.py | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index a712680cd..6007c9b9a 100644
+index d2218f6f2..1afc60543 100644
 --- a/lib/matplotlib/tests/test_streamplot.py
 +++ b/lib/matplotlib/tests/test_streamplot.py
-@@ -61,7 +61,7 @@ def test_linewidth():
+@@ -63,8 +63,8 @@ def test_linewidth():
+                   linewidth=lw)
  
  
- @image_comparison(baseline_images=['streamplot_masks_and_nans'],
--                  tol=0.04 if on_win else 0,
-+                  tol=0.04 if on_win else 0.01,
-                   remove_text=True, style='mpl20')
+-@image_comparison(['streamplot_masks_and_nans'],
+-                  remove_text=True, style='mpl20', tol=0.04 if on_win else 0)
++@image_comparison(baseline_images=['streamplot_masks_and_nans'],
++                  remove_text=True, style='mpl20', tol=0.04 if on_win else .01)
  def test_masks_and_nans():
      X, Y, U, V = velocity_field()
+     mask = np.zeros(U.shape, dtype=bool)
 diff --git a/lib/mpl_toolkits/tests/test_axes_grid1.py b/lib/mpl_toolkits/tests/test_axes_grid1.py
-index 95b1ae5a3..e054196b4 100644
+index 9ed9a9280..56a3bd14a 100644
 --- a/lib/mpl_toolkits/tests/test_axes_grid1.py
 +++ b/lib/mpl_toolkits/tests/test_axes_grid1.py
-@@ -362,7 +362,7 @@ def test_zooming_with_inverted_axes():
+@@ -343,7 +343,7 @@ def test_zooming_with_inverted_axes():
  
  
- @image_comparison(baseline_images=['anchored_direction_arrows'],
--                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0),
-+                  tol=0.02,
-                   extensions=['png'])
+ @image_comparison(['anchored_direction_arrows.png'],
+-                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0))
++                  tol=0.02)
  def test_anchored_direction_arrows():
      fig, ax = plt.subplots()
+     ax.imshow(np.zeros((10, 10)), interpolation='nearest')
 -- 
-2.21.0
+2.21.1
 
