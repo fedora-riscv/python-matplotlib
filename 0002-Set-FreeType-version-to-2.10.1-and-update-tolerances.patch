@@ -1,4 +1,4 @@
-From 1a08b9ab19b817d9deaa7a03ed29a1452fafe3e4 Mon Sep 17 00:00:00 2001
+From cff0aeead7f2e1b570613dbec8c67d0f715fc87e Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
 Subject: [PATCH 2/4] Set FreeType version to 2.10.1 and update tolerances.
@@ -13,10 +13,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  5 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index c56f5ca14..11eee4fcf 100644
+index d2bd48800..ff06bf049 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -1292,7 +1292,7 @@ default_test_modules = [
+@@ -1313,7 +1313,7 @@ default_test_modules = [
  def _init_tests():
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
@@ -26,10 +26,10 @@ index c56f5ca14..11eee4fcf 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 5edb4f24b..ba9c2005b 100644
+index 93548b279..de146a527 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -6400,7 +6400,7 @@ def test_normal_axes():
+@@ -6405,7 +6405,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -38,7 +38,7 @@ index 5edb4f24b..ba9c2005b 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -6418,7 +6418,7 @@ def test_normal_axes():
+@@ -6423,7 +6423,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -47,7 +47,7 @@ index 5edb4f24b..ba9c2005b 100644
  
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
-@@ -6543,7 +6543,7 @@ def test_get_tightbbox_polar():
+@@ -6548,7 +6548,7 @@ def test_get_tightbbox_polar():
      fig.canvas.draw()
      bb = ax.get_tightbbox(fig.canvas.get_renderer())
      assert_allclose(bb.extents,

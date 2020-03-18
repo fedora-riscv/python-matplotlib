@@ -43,7 +43,7 @@
 %global ftver 2.10.1
 
 Name:           python-matplotlib
-Version:        3.2.0
+Version:        3.2.1
 Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
@@ -58,10 +58,6 @@ Patch0001:      0001-Force-using-system-qhull.patch
 
 # Don't attempt to download jQuery and jQuery UI
 Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
-
-# Fix a flaky test
-# https://github.com/matplotlib/matplotlib/pull/16656
-Patch0003:      https://github.com/matplotlib/matplotlib/pull/16656.patch
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
@@ -264,8 +260,6 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 
 %patch0002 -p1
 
-%patch0003 -p1
-
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
@@ -435,6 +429,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Mar 18 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.2.1-1
+- Update to latest version
+
 * Tue Mar 03 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.2.0-1
 - Update to latest version
 

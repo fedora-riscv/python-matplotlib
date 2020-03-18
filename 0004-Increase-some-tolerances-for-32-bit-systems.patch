@@ -1,4 +1,4 @@
-From ce08fe59398bf0bb68ca90fa4c1bf992613f5d19 Mon Sep 17 00:00:00 2001
+From 9e7be0a26644ec35dde39fb332837baab80f91cb Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 4/4] Increase some tolerances for 32-bit systems.
@@ -30,10 +30,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  22 files changed, 60 insertions(+), 70 deletions(-)
 
 diff --git a/lib/matplotlib/testing/decorators.py b/lib/matplotlib/testing/decorators.py
-index 7965d45e4..6f5022ffa 100644
+index 7d0941233..29df3f284 100644
 --- a/lib/matplotlib/testing/decorators.py
 +++ b/lib/matplotlib/testing/decorators.py
-@@ -268,7 +268,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
+@@ -269,7 +269,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
      return decorator
  
  
@@ -56,7 +56,7 @@ index a598e822d..becc9b46d 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index ba9c2005b..6bf56374c 100644
+index de146a527..4d7a3ba47 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -563,7 +563,7 @@ def test_single_point():
@@ -231,7 +231,7 @@ index ba9c2005b..6bf56374c 100644
  def test_horiz_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(43))
-@@ -3647,8 +3648,7 @@ def test_vertex_markers():
+@@ -3652,8 +3653,7 @@ def test_vertex_markers():
      ax.set_ylim([-1, 10])
  
  
@@ -241,7 +241,7 @@ index ba9c2005b..6bf56374c 100644
  def test_eb_line_zorder():
      x = list(range(10))
  
-@@ -4335,7 +4335,7 @@ def test_psd_noise():
+@@ -4340,7 +4340,7 @@ def test_psd_noise():
      ax3.set_ylabel('')
  
  
@@ -250,7 +250,7 @@ index ba9c2005b..6bf56374c 100644
  def test_csd_freqs():
      '''test axes.csd with sinusoidal stimuli'''
      n = 10000
-@@ -5239,7 +5239,7 @@ def test_rc_spines():
+@@ -5244,7 +5244,7 @@ def test_rc_spines():
          fig, ax = plt.subplots()
  
  
@@ -259,7 +259,7 @@ index ba9c2005b..6bf56374c 100644
  def test_rc_grid():
      fig = plt.figure()
      rc_dict0 = {
-@@ -5781,7 +5781,7 @@ def test_date_timezone_y():
+@@ -5786,7 +5786,7 @@ def test_date_timezone_y():
      plt.plot_date([3] * 3, time_index, tz='UTC', xdate=False, ydate=True)
  
  
@@ -470,7 +470,7 @@ index 71499da44..42413a5c1 100644
      x = np.linspace(1, 100, 100)
      y = x
 diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
-index fdf930184..6bf204f8b 100644
+index 508e29fa0..f6862e631 100644
 --- a/lib/matplotlib/tests/test_mathtext.py
 +++ b/lib/matplotlib/tests/test_mathtext.py
 @@ -172,7 +172,7 @@ def baseline_images(request, fontset, index):
@@ -532,7 +532,7 @@ index 0fad3cdf2..aab0b29c6 100644
      fig = plt.figure('Figure with a label?', figsize=(10, 6))
  
 diff --git a/lib/matplotlib/tests/test_quiver.py b/lib/matplotlib/tests/test_quiver.py
-index 68031bff2..68d84d60e 100644
+index 719c8fbc1..fd28062e1 100644
 --- a/lib/matplotlib/tests/test_quiver.py
 +++ b/lib/matplotlib/tests/test_quiver.py
 @@ -173,7 +173,7 @@ def test_quiver_key_xy():

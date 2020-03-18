@@ -1,4 +1,4 @@
-From a37200542ac349b98dc64f4e697396b80f42f0d9 Mon Sep 17 00:00:00 2001
+From 8b585994418d62cde4a525f4e6a14aeba42459f4 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 4/4] Increase some tolerances for non-x86 arches.
@@ -43,7 +43,7 @@ index a9409e2c1..9627b3569 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index ba9c2005b..5da72b9ed 100644
+index de146a527..8574a95d2 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -407,7 +407,7 @@ def test_annotate_default_arrow():
@@ -55,7 +55,7 @@ index ba9c2005b..5da72b9ed 100644
  def test_polar_annotations():
      # you can specify the xypoint and the xytext in different
      # positions and coordinate systems, and optionally turn on a
-@@ -3648,7 +3648,7 @@ def test_vertex_markers():
+@@ -3653,7 +3653,7 @@ def test_vertex_markers():
  
  
  @image_comparison(['vline_hline_zorder', 'errorbar_zorder'],
