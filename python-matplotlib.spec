@@ -44,7 +44,7 @@
 
 Name:           python-matplotlib
 Version:        3.2.1
-Release:        1%{?rctag:.%{rctag}}%{?dist}
+Release:        1%{?rctag:.%{rctag}}%{?dist}.1
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -447,6 +447,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Mon May 25 2020 Miro Hrončok <mhroncok@redhat.com> - 3.2.1-1.1
+- Rebuilt for Python 3.9
+
 * Wed Mar 18 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.2.1-1
 - Update to latest version
 
