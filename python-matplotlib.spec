@@ -44,7 +44,7 @@
 
 Name:           python-matplotlib
 Version:        3.2.1
-Release:        1%{?rctag:.%{rctag}}%{?dist}.1
+Release:        2%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -156,7 +156,8 @@ BuildRequires:  python3-pyparsing
 BuildRequires:  python3-pytz
 BuildRequires:  python3-sphinx
 Requires:       dejavu-sans-fonts
-Requires:       dvipng
+Recommends:     texlive-dvipng
+Requires:       (texlive-dvipng if texlive-base)
 Requires:       python3-matplotlib-data = %{version}-%{release}
 Requires:       python3-cairo
 Requires:       python3-cycler >= 0.10.0
@@ -247,7 +248,7 @@ Requires:       python3-wxpython4
 %package -n python3-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
 %if %{with_html}
-BuildRequires:  dvipng
+BuildRequires:  texlive-dvipng
 BuildRequires:  graphviz
 BuildRequires:  python3-sphinx
 BuildRequires:  tex(latex)
@@ -447,6 +448,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Mon Jun 01 2020 Miro Hrončok <mhroncok@redhat.com> - 3.2.1-2
+- Only recommend texlive-dvipng (but require it if texlive is installed) (#1509657)
+
 * Mon May 25 2020 Miro Hrončok <mhroncok@redhat.com> - 3.2.1-1.1
 - Rebuilt for Python 3.9
 
