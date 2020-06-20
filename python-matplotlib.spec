@@ -402,15 +402,11 @@ PYTHONDONTWRITEBYTECODE=1 \
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_gtk*
 %exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
 %exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
-%exclude %{python3_sitearch}/matplotlib/backends/tkagg.py
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/_backend_tk.*
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_tk*.*
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/tkagg.*
 %exclude %{python3_sitearch}/matplotlib/backends/_tkagg.*
 %exclude %{python3_sitearch}/matplotlib/backends/backend_wx*
-%exclude %{python3_sitearch}/matplotlib/backends/wx_compat.*
 %exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_wx*
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/wx_compat.*
 %exclude %{_pkgdocdir}/*/
 
 %files -n python3-matplotlib-test-data
