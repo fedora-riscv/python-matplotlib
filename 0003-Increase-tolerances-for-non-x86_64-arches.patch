@@ -1,4 +1,4 @@
-From 8652868372a2a227091c457f1c711f2b6dd6af40 Mon Sep 17 00:00:00 2001
+From e952bc36999a141a5c026544bae0c52817d4edd9 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 23 Jan 2018 20:27:17 -0500
 Subject: [PATCH 3/4] Increase tolerances for non-x86_64 arches.
@@ -38,5 +38,5 @@ index 9ed9a9280..56a3bd14a 100644
      fig, ax = plt.subplots()
      ax.imshow(np.zeros((10, 10)), interpolation='nearest')
 -- 
-2.21.1
+2.25.4
 

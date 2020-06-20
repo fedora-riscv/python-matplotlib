@@ -1,4 +1,4 @@
-From 9e7be0a26644ec35dde39fb332837baab80f91cb Mon Sep 17 00:00:00 2001
+From 928df2339ec6f8cc838f2b46c4bef4b10dc66c52 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:15:14 -0400
 Subject: [PATCH 4/4] Increase some tolerances for 32-bit systems.
@@ -30,7 +30,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  22 files changed, 60 insertions(+), 70 deletions(-)
 
 diff --git a/lib/matplotlib/testing/decorators.py b/lib/matplotlib/testing/decorators.py
-index 7d0941233..29df3f284 100644
+index cd447976b..545bf2cfe 100644
 --- a/lib/matplotlib/testing/decorators.py
 +++ b/lib/matplotlib/testing/decorators.py
 @@ -269,7 +269,7 @@ def _pytest_image_comparison(baseline_images, extensions, tol,
@@ -56,7 +56,7 @@ index a598e822d..becc9b46d 100644
      exterior = mpath.Path.unit_rectangle().deepcopy()
      exterior.vertices *= 4
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index de146a527..4d7a3ba47 100644
+index b5bfc32c3..8bf3afb54 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -563,7 +563,7 @@ def test_single_point():
@@ -68,7 +68,7 @@ index de146a527..4d7a3ba47 100644
  def test_single_date():
      # use former defaults to match existing baseline image
      plt.rcParams['axes.formatter.limits'] = -7, 7
-@@ -1093,7 +1093,7 @@ def test_fill_between_interpolate():
+@@ -1097,7 +1097,7 @@ def test_fill_between_interpolate():
  
  
  @image_comparison(['fill_between_interpolate_decreasing'],
@@ -77,7 +77,7 @@ index de146a527..4d7a3ba47 100644
  def test_fill_between_interpolate_decreasing():
      p = np.array([724.3, 700, 655])
      t = np.array([9.4, 7, 2.2])
-@@ -1208,7 +1208,7 @@ def test_pcolormesh_alpha():
+@@ -1212,7 +1212,7 @@ def test_pcolormesh_alpha():
  
  
  @image_comparison(['pcolormesh_datetime_axis.png'],
@@ -86,7 +86,7 @@ index de146a527..4d7a3ba47 100644
  def test_pcolormesh_datetime_axis():
      fig = plt.figure()
      fig.subplots_adjust(hspace=0.4, top=0.98, bottom=.15)
-@@ -1234,7 +1234,7 @@ def test_pcolormesh_datetime_axis():
+@@ -1238,7 +1238,7 @@ def test_pcolormesh_datetime_axis():
  
  
  @image_comparison(['pcolor_datetime_axis.png'],
@@ -95,7 +95,7 @@ index de146a527..4d7a3ba47 100644
  def test_pcolor_datetime_axis():
      fig = plt.figure()
      fig.subplots_adjust(hspace=0.4, top=0.98, bottom=.15)
-@@ -1290,7 +1290,8 @@ def test_canonical():
+@@ -1294,7 +1294,8 @@ def test_canonical():
      ax.plot([1, 2, 3])
  
  
@@ -105,7 +105,7 @@ index de146a527..4d7a3ba47 100644
  def test_arc_angles():
      from matplotlib import patches
      # Ellipse parameters
-@@ -2749,7 +2750,7 @@ def test_boxplot_mod_artist_after_plotting():
+@@ -2769,7 +2770,7 @@ def test_boxplot_mod_artist_after_plotting():
  
  
  @image_comparison(['violinplot_vert_baseline.png',
@@ -114,7 +114,7 @@ index de146a527..4d7a3ba47 100644
  def test_vert_violinplot_baseline():
      # First 9 digits of frac(sqrt(2))
      np.random.seed(414213562)
-@@ -2766,7 +2767,7 @@ def test_vert_violinplot_baseline():
+@@ -2786,7 +2787,7 @@ def test_vert_violinplot_baseline():
                    showmedians=0, data=data)
  
  
@@ -123,7 +123,7 @@ index de146a527..4d7a3ba47 100644
  def test_vert_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(3))
-@@ -2776,7 +2777,7 @@ def test_vert_violinplot_showmeans():
+@@ -2796,7 +2797,7 @@ def test_vert_violinplot_showmeans():
                    showmedians=0)
  
  
@@ -132,7 +132,7 @@ index de146a527..4d7a3ba47 100644
  def test_vert_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(5))
-@@ -2786,7 +2787,7 @@ def test_vert_violinplot_showextrema():
+@@ -2806,7 +2807,7 @@ def test_vert_violinplot_showextrema():
                    showmedians=0)
  
  
@@ -141,7 +141,7 @@ index de146a527..4d7a3ba47 100644
  def test_vert_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(7))
-@@ -2796,7 +2797,7 @@ def test_vert_violinplot_showmedians():
+@@ -2816,7 +2817,7 @@ def test_vert_violinplot_showmedians():
                    showmedians=1)
  
  
@@ -150,7 +150,7 @@ index de146a527..4d7a3ba47 100644
  def test_vert_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(11))
-@@ -2807,7 +2808,7 @@ def test_vert_violinplot_showall():
+@@ -2827,7 +2828,7 @@ def test_vert_violinplot_showall():
                    quantiles=[[0.1, 0.9], [0.2, 0.8], [0.3, 0.7], [0.4, 0.6]])
  
  
@@ -159,7 +159,7 @@ index de146a527..4d7a3ba47 100644
  def test_vert_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(13))
-@@ -2817,7 +2818,7 @@ def test_vert_violinplot_custompoints_10():
+@@ -2837,7 +2838,7 @@ def test_vert_violinplot_custompoints_10():
                    showmedians=0, points=10)
  
  
@@ -168,7 +168,7 @@ index de146a527..4d7a3ba47 100644
  def test_vert_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(17))
-@@ -2827,7 +2828,7 @@ def test_vert_violinplot_custompoints_200():
+@@ -2847,7 +2848,7 @@ def test_vert_violinplot_custompoints_200():
                    showmedians=0, points=200)
  
  
@@ -177,7 +177,7 @@ index de146a527..4d7a3ba47 100644
  def test_horiz_violinplot_baseline():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(19))
-@@ -2837,7 +2838,7 @@ def test_horiz_violinplot_baseline():
+@@ -2857,7 +2858,7 @@ def test_horiz_violinplot_baseline():
                    showextrema=0, showmedians=0)
  
  
@@ -186,7 +186,7 @@ index de146a527..4d7a3ba47 100644
  def test_horiz_violinplot_showmedians():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(23))
-@@ -2847,7 +2848,7 @@ def test_horiz_violinplot_showmedians():
+@@ -2867,7 +2868,7 @@ def test_horiz_violinplot_showmedians():
                    showextrema=0, showmedians=1)
  
  
@@ -195,7 +195,7 @@ index de146a527..4d7a3ba47 100644
  def test_horiz_violinplot_showmeans():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(29))
-@@ -2857,7 +2858,7 @@ def test_horiz_violinplot_showmeans():
+@@ -2877,7 +2878,7 @@ def test_horiz_violinplot_showmeans():
                    showextrema=0, showmedians=0)
  
  
@@ -204,7 +204,7 @@ index de146a527..4d7a3ba47 100644
  def test_horiz_violinplot_showextrema():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(31))
-@@ -2867,7 +2868,7 @@ def test_horiz_violinplot_showextrema():
+@@ -2887,7 +2888,7 @@ def test_horiz_violinplot_showextrema():
                    showextrema=1, showmedians=0)
  
  
@@ -213,7 +213,7 @@ index de146a527..4d7a3ba47 100644
  def test_horiz_violinplot_showall():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(37))
-@@ -2878,7 +2879,7 @@ def test_horiz_violinplot_showall():
+@@ -2898,7 +2899,7 @@ def test_horiz_violinplot_showall():
                    quantiles=[[0.1, 0.9], [0.2, 0.8], [0.3, 0.7], [0.4, 0.6]])
  
  
@@ -222,7 +222,7 @@ index de146a527..4d7a3ba47 100644
  def test_horiz_violinplot_custompoints_10():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(41))
-@@ -2888,7 +2889,7 @@ def test_horiz_violinplot_custompoints_10():
+@@ -2908,7 +2909,7 @@ def test_horiz_violinplot_custompoints_10():
                    showextrema=0, showmedians=0, points=10)
  
  
@@ -231,7 +231,7 @@ index de146a527..4d7a3ba47 100644
  def test_horiz_violinplot_custompoints_200():
      ax = plt.axes()
      # First 9 digits of frac(sqrt(43))
-@@ -3652,8 +3653,7 @@ def test_vertex_markers():
+@@ -3672,8 +3673,7 @@ def test_vertex_markers():
      ax.set_ylim([-1, 10])
  
  
@@ -241,7 +241,7 @@ index de146a527..4d7a3ba47 100644
  def test_eb_line_zorder():
      x = list(range(10))
  
-@@ -4340,7 +4340,7 @@ def test_psd_noise():
+@@ -4360,7 +4360,7 @@ def test_psd_noise():
      ax3.set_ylabel('')
  
  
@@ -250,7 +250,7 @@ index de146a527..4d7a3ba47 100644
  def test_csd_freqs():
      '''test axes.csd with sinusoidal stimuli'''
      n = 10000
-@@ -5244,7 +5244,7 @@ def test_rc_spines():
+@@ -5264,7 +5264,7 @@ def test_rc_spines():
          fig, ax = plt.subplots()
  
  
@@ -259,7 +259,7 @@ index de146a527..4d7a3ba47 100644
  def test_rc_grid():
      fig = plt.figure()
      rc_dict0 = {
-@@ -5786,7 +5786,7 @@ def test_date_timezone_y():
+@@ -5806,7 +5806,7 @@ def test_date_timezone_y():
      plt.plot_date([3] * 3, time_index, tz='UTC', xdate=False, ydate=True)
  
  
@@ -269,7 +269,7 @@ index de146a527..4d7a3ba47 100644
      # Tests issue 5575
      UTC = datetime.timezone.utc
 diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
-index 0983283ec..c4032f920 100644
+index 3f5b3bf1a..773573918 100644
 --- a/lib/matplotlib/tests/test_collections.py
 +++ b/lib/matplotlib/tests/test_collections.py
 @@ -461,7 +461,7 @@ def test_EllipseCollection():
@@ -409,7 +409,7 @@ index ee67b4e41..3ae6e4ebc 100644
      fig, ax = plt.subplots()
      ax.set_prop_cycle(cycler('ls', ['-', '--', ':']))
 diff --git a/lib/matplotlib/tests/test_figure.py b/lib/matplotlib/tests/test_figure.py
-index a9e8dfade..98d90eea1 100644
+index b5ca0ed5b..272fd6101 100644
 --- a/lib/matplotlib/tests/test_figure.py
 +++ b/lib/matplotlib/tests/test_figure.py
 @@ -13,8 +13,7 @@ import numpy as np
@@ -492,7 +492,7 @@ index 508e29fa0..f6862e631 100644
      matplotlib.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
 diff --git a/lib/matplotlib/tests/test_patches.py b/lib/matplotlib/tests/test_patches.py
-index 32ce5db1c..63abc712a 100644
+index c0eda5542..62670dbbf 100644
 --- a/lib/matplotlib/tests/test_patches.py
 +++ b/lib/matplotlib/tests/test_patches.py
 @@ -257,8 +257,7 @@ def test_wedge_movement():
@@ -661,5 +661,5 @@ index 592096b74..69ac5a2b3 100644
          fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
  
 -- 
-2.21.1
+2.25.4
 

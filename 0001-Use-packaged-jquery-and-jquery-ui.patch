@@ -1,4 +1,4 @@
-From 0ffab3ff58bee5346b9443a8b769d9786aba3b26 Mon Sep 17 00:00:00 2001
+From a3fec73e39558f1a8d41663fe05783889e735af4 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 2 Mar 2019 18:18:29 -0500
 Subject: [PATCH] Use packaged jquery and jquery-ui.
@@ -7,8 +7,8 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
  .../backends/web_backend/all_figures.html     |  6 +--
  .../backends/web_backend/single_figure.html   |  6 +--
- setup.py                                      | 53 -------------------
- 3 files changed, 6 insertions(+), 59 deletions(-)
+ setup.py                                      | 54 -------------------
+ 3 files changed, 6 insertions(+), 60 deletions(-)
 
 diff --git a/lib/matplotlib/backends/web_backend/all_figures.html b/lib/matplotlib/backends/web_backend/all_figures.html
 index 41f48dc6d..69097eb4f 100644
@@ -45,10 +45,10 @@ index 4d5a366fb..c11c86618 100644
      <script src="{{ prefix }}/js/mpl.js"></script>
      <script>
 diff --git a/setup.py b/setup.py
-index 760e84af1..2b184749f 100644
+index bf03159fb..81c2f96d7 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -26,8 +26,6 @@ from zipfile import ZipFile
+@@ -28,8 +28,6 @@ from zipfile import ZipFile
  
  from setuptools import setup, find_packages, Extension
  from setuptools.command.build_ext import build_ext as BuildExtCommand
@@ -57,7 +57,7 @@ index 760e84af1..2b184749f 100644
  from setuptools.command.test import test as TestCommand
  
  # The setuptools version of sdist adds a setup.cfg file to the tree.
-@@ -115,57 +113,6 @@ cmdclass['test'] = NoopTestCommand
+@@ -120,58 +118,6 @@ cmdclass['test'] = NoopTestCommand
  cmdclass['build_ext'] = BuildExtraLibraries
  
  
@@ -79,8 +79,9 @@ index 760e84af1..2b184749f 100644
 -        try:
 -            buff = download_or_cache(url, sha)
 -        except Exception:
--            raise IOError(f"Failed to download jquery-ui.  Please download "
--                          f"{url} and extract it to {dest}.")
+-            raise IOError(
+-                "Failed to download jquery-ui.  Please download "
+-                "{url} and extract it to {dest}.".format(url=url, dest=dest))
 -        with ZipFile(buff) as zf:
 -            zf.extractall(dest)
 -
@@ -116,5 +117,5 @@ index 760e84af1..2b184749f 100644
  # however, this is needed on Windows to avoid creating infinite subprocesses
  # when using multiprocessing.
 -- 
-2.21.0
+2.25.4
 

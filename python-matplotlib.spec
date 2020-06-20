@@ -37,14 +37,14 @@
 #global rctag rc2
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.2.0
+%global mpl_images_version 3.2.2
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.10.1
 
 Name:           python-matplotlib
-Version:        3.2.1
-Release:        2%{?rctag:.%{rctag}}%{?dist}
+Version:        3.2.2
+Release:        1%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -448,6 +448,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Sat Jun 20 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.2.2-1
+- Update to latest version
+
 * Mon Jun 01 2020 Miro Hrončok <mhroncok@redhat.com> - 3.2.1-2
 - Only recommend texlive-dvipng (but require it if texlive is installed) (#1509657)
 
