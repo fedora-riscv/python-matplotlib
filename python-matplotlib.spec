@@ -84,15 +84,13 @@ BuildRequires:  qhull-devel
 BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  zlib-devel
 
+BuildRequires:  tex(utf8x.def)
 BuildRequires:  tex(avant.sty)
-BuildRequires:  tex(cmss10.tfm)
-BuildRequires:  tex(cmss12.tfm)
-BuildRequires:  tex(courier.sty)
-BuildRequires:  tex(ecrm1000.tfm)
-BuildRequires:  tex(geometry.sty)
-BuildRequires:  tex(helvet.sty)
 BuildRequires:  tex(chancery.sty)
 BuildRequires:  tex(charter.sty)
+BuildRequires:  tex(courier.sty)
+BuildRequires:  tex(geometry.sty)
+BuildRequires:  tex(helvet.sty)
 BuildRequires:  tex(inputenc.sty)
 BuildRequires:  tex(mathpazo.sty)
 BuildRequires:  tex(mathptmx.sty)
@@ -101,7 +99,9 @@ BuildRequires:  tex(sfmath.sty)
 BuildRequires:  tex(textcomp.sty)
 BuildRequires:  tex(txfonts.sty)
 BuildRequires:  tex(type1ec.sty)
-BuildRequires:  tex(utf8x.def)
+BuildRequires:  tex(cmss10.tfm)
+BuildRequires:  tex(cmss12.tfm)
+BuildRequires:  tex(ecrm1000.tfm)
 
 %description
 Matplotlib is a Python 2D plotting library which produces publication
