@@ -84,24 +84,50 @@ BuildRequires:  qhull-devel
 BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  zlib-devel
 
+BuildRequires:  texlive-latex-bin
+BuildRequires:  texlive-tex-bin
+BuildRequires:  texlive-xetex-bin
+# Search for documentclass and add the classes here.
+BuildRequires:  tex(article.cls)
+BuildRequires:  tex(minimal.cls)
+# Search for inputenc and add any encodings used with it.
+BuildRequires:  tex(utf8.def)
 BuildRequires:  tex(utf8x.def)
+# Found with: rg -Io 'usepackage(\[.+\])?\{.+\}' lib | rg -o '\{.+\}' | sort -u
+# and then removing duplicates in one line, etc.
 BuildRequires:  tex(avant.sty)
+BuildRequires:  tex(bm.sty)
 BuildRequires:  tex(chancery.sty)
 BuildRequires:  tex(charter.sty)
+BuildRequires:  tex(color.sty)
 BuildRequires:  tex(courier.sty)
+BuildRequires:  tex(euler.sty)
+BuildRequires:  tex(fontenc.sty)
+BuildRequires:  tex(fontspec.sty)
 BuildRequires:  tex(geometry.sty)
+BuildRequires:  tex(graphicx.sty)
 BuildRequires:  tex(helvet.sty)
+BuildRequires:  tex(import.sty)
 BuildRequires:  tex(inputenc.sty)
 BuildRequires:  tex(mathpazo.sty)
 BuildRequires:  tex(mathptmx.sty)
+BuildRequires:  tex(pgf.sty)
 BuildRequires:  tex(preview.sty)
+BuildRequires:  tex(psfrag.sty)
 BuildRequires:  tex(sfmath.sty)
 BuildRequires:  tex(textcomp.sty)
 BuildRequires:  tex(txfonts.sty)
+BuildRequires:  tex(type1cm.sty)
 BuildRequires:  tex(type1ec.sty)
+BuildRequires:  tex(unicode-math.sty)
+# See BakomaFonts._fontmap in lib/matplotlib/mathtext.py
+BuildRequires:  tex(cmb10.tfm)
+BuildRequires:  tex(cmex10.tfm)
+BuildRequires:  tex(cmmi10.tfm)
+BuildRequires:  tex(cmr10.tfm)
 BuildRequires:  tex(cmss10.tfm)
-BuildRequires:  tex(cmss12.tfm)
-BuildRequires:  tex(ecrm1000.tfm)
+BuildRequires:  tex(cmsy10.tfm)
+BuildRequires:  tex(cmtt10.tfm)
 
 %description
 Matplotlib is a Python 2D plotting library which produces publication
