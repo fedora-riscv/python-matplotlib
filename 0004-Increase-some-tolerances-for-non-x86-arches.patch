@@ -1,4 +1,4 @@
-From 8b585994418d62cde4a525f4e6a14aeba42459f4 Mon Sep 17 00:00:00 2001
+From 91ef378043f12f16a9a1f03437d9f51220dff305 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sat, 31 Mar 2018 00:33:37 -0400
 Subject: [PATCH 4/4] Increase some tolerances for non-x86 arches.
@@ -43,7 +43,7 @@ index a9409e2c1..9627b3569 100644
  def test_fancyarrow_dpi_cor_200dpi():
      """
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index de146a527..8574a95d2 100644
+index b5bfc32c3..a956412d1 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -407,7 +407,7 @@ def test_annotate_default_arrow():
@@ -55,7 +55,7 @@ index de146a527..8574a95d2 100644
  def test_polar_annotations():
      # you can specify the xypoint and the xytext in different
      # positions and coordinate systems, and optionally turn on a
-@@ -3653,7 +3653,7 @@ def test_vertex_markers():
+@@ -3673,7 +3673,7 @@ def test_vertex_markers():
  
  
  @image_comparison(['vline_hline_zorder', 'errorbar_zorder'],
@@ -65,12 +65,12 @@ index de146a527..8574a95d2 100644
      x = list(range(10))
  
 diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
-index ad23abe3f..7b9660f2b 100644
+index 7465bb919..8300ab627 100644
 --- a/lib/matplotlib/tests/test_backends_interactive.py
 +++ b/lib/matplotlib/tests/test_backends_interactive.py
-@@ -104,7 +104,7 @@ fig.canvas.mpl_connect("draw_event", lambda event: timer.start())
- 
- plt.show()
+@@ -126,7 +126,7 @@ if not backend.startswith('qt5') and sys.platform == 'darwin':
+     # not resize incorrectly.
+     assert_equal(result.getvalue(), result_after.getvalue())
  """
 -_test_timeout = 10  # Empirically, 1s is not enough on Travis.
 +_test_timeout = 30  # Empirically, 1s is not enough on Travis.
@@ -78,7 +78,7 @@ index ad23abe3f..7b9660f2b 100644
  
  @pytest.mark.parametrize("backend", _get_testable_interactive_backends())
 diff --git a/lib/matplotlib/tests/test_collections.py b/lib/matplotlib/tests/test_collections.py
-index 0983283ec..1b079aff1 100644
+index 3f5b3bf1a..8c5549bad 100644
 --- a/lib/matplotlib/tests/test_collections.py
 +++ b/lib/matplotlib/tests/test_collections.py
 @@ -439,7 +439,7 @@ def test_barb_limits():
@@ -136,7 +136,7 @@ index ee67b4e41..c52a5b0f8 100644
      fig, ax = plt.subplots()
      ax.set_prop_cycle(cycler('ls', ['-', '--', ':']))
 diff --git a/lib/matplotlib/tests/test_figure.py b/lib/matplotlib/tests/test_figure.py
-index a9e8dfade..322acd41e 100644
+index b5ca0ed5b..284cccb15 100644
 --- a/lib/matplotlib/tests/test_figure.py
 +++ b/lib/matplotlib/tests/test_figure.py
 @@ -14,7 +14,7 @@ import pytest
@@ -263,5 +263,5 @@ index 611908063..be11d7c6b 100644
      # Remove this line when this test image is regenerated.
      plt.rcParams['text.kerning_factor'] = 6
 -- 
-2.21.1
+2.25.4
 
