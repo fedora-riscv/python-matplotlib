@@ -1,7 +1,7 @@
 From 717fb2ce07ac66794df6b4e1833e14d2c8036233 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Mon, 29 Jun 2020 17:35:37 -0400
-Subject: [PATCH 6/6] Fix running contour's test_internal_cpp_api directly.
+Subject: [PATCH 6/7] Fix running contour's test_internal_cpp_api directly.
 
 The `matplotlib._contour` module is lazily loaded, so using it directly
 (as done in this test) may fail if something else doesn't load it. This

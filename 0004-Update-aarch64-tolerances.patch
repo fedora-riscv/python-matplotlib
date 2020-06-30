@@ -1,7 +1,7 @@
 From 954ebfd469a0979e0817db96760ea1f5542f2729 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Mon, 29 Jun 2020 03:49:29 -0400
-Subject: [PATCH 4/6] Update aarch64 tolerances.
+Subject: [PATCH 4/7] Update aarch64 tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---

@@ -43,7 +43,7 @@
 Name:           python-matplotlib
 Version:        3.3.0
 %global Version 3.3.0rc1
-Release:        0.1.rc1%{?dist}
+Release:        0.2.rc1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -67,6 +67,8 @@ Patch0002:      0004-Update-aarch64-tolerances.patch
 Patch0003:      0005-Increase-tolerance-for-ppc64le-and-s390x.patch
 # https://github.com/matplotlib/matplotlib/pull/17797
 Patch0004:      0006-Fix-running-contour-s-test_internal_cpp_api-directly.patch
+# Will be fixed for 3.3.0 final.
+Patch0005:      0007-Increase-tolerance-for-test_usetex-and-test_rgba_mar.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -77,6 +79,11 @@ BuildRequires:  qhull-devel
 BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  zlib-devel
 
+BuildRequires:  ghostscript
+BuildRequires:  ImageMagick
+BuildRequires:  inkscape
+
+BuildRequires:  texlive-dvipng
 BuildRequires:  texlive-latex-bin
 BuildRequires:  texlive-tex-bin
 BuildRequires:  texlive-xetex-bin
@@ -268,7 +275,6 @@ Requires:       python3-wxpython4
 %package -n python3-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
 %if %{with_html}
-BuildRequires:  texlive-dvipng
 BuildRequires:  graphviz
 BuildRequires:  python3-sphinx
 BuildRequires:  tex(latex)
@@ -310,6 +316,7 @@ cp -p %{SOURCE1} setup.cfg
 %patch0002 -p1
 %patch0003 -p1
 %patch0004 -p1
+%patch0005 -p1
 
 
 %build
@@ -451,6 +458,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Tue Jun 30 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.0-0.2.rc1
+- Add more test dependencies
+
 * Mon Jun 29 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.0-0.1.rc1
 - Update to latest version
 

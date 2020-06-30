@@ -1,7 +1,7 @@
 From efd56e93d7e8f6a63d734f98c6110795dd914418 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Mon, 29 Jun 2020 17:29:56 -0400
-Subject: [PATCH 5/6] Increase tolerance for ppc64le and s390x.
+Subject: [PATCH 5/7] Increase tolerance for ppc64le and s390x.
 
 These are mostly the same as the aarch64 increased tolerances.
 

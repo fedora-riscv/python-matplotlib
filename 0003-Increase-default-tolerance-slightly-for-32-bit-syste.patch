@@ -1,7 +1,7 @@
 From a200118d059ec46d29ef2e5b71892d60d31a6103 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Sun, 28 Jun 2020 17:37:36 -0400
-Subject: [PATCH 3/6] Increase default tolerance slightly for 32-bit systems.
+Subject: [PATCH 3/7] Increase default tolerance slightly for 32-bit systems.
 
 Around 900 tests fail on 32-bit systems, but with rather small RMS.
 
