@@ -34,30 +34,22 @@
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
 
-#global rctag rc2
-
 # Updated test images for new FreeType.
-%global mpl_images_version 3.2.2
+%global mpl_images_version 3.3.0rc1
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.10.1
 
 Name:           python-matplotlib
-Version:        3.2.2
-Release:        1%{?rctag:.%{rctag}}%{?dist}
+Version:        3.3.0
+%global Version 3.3.0rc1
+Release:        0.1.rc1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
 URL:            http://matplotlib.org
-Source0:        https://github.com/matplotlib/matplotlib/archive/v%{version}%{?rctag}/matplotlib-%{version}%{?rctag}.tar.gz
+Source0:        https://github.com/matplotlib/matplotlib/archive/v%{Version}/matplotlib-%{Version}.tar.gz
 Source1:        setup.cfg
-
-# Because the qhull package stopped shipping pkgconfig files.
-# https://src.fedoraproject.org/rpms/qhull/pull-request/1
-Patch0001:      0001-Force-using-system-qhull.patch
-
-# Don't attempt to download jQuery and jQuery UI
-Patch0002:      0001-Use-packaged-jquery-and-jquery-ui.patch
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
@@ -68,12 +60,13 @@ Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_vers
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
-# Image tolerances for anything but x86_64:
-Patch1003:      0003-Increase-tolerances-for-non-x86_64-arches.patch
-# Image tolerances for 32-bit systems: i686 armv7hl
-Patch1004:      0004-Increase-some-tolerances-for-32-bit-systems.patch
-# Image tolerances for 64-bit (but not x86_64) systems: aarch64 ppc64(le) s390x
-Patch1005:      0004-Increase-some-tolerances-for-non-x86-arches.patch
+
+# https://github.com/matplotlib/matplotlib/pull/17800
+Patch0001:      0003-Increase-default-tolerance-slightly-for-32-bit-syste.patch
+Patch0002:      0004-Update-aarch64-tolerances.patch
+Patch0003:      0005-Increase-tolerance-for-ppc64le-and-s390x.patch
+# https://github.com/matplotlib/matplotlib/pull/17797
+Patch0004:      0006-Fix-running-contour-s-test_internal_cpp_api-directly.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -195,6 +188,7 @@ BuildRequires:  python3-pytest
 BuildRequires:  python3-pytest-rerunfailures
 BuildRequires:  python3-pytest-timeout
 BuildRequires:  python3-pytest-xdist
+BuildRequires:  python3-pikepdf
 %endif
 Requires:       python3-numpy
 Recommends:     python3-pillow
@@ -300,29 +294,22 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 
 
 %prep
-%autosetup -n matplotlib-%{version}%{?rctag} -N
-%patch0001 -p1
-
-%patch0002 -p1
+%autosetup -n matplotlib-%{Version} -N
 
 # Fedora-specific patches follow:
 %patch1001 -p1
 # Updated test images for new FreeType.
 %patch1002 -p1
-gzip -dc %SOURCE1000 | tar xvf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
-%ifnarch x86_64
-%patch1003 -p1
-%endif
-%ifarch aarch64 ppc64 ppc64le s390x
-%patch1005 -p1
-%endif
-%ifarch i686 armv7hl
-%patch1004 -p1
-%endif
+gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 rm -r extern/libqhull
 
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
+
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
 
 
 %build
@@ -348,10 +335,7 @@ export http_proxy=http://127.0.0.1/
 
 MPLCONFIGDIR=$PWD \
     %{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
-chmod +x %{buildroot}%{python3_sitearch}/matplotlib/dates.py
 mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_datadir}/matplotlib
-mv %{buildroot}%{python3_sitearch}/matplotlib/mpl-data/matplotlibrc \
-   %{buildroot}%{_sysconfdir}
 mv %{buildroot}%{python3_sitearch}/matplotlib/mpl-data \
    %{buildroot}%{_datadir}/matplotlib
 %if !%{with_bundled_fonts}
@@ -370,11 +354,10 @@ export http_proxy=http://127.0.0.1/
 #  * wxagg is broken on ppc64le:
 #    https://bugzilla.redhat.com/show_bug.cgi?id=1738752
 MPLCONFIGDIR=$PWD \
-MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
 PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
+         %{python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
 %ifarch ppc64le
              -k 'not test_invisible_Line_rendering and not Qt5Agg and not wxagg'
@@ -383,16 +366,14 @@ PYTHONDONTWRITEBYTECODE=1 \
 %endif
 # Run Qt5Agg tests separately to not conflict with Qt4 tests.
 MPLCONFIGDIR=$PWD \
-MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
 PYTHONPATH=%{buildroot}%{python3_sitearch} \
 PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
-         %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
+         %{python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' -k 'Qt5Agg'
 %endif
 
 %files -n python3-matplotlib-data
-%{_sysconfdir}/matplotlibrc
 %{_datadir}/matplotlib/mpl-data/
 %if %{with_bundled_fonts}
 %exclude %{_datadir}/matplotlib/mpl-data/fonts/
@@ -470,6 +451,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Mon Jun 29 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.0-0.1.rc1
+- Update to latest version
+
 * Sat Jun 20 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.2.2-1
 - Update to latest version
 

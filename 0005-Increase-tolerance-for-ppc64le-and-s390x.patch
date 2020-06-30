@@ -1,0 +1,219 @@
+From efd56e93d7e8f6a63d734f98c6110795dd914418 Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Mon, 29 Jun 2020 17:29:56 -0400
+Subject: [PATCH 5/6] Increase tolerance for ppc64le and s390x.
+
+These are mostly the same as the aarch64 increased tolerances.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_arrow_patches.py               | 6 ++++--
+ lib/matplotlib/tests/test_axes.py                        | 3 ++-
+ lib/matplotlib/tests/test_contour.py                     | 3 ++-
+ lib/matplotlib/tests/test_figure.py                      | 3 ++-
+ lib/matplotlib/tests/test_image.py                       | 3 ++-
+ lib/matplotlib/tests/test_legend.py                      | 9 ++++++---
+ lib/matplotlib/tests/test_pickle.py                      | 3 ++-
+ lib/matplotlib/tests/test_polar.py                       | 3 ++-
+ lib/matplotlib/tests/test_units.py                       | 6 ++++--
+ lib/mpl_toolkits/tests/test_axes_grid1.py                | 3 ++-
+ .../tests/test_axisartist_grid_helper_curvelinear.py     | 3 ++-
+ 11 files changed, 30 insertions(+), 15 deletions(-)
+
+diff --git a/lib/matplotlib/tests/test_arrow_patches.py b/lib/matplotlib/tests/test_arrow_patches.py
+index 2218a2e7f..037558c02 100644
+--- a/lib/matplotlib/tests/test_arrow_patches.py
++++ b/lib/matplotlib/tests/test_arrow_patches.py
+@@ -67,7 +67,8 @@ def __prepare_fancyarrow_dpi_cor_test():
+ 
+ 
+ @image_comparison(['fancyarrow_dpi_cor_100dpi.png'], remove_text=True,
+-                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0),
++                  tol={'aarch64': 0.02, 'ppc64le': 0.02,
++                       's390x': 0.02}.get(platform.machine(), 0),
+                   savefig_kwarg=dict(dpi=100))
+ def test_fancyarrow_dpi_cor_100dpi():
+     """
+@@ -82,7 +83,8 @@ def test_fancyarrow_dpi_cor_100dpi():
+ 
+ 
+ @image_comparison(['fancyarrow_dpi_cor_200dpi.png'], remove_text=True,
+-                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0),
++                  tol={'aarch64': 0.02, 'ppc64le': 0.02,
++                       's390x': 0.02}.get(platform.machine(), 0),
+                   savefig_kwarg=dict(dpi=200))
+ def test_fancyarrow_dpi_cor_200dpi():
+     """
+diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
+index 107936d19..48cfdf582 100644
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -3705,7 +3705,8 @@ def test_vertex_markers():
+ 
+ 
+ @image_comparison(['vline_hline_zorder', 'errorbar_zorder'],
+-                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0))
++                  tol={'aarch64': 0.02, 'ppc64le': 0.02,
++                       's390x': 0.02}.get(platform.machine(), 0))
+ def test_eb_line_zorder():
+     x = list(range(10))
+ 
+diff --git a/lib/matplotlib/tests/test_contour.py b/lib/matplotlib/tests/test_contour.py
+index e233a2b79..178c7abb3 100644
+--- a/lib/matplotlib/tests/test_contour.py
++++ b/lib/matplotlib/tests/test_contour.py
+@@ -191,7 +191,8 @@ def test_contour_datetime_axis():
+ 
+ @image_comparison(['contour_test_label_transforms.png'],
+                   remove_text=True, style='mpl20',
+-                  tol={'aarch64': 0.08}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.08, 'ppc64le': 0.08,
++                       's390x': 0.08}.get(platform.machine(), 0))
+ def test_labels():
+     # Adapted from pylab_examples example code: contour_demo.py
+     # see issues #2475, #2843, and #2818 for explanation
+diff --git a/lib/matplotlib/tests/test_figure.py b/lib/matplotlib/tests/test_figure.py
+index 2340f2199..ff375e4bf 100644
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -22,7 +22,8 @@ import pytest
+ 
+ 
+ @image_comparison(['figure_align_labels'],
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0))
+ def test_align_labels():
+     fig = plt.figure(tight_layout=True)
+     gs = gridspec.GridSpec(3, 3)
+diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
+index d07b80bef..a6cecc28c 100644
+--- a/lib/matplotlib/tests/test_image.py
++++ b/lib/matplotlib/tests/test_image.py
+@@ -861,7 +861,8 @@ def test_imshow_endianess():
+ 
+ 
+ @image_comparison(['imshow_masked_interpolation'],
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0),
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0),
+                   remove_text=True, style='mpl20')
+ def test_imshow_masked_interpolation():
+ 
+diff --git a/lib/matplotlib/tests/test_legend.py b/lib/matplotlib/tests/test_legend.py
+index b6ccb28dd..24d267405 100644
+--- a/lib/matplotlib/tests/test_legend.py
++++ b/lib/matplotlib/tests/test_legend.py
+@@ -105,7 +105,8 @@ def test_multiple_keys():
+ 
+ 
+ @image_comparison(['rgba_alpha.png'], remove_text=True,
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0))
+ def test_alpha_rgba():
+     fig, ax = plt.subplots(1, 1)
+     ax.plot(range(10), lw=5)
+@@ -114,7 +115,8 @@ def test_alpha_rgba():
+ 
+ 
+ @image_comparison(['rcparam_alpha.png'], remove_text=True,
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0))
+ def test_alpha_rcparam():
+     fig, ax = plt.subplots(1, 1)
+     ax.plot(range(10), lw=5)
+@@ -140,7 +142,8 @@ def test_fancy():
+ 
+ 
+ @image_comparison(['framealpha'], remove_text=True,
+-                  tol={'aarch64': 0.02}.get(platform.machine(), 0.0))
++                  tol={'aarch64': 0.02, 'ppc64le': 0.02,
++                       's390x': 0.02}.get(platform.machine(), 0))
+ def test_framealpha():
+     x = np.linspace(1, 100, 100)
+     y = x
+diff --git a/lib/matplotlib/tests/test_pickle.py b/lib/matplotlib/tests/test_pickle.py
+index 6a78526b5..864853bba 100644
+--- a/lib/matplotlib/tests/test_pickle.py
++++ b/lib/matplotlib/tests/test_pickle.py
+@@ -41,7 +41,8 @@ def test_simple():
+ 
+ 
+ @image_comparison(['multi_pickle.png'], remove_text=True, style='mpl20',
+-                  tol={'aarch64': 0.082}.get(platform.machine(), 0.0))
++                  tol={'aarch64': 0.082, 'ppc64le': 0.082,
++                       's390x': 0.082}.get(platform.machine(), 0))
+ def test_complete():
+     fig = plt.figure('Figure with a label?', figsize=(10, 6))
+ 
+diff --git a/lib/matplotlib/tests/test_polar.py b/lib/matplotlib/tests/test_polar.py
+index 7b5fd6af9..9f94f84cd 100644
+--- a/lib/matplotlib/tests/test_polar.py
++++ b/lib/matplotlib/tests/test_polar.py
+@@ -10,7 +10,8 @@ from matplotlib.testing.decorators import image_comparison, check_figures_equal
+ 
+ 
+ @image_comparison(['polar_axes'], style='default',
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0))
+ def test_polar_annotations():
+     # You can specify the xypoint and the xytext in different positions and
+     # coordinate systems, and optionally turn on a connecting line and mark the
+diff --git a/lib/matplotlib/tests/test_units.py b/lib/matplotlib/tests/test_units.py
+index 137b12aa9..b7b3197ac 100644
+--- a/lib/matplotlib/tests/test_units.py
++++ b/lib/matplotlib/tests/test_units.py
+@@ -74,7 +74,8 @@ def quantity_converter():
+ # Tests that the conversion machinery works properly for classes that
+ # work as a facade over numpy arrays (like pint)
+ @image_comparison(['plot_pint.png'], remove_text=False, style='mpl20',
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0))
+ def test_numpy_facade(quantity_converter):
+     # use former defaults to match existing baseline image
+     plt.rcParams['axes.formatter.limits'] = -7, 7
+@@ -101,7 +102,8 @@ def test_numpy_facade(quantity_converter):
+ 
+ # Tests gh-8908
+ @image_comparison(['plot_masked_units.png'], remove_text=True, style='mpl20',
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0))
+ def test_plot_masked_units():
+     data = np.linspace(-5, 5)
+     data_masked = np.ma.array(data, mask=(data > -2) & (data < 2))
+diff --git a/lib/mpl_toolkits/tests/test_axes_grid1.py b/lib/mpl_toolkits/tests/test_axes_grid1.py
+index 30ea87445..fd8b9632f 100644
+--- a/lib/mpl_toolkits/tests/test_axes_grid1.py
++++ b/lib/mpl_toolkits/tests/test_axes_grid1.py
+@@ -331,7 +331,8 @@ def test_zooming_with_inverted_axes():
+ 
+ 
+ @image_comparison(['anchored_direction_arrows.png'],
+-                  tol={'aarch64': 0.01}.get(platform.machine(), 0))
++                  tol={'aarch64': 0.01, 'ppc64le': 0.01,
++                       's390x': 0.01}.get(platform.machine(), 0))
+ def test_anchored_direction_arrows():
+     fig, ax = plt.subplots()
+     ax.imshow(np.zeros((10, 10)), interpolation='nearest')
+diff --git a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+index bed21a640..d9b3b9b8b 100644
+--- a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
++++ b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+@@ -17,7 +17,8 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import \
+ 
+ 
+ @image_comparison(['custom_transform.png'], style='default',
+-                  tol={'aarch64': 0.034}.get(platform.machine(), 0.03))
++                  tol={'aarch64': 0.034, 'ppc64le': 0.034,
++                       's390x': 0.034}.get(platform.machine(), 0.03))
+ def test_custom_transform():
+     class MyTransform(Transform):
+         input_dims = output_dims = 2
+-- 
+2.25.4
+

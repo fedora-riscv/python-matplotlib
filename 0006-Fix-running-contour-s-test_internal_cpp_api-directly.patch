@@ -1,0 +1,63 @@
+From 717fb2ce07ac66794df6b4e1833e14d2c8036233 Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Mon, 29 Jun 2020 17:35:37 -0400
+Subject: [PATCH 6/6] Fix running contour's test_internal_cpp_api directly.
+
+The `matplotlib._contour` module is lazily loaded, so using it directly
+(as done in this test) may fail if something else doesn't load it. This
+test would fail if it was the first contour-related test run in a
+process (if testing in parallel), or if just called as the only test,
+i.e., this commit fixes:
+```
+$ pytest -k test_internal_cpp_api lib/matplotlib/tests/test_contour.py
+__________ test_internal_cpp_api[args0-TypeError-function takes exactly 6 arguments (0 given)] __________
+
+args = (), cls = <class 'TypeError'>, message = 'function takes exactly 6 arguments (0 given)'
+
+    @pytest.mark.parametrize("args, cls, message", [
+        ((), TypeError,
+         'function takes exactly 6 arguments (0 given)'),
+        ((1, 2, 3, 4, 5, 6), ValueError,
+         'Expected 2-dimensional array, got 0'),
+        (([[0]], [[0]], [[]], None, True, 0), ValueError,
+         'x, y and z must all be 2D arrays with the same dimensions'),
+        (([[0]], [[0]], [[0]], None, True, 0), ValueError,
+         'x, y and z must all be at least 2x2 arrays'),
+        ((*[np.arange(4).reshape((2, 2))] * 3, [[0]], True, 0), ValueError,
+         'If mask is set it must be a 2D array with the same dimensions as x.'),
+    ])
+    def test_internal_cpp_api(args, cls, message):  # Github issue 8197.
+        with pytest.raises(cls, match=re.escape(message)):
+>           mpl._contour.QuadContourGenerator(*args)
+E           AttributeError: module 'matplotlib' has no attribute '_contour'
+
+lib/matplotlib/tests/test_contour.py:269: AttributeError
+
+This is a corollary to b672f68f89fb0d3a90a15571f0c1810fe93724ce for tri.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_contour.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/lib/matplotlib/tests/test_contour.py b/lib/matplotlib/tests/test_contour.py
+index 178c7abb3..7c3337fea 100644
+--- a/lib/matplotlib/tests/test_contour.py
++++ b/lib/matplotlib/tests/test_contour.py
+@@ -268,11 +268,13 @@ def test_contourf_symmetric_locator():
+      'If mask is set it must be a 2D array with the same dimensions as x.'),
+ ])
+ def test_internal_cpp_api(args, cls, message):  # Github issue 8197.
++    from matplotlib import _contour  # noqa: ensure lazy-loaded module *is* loaded.
+     with pytest.raises(cls, match=re.escape(message)):
+         mpl._contour.QuadContourGenerator(*args)
+ 
+ 
+ def test_internal_cpp_api_2():
++    from matplotlib import _contour  # noqa: ensure lazy-loaded module *is* loaded.
+     arr = [[0, 1], [2, 3]]
+     qcg = mpl._contour.QuadContourGenerator(arr, arr, arr, None, True, 0)
+     with pytest.raises(
+-- 
+2.25.4
+

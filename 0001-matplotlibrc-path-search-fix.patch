@@ -1,27 +1,25 @@
-From 4431ff98f5f95a65378f4fa4b6e6fe02280911bf Mon Sep 17 00:00:00 2001
+From e56c8930052b4ac06f5ae58cac8d97dec728f314 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
-Subject: [PATCH 1/4] matplotlibrc path search fix
+Subject: [PATCH 1/6] matplotlibrc path search fix
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- lib/matplotlib/__init__.py            | 31 ++++-----------------------
- lib/matplotlib/tests/test_rcparams.py | 15 +++++++++----
- 2 files changed, 15 insertions(+), 31 deletions(-)
+ lib/matplotlib/__init__.py | 28 ++++------------------------
+ 1 file changed, 4 insertions(+), 24 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index fa1caecda..d2bd48800 100644
+index e19ceabf9..809fff933 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -654,34 +654,12 @@ def _get_data_path():
-             "3.1", name="MATPLOTLIBDATA", obj_type="environment variable")
-         return path
+@@ -536,33 +536,11 @@ def get_data_path(*, _from_rc=None):
  
+ @_logged_cached('(private) matplotlib data path: %s')
+ def _get_data_path():
 -    path = Path(__file__).with_name("mpl-data")
 +    path = (Path(__file__).parent.parent.parent.parent.parent /
 +            'share/matplotlib/mpl-data')
      if path.is_dir():
-         defaultParams['datapath'][0] = str(path)
          return str(path)
  
 -    cbook.warn_deprecated(
@@ -50,62 +48,22 @@ index fa1caecda..d2bd48800 100644
      raise RuntimeError('Could not find the matplotlib data files')
  
  
-@@ -712,8 +690,7 @@ def matplotlib_fname():
+@@ -583,6 +561,7 @@ def matplotlib_fname():
            is not defined)
      - On other platforms,
        - ``$HOME/.matplotlib/matplotlibrc`` if ``$HOME`` is defined
--    - Lastly, it looks in ``$MATPLOTLIBDATA/matplotlibrc``, which should always
--      exist.
-+    - Lastly, it looks in ``/etc/matplotlibrc``, which should always exist.
++    - ``/etc/matplotlibrc``
+     - Lastly, it looks in ``$MATPLOTLIBDATA/matplotlibrc``, which should always
+       exist.
      """
- 
-     def gen_candidates():
-@@ -726,7 +703,7 @@ def matplotlib_fname():
+@@ -597,6 +576,7 @@ def matplotlib_fname():
              yield matplotlibrc
              yield os.path.join(matplotlibrc, 'matplotlibrc')
          yield os.path.join(get_configdir(), 'matplotlibrc')
--        yield os.path.join(_get_data_path(), 'matplotlibrc')
 +        yield '/etc/matplotlibrc'
+         yield os.path.join(_get_data_path(), 'matplotlibrc')
  
      for fname in gen_candidates():
-         if os.path.exists(fname) and not os.path.isdir(fname):
-diff --git a/lib/matplotlib/tests/test_rcparams.py b/lib/matplotlib/tests/test_rcparams.py
-index 87dfbeceb..54885da47 100644
---- a/lib/matplotlib/tests/test_rcparams.py
-+++ b/lib/matplotlib/tests/test_rcparams.py
-@@ -460,10 +460,17 @@ def test_rcparams_reset_after_fail():
-         assert mpl.rcParams['text.usetex'] is False
- 
- 
--def test_if_rctemplate_is_up_to_date():
-+@pytest.fixture
-+def mplrc():
-+    # This is the Fedora-specific location.
-+    return (Path(__file__).parent.parent.parent.parent.parent.parent.parent /
-+            'etc/matplotlibrc')
-+
-+
-+def test_if_rctemplate_is_up_to_date(mplrc):
-     # This tests if the matplotlibrc.template file contains all valid rcParams.
-     deprecated = {*mpl._all_deprecated, *mpl._deprecated_remain_as_none}
--    with cbook._get_data_path('matplotlibrc').open() as file:
-+    with mplrc.open() as file:
-         rclines = file.readlines()
-     missing = {}
-     for k, v in mpl.defaultParams.items():
-@@ -483,10 +490,10 @@ def test_if_rctemplate_is_up_to_date():
-                          .format(missing.items()))
- 
- 
--def test_if_rctemplate_would_be_valid(tmpdir):
-+def test_if_rctemplate_would_be_valid(tmpdir, mplrc):
-     # This tests if the matplotlibrc.template file would result in a valid
-     # rc file if all lines are uncommented.
--    with cbook._get_data_path('matplotlibrc').open() as file:
-+    with mplrc.open() as file:
-         rclines = file.readlines()
-     newlines = []
-     for line in rclines:
 -- 
 2.25.4
 
