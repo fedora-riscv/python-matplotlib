@@ -81,7 +81,9 @@ BuildRequires:  zlib-devel
 
 BuildRequires:  ghostscript
 BuildRequires:  ImageMagick
+%ifnarch s390x
 BuildRequires:  inkscape
+%endif
 
 BuildRequires:  texlive-dvipng
 BuildRequires:  texlive-latex-bin
