@@ -35,15 +35,15 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.3.0rc1
+%global mpl_images_version 3.3.0
 
 # The version of FreeType in this Fedora branch.
-%global ftver 2.10.1
+%global ftver 2.10.2
 
 Name:           python-matplotlib
 Version:        3.3.0
-%global Version 3.3.0rc1
-Release:        0.2.rc1%{?dist}
+%global Version 3.3.0
+Release:        1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -53,7 +53,6 @@ Source1:        setup.cfg
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
-# https://github.com/fedora-python/matplotlib/tree/fedora-patches-non-x86
 # Updated test images for new FreeType.
 Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_version}-with-freetype-%{ftver}/matplotlib-%{mpl_images_version}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
@@ -61,14 +60,8 @@ Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 
-# https://github.com/matplotlib/matplotlib/pull/17800
-Patch0001:      0003-Increase-default-tolerance-slightly-for-32-bit-syste.patch
-Patch0002:      0004-Update-aarch64-tolerances.patch
-Patch0003:      0005-Increase-tolerance-for-ppc64le-and-s390x.patch
-# https://github.com/matplotlib/matplotlib/pull/17797
-Patch0004:      0006-Fix-running-contour-s-test_internal_cpp_api-directly.patch
-# Will be fixed for 3.3.0 final.
-Patch0005:      0007-Increase-tolerance-for-test_usetex-and-test_rgba_mar.patch
+# https://github.com/matplotlib/matplotlib/pull/17963
+Patch0001:      0003-TST-Ignore-deprecations-when-switching-backends.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -315,10 +308,6 @@ rm -r extern/libqhull
 cp -p %{SOURCE1} setup.cfg
 
 %patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
 
 
 %build
@@ -460,6 +449,10 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Sat Jul 18 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.0-1
+- Update to latest version
+- Fixes RHBZ#1858120
+
 * Tue Jun 30 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.0-0.2.rc1
 - Add more test dependencies
 
