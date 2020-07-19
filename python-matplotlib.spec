@@ -1,12 +1,7 @@
-%global with_html               0
-
-# It seems like there's some kind of weird occasional error where a
-# build (often aarch64 or ppc64) will fail in one of the Stix font
-# tests with a huge RMS difference, but if you run the same build again,
-# you won't get the same error. Unless someone can figure out what's
-# going on, we just have to keep re-running the build until it doesn't
-# happen.
-%global run_tests               1
+%bcond_with html
+%bcond_without check
+# https://fedorahosted.org/fpc/ticket/381
+%bcond_without bundled_fonts
 
 # the default backend; one of GTK3Agg GTK3Cairo MacOSX Qt4Agg Qt5Agg TkAgg
 # WXAgg Agg Cairo PS PDF SVG
@@ -27,9 +22,6 @@
 %    endif
 %  endif
 %endif
-
-# https://fedorahosted.org/fpc/ticket/381
-%global with_bundled_fonts      1
 
 # Use the same directory of the main package for subpackage licence and docs
 %global _docdir_fmt %{name}
@@ -138,16 +130,15 @@ errorcharts, scatterplots, etc, with just a few lines of code.
 %package -n python3-matplotlib-data
 Summary:        Data used by python-matplotlib
 BuildArch:      noarch
-%if %{with_bundled_fonts}
+%if %{with bundled_fonts}
 Requires:       python3-matplotlib-data-fonts = %{version}-%{release}
 %endif
 Obsoletes:      python-matplotlib-data < 3
-%{?python_provide:%python_provide python3-matplotlib-data}
 
 %description -n python3-matplotlib-data
 %{summary}
 
-%if %{with_bundled_fonts}
+%if %{with bundled_fonts}
 %package -n python3-matplotlib-data-fonts
 Summary:        Fonts used by python-matplotlib
 # STIX and Computer Modern is OFL
@@ -156,7 +147,6 @@ License:        OFL and Bitstream Vera and Public Domain
 BuildArch:      noarch
 Requires:       python3-matplotlib-data = %{version}-%{release}
 Obsoletes:      python-matplotlib-data-fonts < 3
-%{?python_provide:%python_provide python3-matplotlib-data-fonts}
 
 %description -n python3-matplotlib-data-fonts
 %{summary}
@@ -185,7 +175,7 @@ Requires:       python3-cycler >= 0.10.0
 Requires:       python3-dateutil
 Requires:       python3-kiwisolver
 Requires:       python3-matplotlib-%{?backend_subpackage}%{!?backend_subpackage:tk}%{?_isa} = %{version}-%{release}
-%if %{run_tests}
+%if %{with check}
 BuildRequires:  python3-pytest
 BuildRequires:  python3-pytest-rerunfailures
 BuildRequires:  python3-pytest-timeout
@@ -195,12 +185,11 @@ BuildRequires:  python3-pikepdf
 Requires:       python3-numpy
 Recommends:     python3-pillow
 Requires:       python3-pyparsing
-%if !%{with_bundled_fonts}
+%if %{without bundled_fonts}
 Requires:       stix-math-fonts
 %else
 Provides:       bundled(stix-math-fonts)
 %endif
-%{?python_provide:%python_provide python3-matplotlib}
 
 %description -n python3-matplotlib
 Matplotlib is a Python 2D plotting library which produces publication
@@ -219,7 +208,6 @@ BuildRequires:  python3-PyQt4-devel
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-matplotlib-qt5
 Requires:       python3-PyQt4
-%{?python_provide:%python_provide python3-matplotlib-qt4}
 
 %description -n python3-matplotlib-qt4
 %{summary}
@@ -242,7 +230,6 @@ BuildRequires:  python3-gobject
 Requires:       gtk3%{?_isa}
 Requires:       python3-gobject%{?_isa}
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python3-matplotlib-gtk3}
 
 %description -n python3-matplotlib-gtk3
 %{summary}
@@ -252,7 +239,6 @@ Summary:        Tk backend for python3-matplotlib
 BuildRequires:  python3-tkinter
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-tkinter
-%{?python_provide:%python_provide python3-matplotlib-tk}
 
 %description -n python3-matplotlib-tk
 %{summary}
@@ -262,14 +248,13 @@ Summary:        WX backend for python3-matplotlib
 BuildRequires:  python3-wxpython4
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-wxpython4
-%{?python_provide:%python_provide python3-matplotlib-wx}
 
 %description -n python3-matplotlib-wx
 %{summary}
 
 %package -n python3-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
-%if %{with_html}
+%if %{with html}
 BuildRequires:  graphviz
 BuildRequires:  python3-sphinx
 BuildRequires:  tex(latex)
@@ -288,7 +273,6 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %package -n python3-matplotlib-test-data
 Summary:        Test data for python3-matplotlib
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python3-matplotlib-test-data}
 
 %description -n python3-matplotlib-test-data
 %{summary}
@@ -314,33 +298,33 @@ cp -p %{SOURCE1} setup.cfg
 %set_build_flags
 export http_proxy=http://127.0.0.1/
 
-MPLCONFIGDIR=$PWD \
-  xvfb-run %{__python3} setup.py build
-%if %{with_html}
+MPLCONFIGDIR=$PWD %py3_build
+%if %{with html}
 # Need to make built matplotlib libs available for the sphinx extensions:
 pushd doc
     MPLCONFIGDIR=$PWD/.. \
     PYTHONPATH=`realpath ../build/lib.linux*` \
-        %{__python3} make.py html
+        %{python3} make.py html
 popd
 %endif
 # Ensure all example files are non-executable so that the -doc
 # package doesn't drag in dependencies
 find examples -name '*.py' -exec chmod a-x '{}' \;
 
+
 %install
 export http_proxy=http://127.0.0.1/
 
-MPLCONFIGDIR=$PWD \
-    %{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
+MPLCONFIGDIR=$PWD %py3_install
 mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_datadir}/matplotlib
 mv %{buildroot}%{python3_sitearch}/matplotlib/mpl-data \
    %{buildroot}%{_datadir}/matplotlib
-%if !%{with_bundled_fonts}
+%if %{without bundled_fonts}
 rm -rf %{buildroot}%{_datadir}/matplotlib/mpl-data/fonts
 %endif
 
-%if %{run_tests}
+
+%if %{with check}
 %check
 # These files confuse pytest, and we want to test the installed copy.
 rm -rf build*/
@@ -371,47 +355,41 @@ PYTHONDONTWRITEBYTECODE=1 \
              -m 'not network' -k 'Qt5Agg'
 %endif
 
+
 %files -n python3-matplotlib-data
 %{_datadir}/matplotlib/mpl-data/
-%if %{with_bundled_fonts}
+%if %{with bundled_fonts}
 %exclude %{_datadir}/matplotlib/mpl-data/fonts/
 %endif
 
-%if %{with_bundled_fonts}
+%if %{with bundled_fonts}
 %files -n python3-matplotlib-data-fonts
 %{_datadir}/matplotlib/mpl-data/fonts/
 %endif
 
 %files -n python3-matplotlib-doc
 %doc examples
-%if %{with_html}
+%if %{with html}
 %doc doc/build/html/*
 %endif
 
 %files -n python3-matplotlib
 %license LICENSE/
 %doc README.rst
-%{python3_sitearch}/*egg-info
+%{python3_sitearch}/matplotlib-*.egg-info/
 %{python3_sitearch}/matplotlib-*-nspkg.pth
 %{python3_sitearch}/matplotlib/
 %exclude %{python3_sitearch}/matplotlib/tests/baseline_images/*
 %{python3_sitearch}/mpl_toolkits/
 %exclude %{python3_sitearch}/mpl_toolkits/tests/baseline_images/*
-%{python3_sitearch}/pylab.py*
-%{python3_sitearch}/__pycache__/*
-%exclude %{python3_sitearch}/matplotlib/backends/backend_qt4*.py
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4*
-#exclude #{python3_sitearch}/matplotlib/backends/backend_qt5*.py
-#exclude #{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5*
-%exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_gtk*
-%exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
-%exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/_backend_tk.*
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_tk*.*
+%pycached %{python3_sitearch}/pylab.py
+%pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt4*.py
+#pycached #exclude #{python3_sitearch}/matplotlib/backends/backend_qt5*.py
+%pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
+%pycached %exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
+%pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
 %exclude %{python3_sitearch}/matplotlib/backends/_tkagg.*
-%exclude %{python3_sitearch}/matplotlib/backends/backend_wx*
-%exclude %{python3_sitearch}/matplotlib/backends/__pycache__/backend_wx*
+%pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_wx*.py
 %exclude %{_pkgdocdir}/*/
 
 %files -n python3-matplotlib-test-data
@@ -419,33 +397,25 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/mpl_toolkits/tests/baseline_images/
 
 %files -n python3-matplotlib-qt4
-%{python3_sitearch}/matplotlib/backends/backend_qt4.py
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4.*
-%{python3_sitearch}/matplotlib/backends/backend_qt4agg.py
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt4agg.*
+%pycached %{python3_sitearch}/matplotlib/backends/backend_qt4.py
+%pycached %{python3_sitearch}/matplotlib/backends/backend_qt4agg.py
 
 # This subpackage is empty because the Qt4 backend imports it, so we leave
 # these files in the default package, and only use this one for dependencies.
 %files -n python3-matplotlib-qt5
-#{python3_sitearch}/matplotlib/backends/backend_qt5.py
-#{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5.*
-#{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
-#{python3_sitearch}/matplotlib/backends/__pycache__/backend_qt5agg.*
+#pycached #{python3_sitearch}/matplotlib/backends/backend_qt5.py
+#pycached #{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
 
 %files -n python3-matplotlib-gtk3
-%{python3_sitearch}/matplotlib/backends/backend_gtk*.py
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_gtk*
+%pycached %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
 
 %files -n python3-matplotlib-tk
-%{python3_sitearch}/matplotlib/backends/backend_tk*.py
-%{python3_sitearch}/matplotlib/backends/_backend_tk.py
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_tk*.*
-%{python3_sitearch}/matplotlib/backends/__pycache__/_backend_tk.*
+%pycached %{python3_sitearch}/matplotlib/backends/backend_tk*.py
+%pycached %{python3_sitearch}/matplotlib/backends/_backend_tk.py
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
 %files -n python3-matplotlib-wx
-%{python3_sitearch}/matplotlib/backends/backend_wx*.py
-%{python3_sitearch}/matplotlib/backends/__pycache__/backend_wx*
+%pycached %{python3_sitearch}/matplotlib/backends/backend_wx*.py
 
 
 %changelog
