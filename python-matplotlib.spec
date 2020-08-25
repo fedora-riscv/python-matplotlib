@@ -33,9 +33,9 @@
 %global ftver 2.10.2
 
 Name:           python-matplotlib
-Version:        3.3.0
-%global Version 3.3.0
-Release:        2%{?dist}
+Version:        3.3.1
+%global Version 3.3.1
+Release:        1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -51,9 +51,6 @@ Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_vers
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
-
-# https://github.com/matplotlib/matplotlib/pull/17963
-Patch0001:      0003-TST-Ignore-deprecations-when-switching-backends.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -155,6 +152,7 @@ Obsoletes:      python-matplotlib-data-fonts < 3
 %package -n     python3-matplotlib
 Summary:        Python 2D plotting library
 BuildRequires:  python3-cairo
+BuildRequires:  python3-certifi >= 2020.06.20
 BuildRequires:  python3-cycler >= 0.10.0
 BuildRequires:  python3-dateutil
 BuildRequires:  python3-devel
@@ -291,8 +289,6 @@ rm -r extern/libqhull
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
 
-%patch0001 -p1
-
 
 %build
 %set_build_flags
@@ -413,6 +409,10 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Thu Aug 13 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.1-1
+- Update to latest version
+- Fixes RHBZ#1868838
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 3.3.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
