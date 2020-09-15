@@ -33,8 +33,8 @@
 %global ftver 2.10.2
 
 Name:           python-matplotlib
-Version:        3.3.1
-%global Version 3.3.1
+Version:        3.3.2
+%global Version 3.3.2
 Release:        1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
@@ -409,6 +409,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Tue Sep 15 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.2-1
+- Update to latest version (#1878999)
+
 * Thu Aug 13 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.1-1
 - Update to latest version
 - Fixes RHBZ#1868838
