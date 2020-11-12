@@ -1,7 +1,7 @@
-From a5bf4b21aa32f3e02cf66e0f8e63ebd2abb7cb61 Mon Sep 17 00:00:00 2001
+From d7ae8db9a49f0d9533bfd6a15dc17b86c186b46c Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/3] Set FreeType version to 2.10.2 and update tolerances.
+Subject: [PATCH 2/2] Set FreeType version to 2.10.4 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -10,27 +10,27 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  lib/matplotlib/tests/test_constrainedlayout.py |  2 +-
  lib/matplotlib/tests/test_polar.py             |  2 +-
  lib/matplotlib/tests/test_tightlayout.py       | 10 +++++-----
- setupext.py                                    |  4 +++-
- 6 files changed, 13 insertions(+), 11 deletions(-)
+ setupext.py                                    |  6 +++++-
+ 6 files changed, 15 insertions(+), 11 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 409217f6b..f578a3961 100644
+index 202acce525..18731b7c4d 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -1182,7 +1182,7 @@ default_test_modules = [
+@@ -1198,7 +1198,7 @@ default_test_modules = [
  def _init_tests():
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
 -    LOCAL_FREETYPE_VERSION = '2.6.1'
-+    LOCAL_FREETYPE_VERSION = '2.10.2'
++    LOCAL_FREETYPE_VERSION = '2.10.4'
  
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 6eedf20d5..bad298928 100644
+index 57beec025a..ca583c9c64 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -5955,7 +5955,7 @@ def test_normal_axes():
+@@ -6055,7 +6055,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -39,7 +39,7 @@ index 6eedf20d5..bad298928 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -5973,7 +5973,7 @@ def test_normal_axes():
+@@ -6073,7 +6073,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -49,7 +49,7 @@ index 6eedf20d5..bad298928 100644
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 46e6b9663..593b3fb3e 100644
+index 46e6b9663e..593b3fb3ee 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -398,4 +398,4 @@ def test_hidden_axes():
@@ -59,7 +59,7 @@ index 46e6b9663..593b3fb3e 100644
 -        extents1, [0.045552, 0.548288, 0.47319, 0.982638], rtol=1e-5)
 +        extents1, [0.045552, 0.548288, 0.47319, 0.982638], rtol=1e-2)
 diff --git a/lib/matplotlib/tests/test_polar.py b/lib/matplotlib/tests/test_polar.py
-index da9a77c82..a7a98ef59 100644
+index da9a77c825..a7a98ef59e 100644
 --- a/lib/matplotlib/tests/test_polar.py
 +++ b/lib/matplotlib/tests/test_polar.py
 @@ -314,7 +314,7 @@ def test_get_tightbbox_polar():
@@ -72,7 +72,7 @@ index da9a77c82..a7a98ef59 100644
  
  @check_figures_equal(extensions=["png"])
 diff --git a/lib/matplotlib/tests/test_tightlayout.py b/lib/matplotlib/tests/test_tightlayout.py
-index 9ad2e0a9a..7c9085a31 100644
+index 9ad2e0a9a0..7c9085a314 100644
 --- a/lib/matplotlib/tests/test_tightlayout.py
 +++ b/lib/matplotlib/tests/test_tightlayout.py
 @@ -171,12 +171,12 @@ def test_outward_ticks():
@@ -94,25 +94,27 @@ index 9ad2e0a9a..7c9085a31 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index 19c2868bd..c59ce6706 100644
+index fda44ed7db..5864ce5223 100644
 --- a/setupext.py
 +++ b/setupext.py
-@@ -121,12 +121,14 @@ _freetype_hashes = {
+@@ -129,12 +129,16 @@ _freetype_hashes = {
          '955e17244e9b38adb0c98df66abb50467312e6bb70eac07e49ce6bd1a20e809a',
      '2.10.1':
          '3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110',
 +    '2.10.2':
 +        'e09aa914e4f7a5d723ac381420949c55c0b90b15744adce5d1406046022186ab',
++    '2.10.4':
++        '5eab795ebb23ac77001cfb68b7d4d50b5d6c7469247b0b01b2c953269f658dac',
  }
  # This is the version of FreeType to use when building a local
  # version.  It must match the value in
  # lib/matplotlib.__init__.py and also needs to be changed below in the
  # embedded windows build script (grep for "REMINDER" in this file)
 -LOCAL_FREETYPE_VERSION = '2.6.1'
-+LOCAL_FREETYPE_VERSION = '2.10.2'
++LOCAL_FREETYPE_VERSION = '2.10.4'
  LOCAL_FREETYPE_HASH = _freetype_hashes.get(LOCAL_FREETYPE_VERSION, 'unknown')
  
  
 -- 
-2.25.4
+2.26.2
 

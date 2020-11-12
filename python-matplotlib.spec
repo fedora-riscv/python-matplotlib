@@ -27,18 +27,19 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.3.0
+%global mpl_images_version 3.3.3
 
 # The version of FreeType in this Fedora branch.
-%global ftver 2.10.2
+%global ftver 2.10.4
 
 Name:           python-matplotlib
-Version:        3.3.2
-%global Version 3.3.2
+Version:        3.3.3
+%global Version 3.3.3
 Release:        1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
-License:        Python and MIT
+# ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
+License:        Python and MIT and Public Domain
 URL:            http://matplotlib.org
 Source0:        https://github.com/matplotlib/matplotlib/archive/v%{Version}/matplotlib-%{Version}.tar.gz
 Source1:        setup.cfg
@@ -409,6 +410,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Thu Nov 12 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.3-1
+- Update to latest version (#1897021)
+
 * Tue Sep 15 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.2-1
 - Update to latest version (#1878999)
 
