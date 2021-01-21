@@ -3,6 +3,13 @@
 # https://fedorahosted.org/fpc/ticket/381
 %bcond_without bundled_fonts
 
+# No qt4 for EL8/ELN/EL9
+%if 0%{?rhel} >= 8
+%bcond_with qt4
+%else
+%bcond_without qt4
+%endif
+
 # the default backend; one of GTK3Agg GTK3Cairo MacOSX Qt4Agg Qt5Agg TkAgg
 # WXAgg Agg Cairo PS PDF SVG
 %global backend                 TkAgg
@@ -35,7 +42,7 @@
 Name:           python-matplotlib
 Version:        3.3.3
 %global Version 3.3.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -201,6 +208,7 @@ Matplotlib tries to make easy things easy and hard things possible.
 You can generate plots, histograms, power spectra, bar charts,
 errorcharts, scatterplots, etc, with just a few lines of code.
 
+%if %{with qt4}
 %package -n     python3-matplotlib-qt4
 Summary:        Qt4 backend for python3-matplotlib
 BuildRequires:  python3-PyQt4-devel
@@ -210,6 +218,7 @@ Requires:       python3-PyQt4
 
 %description -n python3-matplotlib-qt4
 %{summary}
+%endif
 
 %package -n     python3-matplotlib-qt5
 Summary:        Qt5 backend for python3-matplotlib
@@ -375,7 +384,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 %exclude %{python3_sitearch}/mpl_toolkits/tests/baseline_images/*
 %pycached %{python3_sitearch}/pylab.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt4*.py
-#pycached #exclude #{python3_sitearch}/matplotlib/backends/backend_qt5*.py
+%if %{without qt4}
+%pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt5*.py
+%endif
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
@@ -387,15 +398,19 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/matplotlib/tests/baseline_images/
 %{python3_sitearch}/mpl_toolkits/tests/baseline_images/
 
+%if %{with qt4}
 %files -n python3-matplotlib-qt4
 %pycached %{python3_sitearch}/matplotlib/backends/backend_qt4.py
 %pycached %{python3_sitearch}/matplotlib/backends/backend_qt4agg.py
+%endif
 
 # This subpackage is empty because the Qt4 backend imports it, so we leave
 # these files in the default package, and only use this one for dependencies.
 %files -n python3-matplotlib-qt5
-#pycached #{python3_sitearch}/matplotlib/backends/backend_qt5.py
-#pycached #{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
+%if %{without qt4}
+%pycached %{python3_sitearch}/matplotlib/backends/backend_qt5.py
+%pycached %{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
+%endif
 
 %files -n python3-matplotlib-gtk3
 %pycached %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
@@ -410,6 +425,11 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Dec 02 2020 Tomas Popela <tpopela@redhat.com> - 3.3.3-2
+- Don't build the Qt 4 backend in ELN/RHEL 9 as Qt 4 won't be available there
+  (reuse
+  https://src.fedoraproject.org/rpms/python-matplotlib/c/588e490738b06d525910f05bc1ba3f3f05ec7d50?branch=epel8)
+
 * Thu Nov 12 2020 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.3-1
 - Update to latest version (#1897021)
 
