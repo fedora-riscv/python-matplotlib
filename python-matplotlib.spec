@@ -42,7 +42,7 @@
 Name:           python-matplotlib
 Version:        3.3.3
 %global Version 3.3.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -431,6 +431,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.3.3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Wed Dec 02 2020 Tomas Popela <tpopela@redhat.com> - 3.3.3-2
 - Don't build the Qt 4 backend in ELN/RHEL 9 as Qt 4 won't be available there
   (reuse
