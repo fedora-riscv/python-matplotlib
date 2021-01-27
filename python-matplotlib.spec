@@ -335,6 +335,12 @@ rm -rf %{buildroot}%{_datadir}/matplotlib/mpl-data/fonts
 # These files confuse pytest, and we want to test the installed copy.
 rm -rf build*/
 
+# We need to prime this LaTeX cache stuff, or it might fail while running tests
+# in parallel.
+mktexfmt lualatex.fmt
+mktexfmt pdflatex.fmt
+mktexfmt xelatex.fmt
+
 export http_proxy=http://127.0.0.1/
 # Skips:
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
