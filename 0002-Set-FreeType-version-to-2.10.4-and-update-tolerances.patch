@@ -1,4 +1,4 @@
-From d7ae8db9a49f0d9533bfd6a15dc17b86c186b46c Mon Sep 17 00:00:00 2001
+From 40ed55c16c0d3f7d2365af5c6a8f99e02eadae31 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
 Subject: [PATCH 2/2] Set FreeType version to 2.10.4 and update tolerances.
@@ -27,7 +27,7 @@ index 202acce525..18731b7c4d 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 57beec025a..ca583c9c64 100644
+index e0b340da1e..9090c2930c 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -6055,7 +6055,7 @@ def test_normal_axes():
@@ -94,7 +94,7 @@ index 9ad2e0a9a0..7c9085a314 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index fda44ed7db..5864ce5223 100644
+index dfa004d7f0..8ec77feed9 100644
 --- a/setupext.py
 +++ b/setupext.py
 @@ -129,12 +129,16 @@ _freetype_hashes = {
@@ -116,5 +116,5 @@ index fda44ed7db..5864ce5223 100644
  
  
 -- 
-2.26.2
+2.29.2
 

@@ -1,4 +1,4 @@
-From 222c2c7dbc362a1a3e284a3900c9290d83054945 Mon Sep 17 00:00:00 2001
+From 7d34e4c6cf3e9f0b68d0a7f70f5c832a24b74d7e Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
 Subject: [PATCH 1/2] matplotlibrc path search fix
@@ -65,5 +65,5 @@ index 1c47973f15..202acce525 100644
  
      for fname in gen_candidates():
 -- 
-2.26.2
+2.29.2
 
