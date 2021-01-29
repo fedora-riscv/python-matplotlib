@@ -232,6 +232,11 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-matplotlib-qt5
 Requires:       python3-PyQt4
 
+# Upstream has deprecated this backend due to Qt4 being no longer supported.
+# This backend will be removed when upstream does, likely in 3.5, or Fedora 35.
+# The removal date is thus estimated to be the Fedora 35 Branch point.
+Provides:       deprecated() = 20210810
+
 %description -n python3-matplotlib-qt4
 %{summary}
 %endif
@@ -451,6 +456,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Thu Jan 28 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.0-0
+- Deprecated python3-matplotlib-qt4 subpackage
+
 * Tue Feb 16 2021 Troy Dawson <tdawson@redhat.com> - 3.3.4-3
 - Add build deps that were only getting pulled in by other dependencies
 
