@@ -10,6 +10,13 @@
 %bcond_without qt4
 %endif
 
+# No WX for EL8/ELN/EL9
+%if 0%{?rhel} >= 8
+%bcond_with wx
+%else
+%bcond_without wx
+%endif
+
 # the default backend; one of GTK3Agg GTK3Cairo MacOSX Qt4Agg Qt5Agg TkAgg
 # WXAgg Agg Cairo PS PDF SVG
 %global backend                 TkAgg
@@ -42,7 +49,7 @@
 Name:           python-matplotlib
 Version:        3.3.4
 %global Version 3.3.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -254,6 +261,7 @@ Requires:       python3-tkinter
 %description -n python3-matplotlib-tk
 %{summary}
 
+%if %{with wx}
 %package -n     python3-matplotlib-wx
 Summary:        WX backend for python3-matplotlib
 BuildRequires:  python3-wxpython4
@@ -262,6 +270,7 @@ Requires:       python3-wxpython4
 
 %description -n python3-matplotlib-wx
 %{summary}
+%endif
 
 %package -n python3-matplotlib-doc
 Summary:        Documentation files for python-matplotlib
@@ -429,11 +438,17 @@ PYTHONDONTWRITEBYTECODE=1 \
 %pycached %{python3_sitearch}/matplotlib/backends/_backend_tk.py
 %{python3_sitearch}/matplotlib/backends/_tkagg.*
 
+%if %{with wx}
 %files -n python3-matplotlib-wx
 %pycached %{python3_sitearch}/matplotlib/backends/backend_wx*.py
+%endif
 
 
 %changelog
+* Mon Feb 01 2021 Tomas Popela <tpopela@redhat.com> - 3.3.4-2
+- Conditionalize the WX backend and disable it on RHEL 8+ as WX is not
+  available there.
+
 * Thu Jan 28 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.3.4-1
 - Update to latest version (#1921574)
 
