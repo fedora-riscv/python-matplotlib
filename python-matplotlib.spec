@@ -70,7 +70,10 @@ BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  zlib-devel
 
 BuildRequires:  ghostscript
+# No ImageMagick for EL8/ELN/EL9
+%if ! 0%{?rhel} >= 8
 BuildRequires:  ImageMagick
+%endif
 %ifnarch s390x
 BuildRequires:  inkscape
 %endif
