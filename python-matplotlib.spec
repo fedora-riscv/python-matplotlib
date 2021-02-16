@@ -49,7 +49,7 @@
 Name:           python-matplotlib
 Version:        3.3.4
 %global Version 3.3.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -85,8 +85,13 @@ BuildRequires:  ImageMagick
 BuildRequires:  inkscape
 %endif
 
+BuildRequires:  texlive-collection-basic
+BuildRequires:  texlive-collection-fontsrecommended
+BuildRequires:  texlive-collection-latex
+BuildRequires:  texlive-collection-latexrecommended
 BuildRequires:  texlive-dvipng
 BuildRequires:  texlive-latex-bin
+BuildRequires:  texlive-luahbtex
 BuildRequires:  texlive-tex-bin
 BuildRequires:  texlive-xetex-bin
 # Search for documentclass and add the classes here.
@@ -104,6 +109,7 @@ BuildRequires:  tex(charter.sty)
 BuildRequires:  tex(color.sty)
 BuildRequires:  tex(courier.sty)
 BuildRequires:  tex(euler.sty)
+BuildRequires:  tex(fancyhdr.sty)
 BuildRequires:  tex(fontenc.sty)
 BuildRequires:  tex(fontspec.sty)
 BuildRequires:  tex(geometry.sty)
@@ -445,6 +451,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Tue Feb 16 2021 Troy Dawson <tdawson@redhat.com> - 3.3.4-3
+- Add build deps that were only getting pulled in by other dependencies
+
 * Mon Feb 01 2021 Tomas Popela <tpopela@redhat.com> - 3.3.4-2
 - Conditionalize the WX backend and disable it on RHEL 8+ as WX is not
   available there.
