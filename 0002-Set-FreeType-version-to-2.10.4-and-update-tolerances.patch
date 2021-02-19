@@ -1,7 +1,7 @@
-From 40ed55c16c0d3f7d2365af5c6a8f99e02eadae31 Mon Sep 17 00:00:00 2001
+From c970ba953bed9df6670d28cb4421ebd054033590 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/2] Set FreeType version to 2.10.4 and update tolerances.
+Subject: [PATCH 2/3] Set FreeType version to 2.10.4 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -14,10 +14,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  6 files changed, 15 insertions(+), 11 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 202acce525..18731b7c4d 100644
+index ec115cd3f5..47c315bde4 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -1198,7 +1198,7 @@ default_test_modules = [
+@@ -1128,7 +1128,7 @@ default_test_modules = [
  def _init_tests():
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
@@ -27,10 +27,10 @@ index 202acce525..18731b7c4d 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index e0b340da1e..9090c2930c 100644
+index ed76af576f..f432713680 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -6055,7 +6055,7 @@ def test_normal_axes():
+@@ -6426,7 +6426,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -39,7 +39,7 @@ index e0b340da1e..9090c2930c 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -6073,7 +6073,7 @@ def test_normal_axes():
+@@ -6444,7 +6444,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -49,20 +49,23 @@ index e0b340da1e..9090c2930c 100644
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 46e6b9663e..593b3fb3ee 100644
+index 67474628e7..d3e9d105dc 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
-@@ -398,4 +398,4 @@ def test_hidden_axes():
+@@ -429,7 +429,7 @@ def test_hidden_axes():
      extents1 = np.copy(axs[0, 0].get_position().extents)
  
      np.testing.assert_allclose(
--        extents1, [0.045552, 0.548288, 0.47319, 0.982638], rtol=1e-5)
-+        extents1, [0.045552, 0.548288, 0.47319, 0.982638], rtol=1e-2)
+-        extents1, [0.045552, 0.543288, 0.47819, 0.982638], rtol=1e-5)
++        extents1, [0.045552, 0.543288, 0.47819, 0.982638], rtol=1e-2)
+ 
+ 
+ def test_colorbar_align():
 diff --git a/lib/matplotlib/tests/test_polar.py b/lib/matplotlib/tests/test_polar.py
-index da9a77c825..a7a98ef59e 100644
+index 389d08b6ee..865780bf62 100644
 --- a/lib/matplotlib/tests/test_polar.py
 +++ b/lib/matplotlib/tests/test_polar.py
-@@ -314,7 +314,7 @@ def test_get_tightbbox_polar():
+@@ -312,7 +312,7 @@ def test_get_tightbbox_polar():
      fig.canvas.draw()
      bb = ax.get_tightbbox(fig.canvas.get_renderer())
      assert_allclose(
@@ -72,10 +75,10 @@ index da9a77c825..a7a98ef59e 100644
  
  @check_figures_equal(extensions=["png"])
 diff --git a/lib/matplotlib/tests/test_tightlayout.py b/lib/matplotlib/tests/test_tightlayout.py
-index 9ad2e0a9a0..7c9085a314 100644
+index 23d363b508..e94c863477 100644
 --- a/lib/matplotlib/tests/test_tightlayout.py
 +++ b/lib/matplotlib/tests/test_tightlayout.py
-@@ -171,12 +171,12 @@ def test_outward_ticks():
+@@ -172,12 +172,12 @@ def test_outward_ticks():
      plt.tight_layout()
      # These values were obtained after visual checking that they correspond
      # to a tight layouting that did take the ticks into account.
@@ -94,10 +97,10 @@ index 9ad2e0a9a0..7c9085a314 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index dfa004d7f0..8ec77feed9 100644
+index d8d0b6b393..aabb7ed9fd 100644
 --- a/setupext.py
 +++ b/setupext.py
-@@ -129,12 +129,16 @@ _freetype_hashes = {
+@@ -167,12 +167,16 @@ _freetype_hashes = {
          '955e17244e9b38adb0c98df66abb50467312e6bb70eac07e49ce6bd1a20e809a',
      '2.10.1':
          '3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110',
@@ -114,7 +117,7 @@ index dfa004d7f0..8ec77feed9 100644
 +LOCAL_FREETYPE_VERSION = '2.10.4'
  LOCAL_FREETYPE_HASH = _freetype_hashes.get(LOCAL_FREETYPE_VERSION, 'unknown')
  
- 
+ LOCAL_QHULL_VERSION = '2020.2'
 -- 
 2.29.2
 

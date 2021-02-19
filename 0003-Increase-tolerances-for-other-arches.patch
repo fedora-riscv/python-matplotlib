@@ -1,0 +1,66 @@
+From 209dd631c428fba83c66fa03b516e90b65659ed5 Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Fri, 19 Feb 2021 16:33:00 -0500
+Subject: [PATCH 3/3] Increase tolerances for other arches.
+
+See scratch build here:
+https://koji.fedoraproject.org/koji/taskinfo?taskID=62275793
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_arrow_patches.py                    | 3 ++-
+ .../tests/test_axisartist_grid_helper_curvelinear.py          | 2 +-
+ lib/mpl_toolkits/tests/test_mplot3d.py                        | 4 +++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/lib/matplotlib/tests/test_arrow_patches.py b/lib/matplotlib/tests/test_arrow_patches.py
+index 0eee4f1fba..3c95535e0c 100644
+--- a/lib/matplotlib/tests/test_arrow_patches.py
++++ b/lib/matplotlib/tests/test_arrow_patches.py
+@@ -114,7 +114,8 @@ def test_fancyarrow_dash():
+     ax.add_patch(e2)
+ 
+ 
+-@image_comparison(['arrow_styles.png'], style='mpl20', remove_text=True)
++@image_comparison(['arrow_styles.png'], style='mpl20', remove_text=True,
++                  tol=0 if platform.machine() == 'x86_64' else 0.005)
+ def test_arrow_styles():
+     styles = mpatches.ArrowStyle.get_styles()
+ 
+diff --git a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+index 57397a5962..9a78a2676a 100644
+--- a/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
++++ b/lib/mpl_toolkits/tests/test_axisartist_grid_helper_curvelinear.py
+@@ -17,7 +17,7 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import \
+ 
+ 
+ @image_comparison(['custom_transform.png'], style='default',
+-                  tol=0.03 if platform.machine() == 'x86_64' else 0.034)
++                  tol=0.03 if platform.machine() == 'x86_64' else 0.04)
+ def test_custom_transform():
+     class MyTransform(Transform):
+         input_dims = output_dims = 2
+diff --git a/lib/mpl_toolkits/tests/test_mplot3d.py b/lib/mpl_toolkits/tests/test_mplot3d.py
+index cfcc383db1..f55edaa4aa 100644
+--- a/lib/mpl_toolkits/tests/test_mplot3d.py
++++ b/lib/mpl_toolkits/tests/test_mplot3d.py
+@@ -1,5 +1,6 @@
+ import functools
+ import itertools
++import platform
+ 
+ import pytest
+ 
+@@ -1267,7 +1268,8 @@ def test_errorbar3d():
+     ax.legend()
+ 
+ 
+-@image_comparison(['stem3d.png'], style='mpl20')
++@image_comparison(['stem3d.png'], style='mpl20',
++                  tol=0.0 if platform.machine() == 'x86_64' else 0.003)
+ def test_stem3d():
+     fig, axs = plt.subplots(2, 3, figsize=(8, 6),
+                             constrained_layout=True,
+-- 
+2.29.2
+

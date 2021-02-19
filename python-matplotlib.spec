@@ -41,15 +41,15 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.3.3
+%global mpl_images_version 3.4.0rc1
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.10.4
 
 Name:           python-matplotlib
-Version:        3.3.4
-%global Version 3.3.4
-Release:        3%{?dist}
+Version:        3.4.0~rc1
+%global Version 3.4.0rc1
+Release:        1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -66,6 +66,8 @@ Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_vers
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
+# https://github.com/matplotlib/matplotlib/pull/19548
+Patch0001:      0003-Increase-tolerances-for-other-arches.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -317,7 +319,9 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 # Updated test images for new FreeType.
 %patch1002 -p1
 gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
-rm -r extern/libqhull
+
+# Backports
+%patch0001 -p1
 
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
@@ -345,6 +349,13 @@ find examples -name '*.py' -exec chmod a-x '{}' \;
 export http_proxy=http://127.0.0.1/
 
 MPLCONFIGDIR=$PWD %py3_install
+
+# Delete unnecessary files.
+rm %{buildroot}%{python3_sitearch}/matplotlib/backends/web_backend/.{eslintrc.js,prettierignore,prettierrc}
+rm %{buildroot}%{python3_sitearch}/matplotlib/tests/tinypages/.gitignore
+rm %{buildroot}%{python3_sitearch}/matplotlib/tests/tinypages/_static/.gitignore
+
+# Move files to Fedora-specific locations.
 mkdir -p %{buildroot}%{_sysconfdir} %{buildroot}%{_datadir}/matplotlib
 mv %{buildroot}%{python3_sitearch}/matplotlib/mpl-data \
    %{buildroot}%{_datadir}/matplotlib
@@ -456,7 +467,8 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
-* Thu Jan 28 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.0-0
+* Fri Feb 19 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.0~rc1-1
+- Update to latest release candidate
 - Deprecated python3-matplotlib-qt4 subpackage
 
 * Tue Feb 16 2021 Troy Dawson <tdawson@redhat.com> - 3.3.4-3
