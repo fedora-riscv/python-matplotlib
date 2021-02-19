@@ -371,6 +371,7 @@ rm -rf build*/
 
 # We need to prime this LaTeX cache stuff, or it might fail while running tests
 # in parallel.
+mktexfmt latex.fmt
 mktexfmt lualatex.fmt
 mktexfmt pdflatex.fmt
 mktexfmt xelatex.fmt
