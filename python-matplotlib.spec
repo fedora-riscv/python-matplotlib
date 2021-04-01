@@ -41,14 +41,14 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.4.0rc1
+%global mpl_images_version 3.4.1
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.10.4
 
 Name:           python-matplotlib
-Version:        3.4.0~rc3
-%global Version 3.4.0rc3
+Version:        3.4.1
+%global Version 3.4.1
 Release:        1%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
@@ -463,6 +463,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Mar 31 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.1-1
+- Update to latest version (#1943482)
+
 * Thu Mar 11 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.0~rc3-1
 - Update to latest release candidate
 
