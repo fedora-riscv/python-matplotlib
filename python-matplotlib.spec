@@ -1,3 +1,4 @@
+%global _without_check 1
 %bcond_with html
 %bcond_without check
 # https://fedorahosted.org/fpc/ticket/381
@@ -49,7 +50,7 @@
 Name:           python-matplotlib
 Version:        3.4.2
 %global Version 3.4.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -469,6 +470,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Fri Jun 04 2021 Python Maint <python-maint@redhat.com> - 3.4.2-2
+- Bootstrap for Python 3.10
+
 * Fri Jun 04 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.2-2
 - Workaround failures with texlive 2021
 
