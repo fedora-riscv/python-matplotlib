@@ -1,0 +1,26 @@
+From e633708795ea2626accc491ef2b118b256015119 Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Fri, 4 Jun 2021 02:32:31 -0400
+Subject: [PATCH 3/4] Slightly increase tolerance on rcupdate test.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_backend_pgf.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/matplotlib/tests/test_backend_pgf.py b/lib/matplotlib/tests/test_backend_pgf.py
+index 75f50ecbf0..0b56f01687 100644
+--- a/lib/matplotlib/tests/test_backend_pgf.py
++++ b/lib/matplotlib/tests/test_backend_pgf.py
+@@ -127,7 +127,7 @@ def test_rcupdate():
+                 'pgf.preamble': ('\\usepackage[utf8x]{inputenc}'
+                                  '\\usepackage[T1]{fontenc}'
+                                  '\\usepackage{sfmath}')}]
+-    tol = [6, 0]
++    tol = [6, 1.28]
+     for i, rc_set in enumerate(rc_sets):
+         with mpl.rc_context(rc_set):
+             for substring, pkg in [('sfmath', 'sfmath'), ('utf8x', 'ucs')]:
+-- 
+2.31.1
+

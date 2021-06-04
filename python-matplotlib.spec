@@ -66,6 +66,9 @@ Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_vers
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
+# Workarounds for problems with texlive 2021 (#1965547)
+Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
+Patch1004:      0004-Use-new-style-for-test_text_urls_tex.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -321,6 +324,9 @@ gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}
 # Copy setup.cfg to the builddir
 cp -p %{SOURCE1} setup.cfg
 
+%patch1003 -p1
+%patch1004 -p1
+
 
 %build
 %set_build_flags
@@ -463,6 +469,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Fri Jun 04 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.2-2
+- Workaround failures with texlive 2021
+
 * Sat May 08 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.2-1
 - Update to latest version (#1958461)
 

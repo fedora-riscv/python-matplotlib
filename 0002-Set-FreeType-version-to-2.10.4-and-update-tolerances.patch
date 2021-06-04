@@ -1,7 +1,7 @@
-From c970ba953bed9df6670d28cb4421ebd054033590 Mon Sep 17 00:00:00 2001
+From 69ecaadda7a7f59130056458ce9ca6a231aebf5a Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/3] Set FreeType version to 2.10.4 and update tolerances.
+Subject: [PATCH 2/4] Set FreeType version to 2.10.4 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -14,10 +14,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  6 files changed, 15 insertions(+), 11 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index ec115cd3f5..47c315bde4 100644
+index 9d795f65f5..5755ad73da 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -1128,7 +1128,7 @@ default_test_modules = [
+@@ -1137,7 +1137,7 @@ default_test_modules = [
  def _init_tests():
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
@@ -27,10 +27,10 @@ index ec115cd3f5..47c315bde4 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index ed76af576f..f432713680 100644
+index ec4773d465..d63c200b1b 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -6426,7 +6426,7 @@ def test_normal_axes():
+@@ -6500,7 +6500,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -39,7 +39,7 @@ index ed76af576f..f432713680 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -6444,7 +6444,7 @@ def test_normal_axes():
+@@ -6518,7 +6518,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -62,7 +62,7 @@ index 67474628e7..d3e9d105dc 100644
  
  def test_colorbar_align():
 diff --git a/lib/matplotlib/tests/test_polar.py b/lib/matplotlib/tests/test_polar.py
-index 389d08b6ee..865780bf62 100644
+index c614eff027..daf4e26fb8 100644
 --- a/lib/matplotlib/tests/test_polar.py
 +++ b/lib/matplotlib/tests/test_polar.py
 @@ -312,7 +312,7 @@ def test_get_tightbbox_polar():
@@ -119,5 +119,5 @@ index d8d0b6b393..aabb7ed9fd 100644
  
  LOCAL_QHULL_VERSION = '2020.2'
 -- 
-2.29.2
+2.31.1
 
