@@ -49,7 +49,7 @@
 Name:           python-matplotlib
 Version:        3.4.2
 %global Version 3.4.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -469,6 +469,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.4.2-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Fri Jun 04 2021 Python Maint <python-maint@redhat.com> - 3.4.2-3
 - Rebuilt for Python 3.10
 
