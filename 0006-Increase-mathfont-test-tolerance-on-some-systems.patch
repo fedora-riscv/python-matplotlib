@@ -1,7 +1,7 @@
 From 28753e5db82bba5898ee302d687d201ae2a96cd6 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Mon, 9 Aug 2021 21:38:15 -0400
-Subject: [PATCH 6/6] Increase mathfont test tolerance on some systems.
+Subject: [PATCH 6/7] Increase mathfont test tolerance on some systems.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---

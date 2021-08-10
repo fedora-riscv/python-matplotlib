@@ -1,7 +1,7 @@
 From 6277ea0c008b02cd2abe017d041b43a35a407c6c Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
-Subject: [PATCH 1/6] matplotlibrc path search fix
+Subject: [PATCH 1/7] matplotlibrc path search fix
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
