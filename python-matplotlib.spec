@@ -71,6 +71,8 @@ Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
 Patch1004:      0004-Use-new-style-for-test_text_urls_tex.patch
 # https://github.com/matplotlib/matplotlib/pull/20488
 Patch1005:      0005-Backport-PR-20488-FIX-Include-0-when-checking-lognor.patch
+# Tweak tolerances a bit.
+Patch1006:      0006-Increase-mathfont-test-tolerance-on-some-systems.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -329,6 +331,7 @@ cp -p %{SOURCE1} setup.cfg
 %patch1003 -p1
 %patch1004 -p1
 %patch1005 -p1
+%patch1006 -p1
 
 
 %build

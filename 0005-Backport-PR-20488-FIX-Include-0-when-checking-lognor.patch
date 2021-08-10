@@ -1,7 +1,7 @@
 From 982f5255e5da9c5023ca9997aff78c86eb0e8000 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Thu, 24 Jun 2021 01:45:04 -0400
-Subject: [PATCH 5/5] Backport PR #20488: FIX: Include 0 when checking lognorm
+Subject: [PATCH 5/6] Backport PR #20488: FIX: Include 0 when checking lognorm
  vmin
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
