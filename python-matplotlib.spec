@@ -44,12 +44,12 @@
 %global mpl_images_version 3.4.1
 
 # The version of FreeType in this Fedora branch.
-%global ftver 2.10.4
+%global ftver 2.11.0
 
 Name:           python-matplotlib
 Version:        3.4.2
 %global Version 3.4.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -469,6 +469,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Mon Aug 09 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.2-5
+- Update test images for FreeType 2.11.0
+
 * Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.4.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 

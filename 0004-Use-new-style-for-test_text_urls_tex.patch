@@ -1,4 +1,4 @@
-From b16f2142a12ef2c49d366634d7798075d1905553 Mon Sep 17 00:00:00 2001
+From ea96e5684af98e28e704dc26f12b793c6032ada6 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 4 Jun 2021 03:20:38 -0400
 Subject: [PATCH 4/4] Use new style for test_text_urls_tex.
