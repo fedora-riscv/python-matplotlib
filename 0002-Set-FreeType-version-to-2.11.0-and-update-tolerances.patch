@@ -1,7 +1,7 @@
 From 322fe366ece11ae948c7f6ba0191f7dbc5db444b Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/4] Set FreeType version to 2.11.0 and update tolerances.
+Subject: [PATCH 2/5] Set FreeType version to 2.11.0 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---

@@ -69,6 +69,8 @@ Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patc
 # Workarounds for problems with texlive 2021 (#1965547)
 Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
 Patch1004:      0004-Use-new-style-for-test_text_urls_tex.patch
+# https://github.com/matplotlib/matplotlib/pull/20488
+Patch1005:      0005-Backport-PR-20488-FIX-Include-0-when-checking-lognor.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -326,6 +328,7 @@ cp -p %{SOURCE1} setup.cfg
 
 %patch1003 -p1
 %patch1004 -p1
+%patch1005 -p1
 
 
 %build
@@ -471,6 +474,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 %changelog
 * Mon Aug 09 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.2-5
 - Update test images for FreeType 2.11.0
+- Backport patch for NumPy 1.21
 
 * Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.4.2-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
