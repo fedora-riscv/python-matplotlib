@@ -1,17 +1,18 @@
-From 322fe366ece11ae948c7f6ba0191f7dbc5db444b Mon Sep 17 00:00:00 2001
+From 8e37877bc09957a50ee2f181b62447adb14d5162 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/7] Set FreeType version to 2.11.0 and update tolerances.
+Subject: [PATCH 2/3] Set FreeType version to 2.11.0 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
  lib/matplotlib/__init__.py                     |  2 +-
  lib/matplotlib/tests/test_axes.py              |  4 ++--
  lib/matplotlib/tests/test_constrainedlayout.py |  2 +-
+ lib/matplotlib/tests/test_mathtext.py          |  7 +++++--
  lib/matplotlib/tests/test_polar.py             |  2 +-
  lib/matplotlib/tests/test_tightlayout.py       | 10 +++++-----
  setupext.py                                    |  9 ++++++++-
- 6 files changed, 18 insertions(+), 11 deletions(-)
+ 7 files changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
 index 9d795f65f5..f01024109b 100644
@@ -27,7 +28,7 @@ index 9d795f65f5..f01024109b 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index ec4773d465..d63c200b1b 100644
+index 7950e5b830..046dbbe1b8 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
 @@ -6500,7 +6500,7 @@ def test_normal_axes():
@@ -49,7 +50,7 @@ index ec4773d465..d63c200b1b 100644
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 67474628e7..d3e9d105dc 100644
+index 117b221cc2..d009912dfa 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -429,7 +429,7 @@ def test_hidden_axes():
@@ -61,6 +62,37 @@ index 67474628e7..d3e9d105dc 100644
  
  
  def test_colorbar_align():
+diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
+index b5fd906d2f..8e3801a231 100644
+--- a/lib/matplotlib/tests/test_mathtext.py
++++ b/lib/matplotlib/tests/test_mathtext.py
+@@ -1,5 +1,6 @@
+ import io
+ import os
++import platform
+ import re
+ 
+ import numpy as np
+@@ -189,7 +190,8 @@ def baseline_images(request, fontset, index, text):
+ @pytest.mark.parametrize(
+     'fontset', ['cm', 'stix', 'stixsans', 'dejavusans', 'dejavuserif'])
+ @pytest.mark.parametrize('baseline_images', ['mathtext'], indirect=True)
+-@image_comparison(baseline_images=None)
++@image_comparison(baseline_images=None,
++                  tol=0.011 if platform.machine() in ('ppc64le', 's390x') else 0)
+ def test_mathtext_rendering(baseline_images, fontset, index, text):
+     mpl.rcParams['mathtext.fontset'] = fontset
+     fig = plt.figure(figsize=(5.25, 0.75))
+@@ -213,7 +215,8 @@ def test_mathtext_rendering_lightweight(baseline_images, fontset, index, text):
+ @pytest.mark.parametrize(
+     'fontset', ['cm', 'stix', 'stixsans', 'dejavusans', 'dejavuserif'])
+ @pytest.mark.parametrize('baseline_images', ['mathfont'], indirect=True)
+-@image_comparison(baseline_images=None, extensions=['png'])
++@image_comparison(baseline_images=None, extensions=['png'],
++                  tol=0.011 if platform.machine() in ('ppc64le', 's390x') else 0)
+ def test_mathfont_rendering(baseline_images, fontset, index, text):
+     mpl.rcParams['mathtext.fontset'] = fontset
+     fig = plt.figure(figsize=(5.25, 0.75))
 diff --git a/lib/matplotlib/tests/test_polar.py b/lib/matplotlib/tests/test_polar.py
 index c614eff027..daf4e26fb8 100644
 --- a/lib/matplotlib/tests/test_polar.py

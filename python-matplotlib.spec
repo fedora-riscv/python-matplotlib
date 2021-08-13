@@ -41,14 +41,14 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.4.1
+%global mpl_images_version 3.4.3
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.11.0
 
 Name:           python-matplotlib
-Version:        3.4.2
-%global Version 3.4.2
+Version:        3.4.3
+%global Version 3.4.3
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
@@ -66,15 +66,8 @@ Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_vers
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
-# Workarounds for problems with texlive 2021 (#1965547)
+# Work around for problems with texlive 2021 (#1965547)
 Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
-Patch1004:      0004-Use-new-style-for-test_text_urls_tex.patch
-# https://github.com/matplotlib/matplotlib/pull/20488
-Patch1005:      0005-Backport-PR-20488-FIX-Include-0-when-checking-lognor.patch
-# Tweak tolerances a bit.
-Patch1006:      0006-Increase-mathfont-test-tolerance-on-some-systems.patch
-# https://github.com/matplotlib/matplotlib/pull/20817
-Patch1007:      0007-Make-test_change_epoch-more-robust.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -331,10 +324,6 @@ gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}
 cp -p %{SOURCE1} setup.cfg
 
 %patch1003 -p1
-%patch1004 -p1
-%patch1005 -p1
-%patch1006 -p1
-%patch1007 -p1
 
 
 %build
