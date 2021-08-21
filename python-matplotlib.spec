@@ -3,13 +3,6 @@
 # https://fedorahosted.org/fpc/ticket/381
 %bcond_without bundled_fonts
 
-# No qt4 for EL8/ELN/EL9
-%if 0%{?rhel} >= 8
-%bcond_with qt4
-%else
-%bcond_without qt4
-%endif
-
 # No WX for EL8/ELN/EL9
 %if 0%{?rhel} >= 8
 %bcond_with wx
@@ -24,15 +17,11 @@
 %if "%{backend}" == "TkAgg"
 %global backend_subpackage tk
 %else
-%  if "%{backend}" == "Qt4Agg"
-%global backend_subpackage qt4
-%  else
-%    if "%{backend}" == "Qt5Agg"
+%  if "%{backend}" == "Qt5Agg"
 %global backend_subpackage qt5
-%    else
-%      if "%{backend}" == "WXAgg"
+%  else
+%    if "%{backend}" == "WXAgg"
 %global backend_subpackage wx
-%      endif
 %    endif
 %  endif
 %endif
@@ -226,29 +215,13 @@ Matplotlib tries to make easy things easy and hard things possible.
 You can generate plots, histograms, power spectra, bar charts,
 errorcharts, scatterplots, etc, with just a few lines of code.
 
-%if %{with qt4}
-%package -n     python3-matplotlib-qt4
-Summary:        Qt4 backend for python3-matplotlib
-BuildRequires:  python3-PyQt4-devel
-Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
-Requires:       python3-matplotlib-qt5
-Requires:       python3-PyQt4
-
-# Upstream has deprecated this backend due to Qt4 being no longer supported.
-# This backend will be removed when upstream does, likely in 3.5, or Fedora 35.
-# The removal date is thus estimated to be the Fedora 35 Branch point.
-Provides:       deprecated() = 20210810
-
-%description -n python3-matplotlib-qt4
-%{summary}
-%endif
-
 %package -n     python3-matplotlib-qt5
 Summary:        Qt5 backend for python3-matplotlib
 BuildRequires:  python3-qt5
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-qt5
 %{?python_provide:%python_provide python3-matplotlib-qt5}
+Obsoletes:      python3-matplotlib-qt4 < 3.5.0-0
 
 %description -n python3-matplotlib-qt5
 %{summary}
@@ -385,14 +358,7 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not Qt5Agg'
-# Run Qt5Agg tests separately to not conflict with Qt4 tests.
-MPLCONFIGDIR=$PWD \
-PYTHONPATH=%{buildroot}%{python3_sitearch} \
-PYTHONDONTWRITEBYTECODE=1 \
-     xvfb-run -a -s "-screen 0 640x480x24" \
-         %{python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
-             -m 'not network' -k 'Qt5Agg'
+             -k 'not test_invisible_Line_rendering and not Qt4Agg'
 %endif
 
 
@@ -424,9 +390,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 %exclude %{python3_sitearch}/mpl_toolkits/tests/baseline_images/*
 %pycached %{python3_sitearch}/pylab.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt4*.py
-%if %{without qt4}
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt5*.py
-%endif
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
@@ -438,19 +402,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 %{python3_sitearch}/matplotlib/tests/baseline_images/
 %{python3_sitearch}/mpl_toolkits/tests/baseline_images/
 
-%if %{with qt4}
-%files -n python3-matplotlib-qt4
-%pycached %{python3_sitearch}/matplotlib/backends/backend_qt4.py
-%pycached %{python3_sitearch}/matplotlib/backends/backend_qt4agg.py
-%endif
-
-# This subpackage is empty because the Qt4 backend imports it, so we leave
-# these files in the default package, and only use this one for dependencies.
 %files -n python3-matplotlib-qt5
-%if %{without qt4}
 %pycached %{python3_sitearch}/matplotlib/backends/backend_qt5.py
 %pycached %{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
-%endif
 
 %files -n python3-matplotlib-gtk3
 %pycached %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
