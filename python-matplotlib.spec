@@ -57,6 +57,8 @@ Patch1001:      0001-matplotlibrc-path-search-fix.patch
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 # Work around for problems with texlive 2021 (#1965547)
 Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
+# https://github.com/matplotlib/matplotlib/pull/20869
+Patch1004:      0004-Ignore-errors-trying-to-delete-make_release_tree.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -166,17 +168,9 @@ Obsoletes:      python-matplotlib-data-fonts < 3
 
 %package -n     python3-matplotlib
 Summary:        Python 2D plotting library
-BuildRequires:  python3-cairo
-BuildRequires:  python3-certifi >= 2020.06.20
-BuildRequires:  python3-cycler >= 0.10.0
-BuildRequires:  python3-dateutil
 BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
+BuildRequires:  python3-cairo
 BuildRequires:  python3-gobject
-BuildRequires:  python3-kiwisolver
-BuildRequires:  python3-numpy
-BuildRequires:  python3-pillow
-BuildRequires:  python3-pyparsing
 BuildRequires:  python3-pytz
 BuildRequires:  python3-sphinx
 Requires:       dejavu-sans-fonts
@@ -184,9 +178,6 @@ Recommends:     texlive-dvipng
 Requires:       (texlive-dvipng if texlive-base)
 Requires:       python3-matplotlib-data = %{version}-%{release}
 Requires:       python3-cairo
-Requires:       python3-cycler >= 0.10.0
-Requires:       python3-dateutil
-Requires:       python3-kiwisolver
 Requires:       python3-matplotlib-%{?backend_subpackage}%{!?backend_subpackage:tk}%{?_isa} = %{version}-%{release}
 %if %{with check}
 BuildRequires:  python3-pytest
@@ -195,9 +186,6 @@ BuildRequires:  python3-pytest-timeout
 BuildRequires:  python3-pytest-xdist
 BuildRequires:  python3-pikepdf
 %endif
-Requires:       python3-numpy
-Recommends:     python3-pillow
-Requires:       python3-pyparsing
 %if %{without bundled_fonts}
 Requires:       stix-math-fonts
 %else
@@ -220,7 +208,6 @@ Summary:        Qt5 backend for python3-matplotlib
 BuildRequires:  python3-qt5
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 Requires:       python3-qt5
-%{?python_provide:%python_provide python3-matplotlib-qt5}
 Obsoletes:      python3-matplotlib-qt4 < 3.5.0-0
 
 %description -n python3-matplotlib-qt5
@@ -262,16 +249,12 @@ Requires:       python3-wxpython4
 Summary:        Documentation files for python-matplotlib
 %if %{with html}
 BuildRequires:  graphviz
+BuildRequires:  make
 BuildRequires:  python3-sphinx
 BuildRequires:  tex(latex)
 BuildRequires:  tex-preview
-BuildRequires:  js-jquery >= 3.2.1
-BuildRequires:  xstatic-jquery-ui-common
-Requires:       js-jquery >= 3.2.1
-Requires:       xstatic-jquery-ui-common
 %endif
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
-%{?python_provide:%python_provide python3-matplotlib-doc}
 
 %description -n python3-matplotlib-doc
 %{summary}
@@ -297,20 +280,23 @@ gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}
 cp -p %{SOURCE1} setup.cfg
 
 %patch1003 -p1
+%patch1004 -p1
+
+
+%generate_buildrequires
+%pyproject_buildrequires -r
 
 
 %build
 %set_build_flags
 export http_proxy=http://127.0.0.1/
 
-MPLCONFIGDIR=$PWD %py3_build
+MPLCONFIGDIR=$PWD %pyproject_wheel
 %if %{with html}
 # Need to make built matplotlib libs available for the sphinx extensions:
-pushd doc
-    MPLCONFIGDIR=$PWD/.. \
-    PYTHONPATH=`realpath ../build/lib.linux*` \
-        %{python3} make.py html
-popd
+MPLCONFIGDIR=$PWD \
+PYTHONPATH=$(ls -d %{_pyproject_builddir}/pip-req-build-*/build/lib.%{python3_platform}-%{python3_version}) \
+    make -C doc html
 %endif
 # Ensure all example files are non-executable so that the -doc
 # package doesn't drag in dependencies
@@ -320,7 +306,7 @@ find examples -name '*.py' -exec chmod a-x '{}' \;
 %install
 export http_proxy=http://127.0.0.1/
 
-MPLCONFIGDIR=$PWD %py3_install
+MPLCONFIGDIR=$PWD %pyproject_install
 
 # Delete unnecessary files.
 rm %{buildroot}%{python3_sitearch}/matplotlib/backends/web_backend/.{eslintrc.js,prettierignore,prettierrc}
@@ -353,12 +339,11 @@ export http_proxy=http://127.0.0.1/
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
 #    heavily-loaded builder.
 MPLCONFIGDIR=$PWD \
-PYTHONPATH=%{buildroot}%{python3_sitearch} \
-PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
-         %{python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
+         env %{pytest} -ra -n auto \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not Qt4Agg'
+             -k 'not test_invisible_Line_rendering and not Qt4Agg' \
+             --pyargs matplotlib mpl_toolkits.tests
 %endif
 
 
@@ -382,7 +367,7 @@ PYTHONDONTWRITEBYTECODE=1 \
 %files -n python3-matplotlib
 %license LICENSE/
 %doc README.rst
-%{python3_sitearch}/matplotlib-*.egg-info/
+%{python3_sitearch}/matplotlib-*.dist-info/
 %{python3_sitearch}/matplotlib-*-nspkg.pth
 %{python3_sitearch}/matplotlib/
 %exclude %{python3_sitearch}/matplotlib/tests/baseline_images/*
