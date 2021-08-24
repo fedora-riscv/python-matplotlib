@@ -60,6 +60,8 @@ Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
 # https://github.com/matplotlib/matplotlib/pull/20884
 Patch1004:      0004-Ensure-full-environment-is-passed-to-headless-test.patch
 Patch1005:      0005-Increase-a-few-test-tolerances-on-some-arches.patch
+# https://github.com/matplotlib/matplotlib/pull/20885
+Patch1006:      0006-Fix-broken-QApplication-init-in-a-test.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -285,6 +287,7 @@ cp -p %{SOURCE1} mplsetup.cfg
 %patch1003 -p1
 %patch1004 -p1
 %patch1005 -p1
+%patch1006 -p1
 
 
 %generate_buildrequires
