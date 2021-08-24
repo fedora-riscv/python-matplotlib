@@ -60,8 +60,6 @@ Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
 # https://github.com/matplotlib/matplotlib/pull/20884
 Patch1004:      0004-Ensure-full-environment-is-passed-to-headless-test.patch
 Patch1005:      0005-Increase-a-few-test-tolerances-on-some-arches.patch
-# https://github.com/matplotlib/matplotlib/pull/20885
-Patch1006:      0006-Fix-broken-QApplication-init-in-a-test.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -287,7 +285,6 @@ cp -p %{SOURCE1} mplsetup.cfg
 %patch1003 -p1
 %patch1004 -p1
 %patch1005 -p1
-%patch1006 -p1
 
 
 %generate_buildrequires
@@ -345,11 +342,12 @@ export http_proxy=http://127.0.0.1/
 # Skips:
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
 #    heavily-loaded builder.
+#  * test_form_widget_get_with_datetime_and_date_fields is flaky.
 MPLCONFIGDIR=$PWD \
      xvfb-run -a -s "-screen 0 640x480x24" \
          env %{pytest} -ra -n auto \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering' \
+             -k 'not test_invisible_Line_rendering and not test_form_widget_get_with_datetime_and_date_fields' \
              --pyargs matplotlib mpl_toolkits.tests
 %endif
 
