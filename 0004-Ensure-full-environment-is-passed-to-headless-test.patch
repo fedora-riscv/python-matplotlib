@@ -1,0 +1,28 @@
+From 58debfaafeabc791b49dd9e3f2461b9cfe9812ab Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Tue, 24 Aug 2021 03:28:52 -0400
+Subject: [PATCH 4/4] Ensure full environment is passed to headless test.
+
+Otherwise, e.g., `PYTHONPATH` is not available.
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tests/test_backends_interactive.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
+index 36ec3bfc83..a1f27fea57 100644
+--- a/lib/matplotlib/tests/test_backends_interactive.py
++++ b/lib/matplotlib/tests/test_backends_interactive.py
+@@ -301,7 +301,7 @@ else:
+ 
+ """
+     proc = subprocess.run([sys.executable, "-c", test_script],
+-                          env={"MPLBACKEND": ""})
++                          env={**os.environ, "MPLBACKEND": ""})
+     if proc.returncode:
+         pytest.fail("The subprocess returned with non-zero exit status "
+                     f"{proc.returncode}.")
+-- 
+2.31.1
+

@@ -1,4 +1,4 @@
-From 8e37877bc09957a50ee2f181b62447adb14d5162 Mon Sep 17 00:00:00 2001
+From 91ec30ea100a1632b6843b201554f28363aa1677 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
 Subject: [PATCH 2/4] Set FreeType version to 2.11.0 and update tolerances.
@@ -15,10 +15,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  7 files changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 9d795f65f5..f01024109b 100644
+index d58e5c3278..b28e192138 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -1137,7 +1137,7 @@ default_test_modules = [
+@@ -1199,7 +1199,7 @@ default_test_modules = [
  def _init_tests():
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
@@ -28,10 +28,10 @@ index 9d795f65f5..f01024109b 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 7950e5b830..046dbbe1b8 100644
+index 509910bdee..5b6607a696 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -6500,7 +6500,7 @@ def test_normal_axes():
+@@ -6530,7 +6530,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -40,7 +40,7 @@ index 7950e5b830..046dbbe1b8 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -6518,7 +6518,7 @@ def test_normal_axes():
+@@ -6548,7 +6548,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -50,10 +50,10 @@ index 7950e5b830..046dbbe1b8 100644
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 117b221cc2..d009912dfa 100644
+index 007fac6ec1..a8bb740779 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
-@@ -429,7 +429,7 @@ def test_hidden_axes():
+@@ -411,7 +411,7 @@ def test_hidden_axes():
      extents1 = np.copy(axs[0, 0].get_position().extents)
  
      np.testing.assert_allclose(
@@ -63,17 +63,17 @@ index 117b221cc2..d009912dfa 100644
  
  def test_colorbar_align():
 diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
-index b5fd906d2f..8e3801a231 100644
+index 768db940c7..3ce83763eb 100644
 --- a/lib/matplotlib/tests/test_mathtext.py
 +++ b/lib/matplotlib/tests/test_mathtext.py
 @@ -1,5 +1,6 @@
  import io
- import os
+ from pathlib import Path
 +import platform
  import re
- 
- import numpy as np
-@@ -189,7 +190,8 @@ def baseline_images(request, fontset, index, text):
+ import shlex
+ from xml.etree import ElementTree as ET
+@@ -191,7 +192,8 @@ def baseline_images(request, fontset, index, text):
  @pytest.mark.parametrize(
      'fontset', ['cm', 'stix', 'stixsans', 'dejavusans', 'dejavuserif'])
  @pytest.mark.parametrize('baseline_images', ['mathtext'], indirect=True)
@@ -83,7 +83,7 @@ index b5fd906d2f..8e3801a231 100644
  def test_mathtext_rendering(baseline_images, fontset, index, text):
      mpl.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
-@@ -213,7 +215,8 @@ def test_mathtext_rendering_lightweight(baseline_images, fontset, index, text):
+@@ -215,7 +217,8 @@ def test_mathtext_rendering_lightweight(baseline_images, fontset, index, text):
  @pytest.mark.parametrize(
      'fontset', ['cm', 'stix', 'stixsans', 'dejavusans', 'dejavuserif'])
  @pytest.mark.parametrize('baseline_images', ['mathfont'], indirect=True)
@@ -94,10 +94,10 @@ index b5fd906d2f..8e3801a231 100644
      mpl.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
 diff --git a/lib/matplotlib/tests/test_polar.py b/lib/matplotlib/tests/test_polar.py
-index c614eff027..daf4e26fb8 100644
+index ea3cdfa129..d6cc018d5d 100644
 --- a/lib/matplotlib/tests/test_polar.py
 +++ b/lib/matplotlib/tests/test_polar.py
-@@ -312,7 +312,7 @@ def test_get_tightbbox_polar():
+@@ -314,7 +314,7 @@ def test_get_tightbbox_polar():
      fig.canvas.draw()
      bb = ax.get_tightbbox(fig.canvas.get_renderer())
      assert_allclose(
@@ -129,10 +129,10 @@ index 23d363b508..e94c863477 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index d8d0b6b393..45cab7d036 100644
+index 81c4fb56eb..c042f1b66d 100644
 --- a/setupext.py
 +++ b/setupext.py
-@@ -167,12 +167,18 @@ _freetype_hashes = {
+@@ -166,12 +166,18 @@ _freetype_hashes = {
          '955e17244e9b38adb0c98df66abb50467312e6bb70eac07e49ce6bd1a20e809a',
      '2.10.1':
          '3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110',
@@ -152,7 +152,7 @@ index d8d0b6b393..45cab7d036 100644
  LOCAL_FREETYPE_HASH = _freetype_hashes.get(LOCAL_FREETYPE_VERSION, 'unknown')
  
  LOCAL_QHULL_VERSION = '2020.2'
-@@ -565,6 +571,7 @@ class FreeType(SetupPackage):
+@@ -556,6 +562,7 @@ class FreeType(SetupPackage):
              ext.extra_objects.insert(
                  0, str(src_path / 'objs' / '.libs' / libfreetype))
              ext.define_macros.append(('FREETYPE_BUILD_TYPE', 'local'))

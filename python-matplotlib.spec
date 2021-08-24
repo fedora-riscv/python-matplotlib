@@ -30,22 +30,22 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.4.3
+%global mpl_images_version 3.5.0b1
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.11.0
 
 Name:           python-matplotlib
-Version:        3.4.3
-%global Version 3.4.3
-Release:        %autorelease
+Version:        3.5.0
+%global Version 3.5.0b1
+Release:        %autorelease -p b1
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
 License:        Python and MIT and Public Domain
 URL:            http://matplotlib.org
 Source0:        https://github.com/matplotlib/matplotlib/archive/v%{Version}/matplotlib-%{Version}.tar.gz
-Source1:        setup.cfg
+Source1:        mplsetup.cfg
 
 # Fedora-specific patches; see:
 # https://github.com/fedora-python/matplotlib/tree/fedora-patches
@@ -57,8 +57,8 @@ Patch1001:      0001-matplotlibrc-path-search-fix.patch
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 # Work around for problems with texlive 2021 (#1965547)
 Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
-# https://github.com/matplotlib/matplotlib/pull/20869
-Patch1004:      0004-Ignore-errors-trying-to-delete-make_release_tree.patch
+# https://github.com/matplotlib/matplotlib/pull/20884
+Patch1004:      0004-Ensure-full-environment-is-passed-to-headless-test.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -227,8 +227,10 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 
 %package -n     python3-matplotlib-tk
 Summary:        Tk backend for python3-matplotlib
+BuildRequires:  python3-pillow-tk
 BuildRequires:  python3-tkinter
 Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
+Requires:       python3-pillow-tk
 Requires:       python3-tkinter
 
 %description -n python3-matplotlib-tk
@@ -276,8 +278,8 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %patch1002 -p1
 gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
 
-# Copy setup.cfg to the builddir
-cp -p %{SOURCE1} setup.cfg
+# Copy mplsetup.cfg to the builddir
+cp -p %{SOURCE1} mplsetup.cfg
 
 %patch1003 -p1
 %patch1004 -p1
@@ -342,7 +344,7 @@ MPLCONFIGDIR=$PWD \
      xvfb-run -a -s "-screen 0 640x480x24" \
          env %{pytest} -ra -n auto \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not Qt4Agg' \
+             -k 'not test_invisible_Line_rendering' \
              --pyargs matplotlib mpl_toolkits.tests
 %endif
 

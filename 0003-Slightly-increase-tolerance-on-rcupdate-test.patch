@@ -1,4 +1,4 @@
-From 543d61d521c02120b48688ae56e39128144debd8 Mon Sep 17 00:00:00 2001
+From 24874d70222f64e221d8769d02fe91fe01554b1e Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 4 Jun 2021 02:32:31 -0400
 Subject: [PATCH 3/4] Slightly increase tolerance on rcupdate test.
@@ -9,14 +9,14 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/matplotlib/tests/test_backend_pgf.py b/lib/matplotlib/tests/test_backend_pgf.py
-index 040b2e7146..6ee36edc9e 100644
+index a463c96e61..4ff6a50de7 100644
 --- a/lib/matplotlib/tests/test_backend_pgf.py
 +++ b/lib/matplotlib/tests/test_backend_pgf.py
-@@ -127,7 +127,7 @@ def test_rcupdate():
+@@ -136,7 +136,7 @@ def test_rcupdate():
                  'pgf.preamble': ('\\usepackage[utf8x]{inputenc}'
                                   '\\usepackage[T1]{fontenc}'
                                   '\\usepackage{sfmath}')}]
--    tol = [6, 0]
+-    tol = [0, 13.2] if _old_gs_version else [0, 0]
 +    tol = [6, 1.28]
      for i, rc_set in enumerate(rc_sets):
          with mpl.rc_context(rc_set):
