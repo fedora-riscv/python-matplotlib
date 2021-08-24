@@ -59,6 +59,7 @@ Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patc
 Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
 # https://github.com/matplotlib/matplotlib/pull/20884
 Patch1004:      0004-Ensure-full-environment-is-passed-to-headless-test.patch
+Patch1005:      0005-Increase-a-few-test-tolerances-on-some-arches.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -283,6 +284,7 @@ cp -p %{SOURCE1} mplsetup.cfg
 
 %patch1003 -p1
 %patch1004 -p1
+%patch1005 -p1
 
 
 %generate_buildrequires

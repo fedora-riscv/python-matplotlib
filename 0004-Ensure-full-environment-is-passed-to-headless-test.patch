@@ -1,7 +1,7 @@
 From 58debfaafeabc791b49dd9e3f2461b9cfe9812ab Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 24 Aug 2021 03:28:52 -0400
-Subject: [PATCH 4/4] Ensure full environment is passed to headless test.
+Subject: [PATCH 4/5] Ensure full environment is passed to headless test.
 
 Otherwise, e.g., `PYTHONPATH` is not available.
 
