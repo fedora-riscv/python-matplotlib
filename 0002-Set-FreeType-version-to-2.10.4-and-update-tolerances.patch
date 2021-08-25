@@ -1,7 +1,7 @@
-From 8e37877bc09957a50ee2f181b62447adb14d5162 Mon Sep 17 00:00:00 2001
+From 7ca8afa7fa3e141464c1ef2b2c58b23b586bf310 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/3] Set FreeType version to 2.11.0 and update tolerances.
+Subject: [PATCH 2/2] Set FreeType version to 2.10.4 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -15,7 +15,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  7 files changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 9d795f65f5..f01024109b 100644
+index 88be8e97b0..22dc74181e 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
 @@ -1137,7 +1137,7 @@ default_test_modules = [
@@ -129,7 +129,7 @@ index 23d363b508..e94c863477 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index d8d0b6b393..45cab7d036 100644
+index d8d0b6b393..e44d3b046a 100644
 --- a/setupext.py
 +++ b/setupext.py
 @@ -167,12 +167,18 @@ _freetype_hashes = {

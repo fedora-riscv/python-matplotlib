@@ -49,7 +49,7 @@
 Name:           python-matplotlib
 Version:        3.4.3
 %global Version 3.4.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -463,6 +463,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Aug 25 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.3-2
+- Fix return type in get_data_path patch
+
 * Fri Aug 13 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.3-1
 - Update to latest version (#1993426)
 
