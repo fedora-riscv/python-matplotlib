@@ -1,4 +1,4 @@
-From 6279bb6519e33fa875a30fab4fcf86d4f05adafd Mon Sep 17 00:00:00 2001
+From 383fc4380bdc8d14d65ba48f012fd11e1d557348 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 24 Aug 2021 04:47:50 -0400
 Subject: [PATCH 5/6] Increase a few test tolerances on some arches.

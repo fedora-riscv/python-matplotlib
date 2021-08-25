@@ -1,4 +1,4 @@
-From 58debfaafeabc791b49dd9e3f2461b9cfe9812ab Mon Sep 17 00:00:00 2001
+From 54b7d56a0e51c44a579e6177921aa9562b0e7160 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 24 Aug 2021 03:28:52 -0400
 Subject: [PATCH 4/6] Ensure full environment is passed to headless test.

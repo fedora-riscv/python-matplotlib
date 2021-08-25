@@ -1,4 +1,4 @@
-From 40ffe133485dba72cdfcb50ec4a11ef69e92c7ea Mon Sep 17 00:00:00 2001
+From d3b2da006a21a9cc69ce6181497efab84b23ef0d Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
 Subject: [PATCH 1/6] matplotlibrc path search fix
@@ -9,7 +9,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 0361a37aed..d58e5c3278 100644
+index 0361a37aed..7f7005f915 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
 @@ -524,7 +524,8 @@ def get_cachedir():
@@ -17,8 +17,8 @@ index 0361a37aed..d58e5c3278 100644
  def get_data_path():
      """Return the path to Matplotlib data."""
 -    return str(Path(__file__).with_name("mpl-data"))
-+    return (Path(__file__).parent.parent.parent.parent.parent /
-+            'share/matplotlib/mpl-data')
++    return str(Path(__file__).parent.parent.parent.parent.parent /
++               'share/matplotlib/mpl-data')
  
  
  def matplotlib_fname():

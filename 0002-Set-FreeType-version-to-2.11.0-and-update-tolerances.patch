@@ -1,4 +1,4 @@
-From 91ec30ea100a1632b6843b201554f28363aa1677 Mon Sep 17 00:00:00 2001
+From d5f27523c1b620a1288d3ffbb173d945d0c88555 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
 Subject: [PATCH 2/6] Set FreeType version to 2.11.0 and update tolerances.
@@ -15,7 +15,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  7 files changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index d58e5c3278..b28e192138 100644
+index 7f7005f915..5961fdffd8 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
 @@ -1199,7 +1199,7 @@ default_test_modules = [
