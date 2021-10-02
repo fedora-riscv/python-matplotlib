@@ -1,15 +1,16 @@
-From 3c4d2d9d65da9065d7f82d7adf2c226f0662d6b9 Mon Sep 17 00:00:00 2001
+From ce44fc4f778f3e7d781f5d812e86b10dff2ee1fc Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 24 Aug 2021 04:47:50 -0400
 Subject: [PATCH 4/4] Increase a few test tolerances on some arches.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
- lib/matplotlib/tests/test_axes.py    | 6 ++++--
- lib/matplotlib/tests/test_contour.py | 3 ++-
- lib/matplotlib/tests/test_image.py   | 4 ++--
- lib/matplotlib/tests/test_lines.py   | 4 +++-
- 4 files changed, 11 insertions(+), 6 deletions(-)
+ lib/matplotlib/tests/test_axes.py       | 6 ++++--
+ lib/matplotlib/tests/test_contour.py    | 3 ++-
+ lib/matplotlib/tests/test_image.py      | 4 ++--
+ lib/matplotlib/tests/test_lines.py      | 4 +++-
+ lib/matplotlib/tests/test_streamplot.py | 3 ++-
+ 5 files changed, 13 insertions(+), 7 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
 index 472e0e6902..a5e678d048 100644
@@ -86,6 +87,20 @@ index f6917a134b..a7b5772e8c 100644
  def test_set_line_coll_dash_image():
      fig, ax = plt.subplots()
      np.random.seed(0)
+diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
+index 88c3ec2768..3e0c8a76ab 100644
+--- a/lib/matplotlib/tests/test_streamplot.py
++++ b/lib/matplotlib/tests/test_streamplot.py
+@@ -34,7 +34,8 @@ def test_startpoints():
+     plt.plot(start_x, start_y, 'ok')
+ 
+ 
+-@image_comparison(['streamplot_colormap'], remove_text=True, style='mpl20')
++@image_comparison(['streamplot_colormap'], remove_text=True, style='mpl20',
++                  tol=0.01)
+ def test_colormap():
+     X, Y, U, V = velocity_field()
+     plt.streamplot(X, Y, U, V, color=U, density=0.6, linewidth=2,
 -- 
 2.31.1
 
