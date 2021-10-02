@@ -1,7 +1,7 @@
-From 4542a34eb2ddc6f39e5bad3d2b1c24230cbbdc5f Mon Sep 17 00:00:00 2001
+From af387ba8868b761273dc85b288196822ebba345c Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 4 Jun 2021 02:32:31 -0400
-Subject: [PATCH 3/6] Slightly increase tolerance on rcupdate test.
+Subject: [PATCH 3/4] Slightly increase tolerance on rcupdate test.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/matplotlib/tests/test_backend_pgf.py b/lib/matplotlib/tests/test_backend_pgf.py
-index a463c96e61..4ff6a50de7 100644
+index 9b5b0b28ee..eac63a6902 100644
 --- a/lib/matplotlib/tests/test_backend_pgf.py
 +++ b/lib/matplotlib/tests/test_backend_pgf.py
 @@ -136,7 +136,7 @@ def test_rcupdate():

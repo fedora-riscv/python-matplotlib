@@ -1,7 +1,7 @@
-From 383fc4380bdc8d14d65ba48f012fd11e1d557348 Mon Sep 17 00:00:00 2001
+From 3c4d2d9d65da9065d7f82d7adf2c226f0662d6b9 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 24 Aug 2021 04:47:50 -0400
-Subject: [PATCH 5/6] Increase a few test tolerances on some arches.
+Subject: [PATCH 4/4] Increase a few test tolerances on some arches.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -12,10 +12,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  4 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 5b6607a696..8233a436d5 100644
+index 472e0e6902..a5e678d048 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -867,7 +867,8 @@ def test_imshow():
+@@ -868,7 +868,8 @@ def test_imshow():
      ax.imshow("r", data=data)
  
  
@@ -25,7 +25,7 @@ index 5b6607a696..8233a436d5 100644
  def test_imshow_clip():
      # As originally reported by Gellule Xg <gellule.xg@free.fr>
      # use former defaults to match existing baseline image
-@@ -2059,7 +2060,8 @@ def test_contour_hatching():
+@@ -2060,7 +2061,8 @@ def test_contour_hatching():
                  extend='both', alpha=0.5)
  
  
@@ -50,10 +50,10 @@ index 6396105f12..ea13615e4b 100644
  # colorbars was cleaned up...
  def test_contour_addlines():
 diff --git a/lib/matplotlib/tests/test_image.py b/lib/matplotlib/tests/test_image.py
-index 37dddd4e47..01a06378d8 100644
+index 2c4a2763e4..b41bca0863 100644
 --- a/lib/matplotlib/tests/test_image.py
 +++ b/lib/matplotlib/tests/test_image.py
-@@ -1330,8 +1330,8 @@ def test_nonuniform_and_pcolor():
+@@ -1322,8 +1322,8 @@ def test_nonuniform_and_pcolor():
          ax.set(xlim=(0, 10))
  
  
@@ -65,7 +65,7 @@ index 37dddd4e47..01a06378d8 100644
      fig, axs = plt.subplots(2, 2, figsize=(3.5, 3.5), sharex=False,
                              sharey=False, constrained_layout=True)
 diff --git a/lib/matplotlib/tests/test_lines.py b/lib/matplotlib/tests/test_lines.py
-index 21cb221405..f19542201c 100644
+index f6917a134b..a7b5772e8c 100644
 --- a/lib/matplotlib/tests/test_lines.py
 +++ b/lib/matplotlib/tests/test_lines.py
 @@ -3,6 +3,7 @@ Tests specific to the lines module.
@@ -76,7 +76,7 @@ index 21cb221405..f19542201c 100644
  import timeit
  from types import SimpleNamespace
  
-@@ -150,7 +151,8 @@ def test_set_drawstyle():
+@@ -162,7 +163,8 @@ def test_set_drawstyle():
      assert len(line.get_path().vertices) == len(x)
  
  

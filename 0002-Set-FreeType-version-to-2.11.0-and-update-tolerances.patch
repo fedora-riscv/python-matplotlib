@@ -1,7 +1,7 @@
-From d5f27523c1b620a1288d3ffbb173d945d0c88555 Mon Sep 17 00:00:00 2001
+From 0779db3fa70c58e88e048bec9b738ae02fccaead Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/6] Set FreeType version to 2.11.0 and update tolerances.
+Subject: [PATCH 2/4] Set FreeType version to 2.11.0 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -15,10 +15,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  7 files changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 7f7005f915..5961fdffd8 100644
+index bc800e1322..10ff904c8e 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -1199,7 +1199,7 @@ default_test_modules = [
+@@ -1201,7 +1201,7 @@ default_test_modules = [
  def _init_tests():
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
@@ -28,10 +28,10 @@ index 7f7005f915..5961fdffd8 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 509910bdee..5b6607a696 100644
+index 2d6c1deed4..472e0e6902 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -6530,7 +6530,7 @@ def test_normal_axes():
+@@ -6556,7 +6556,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -40,7 +40,7 @@ index 509910bdee..5b6607a696 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -6548,7 +6548,7 @@ def test_normal_axes():
+@@ -6574,7 +6574,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -50,7 +50,7 @@ index 509910bdee..5b6607a696 100644
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 007fac6ec1..a8bb740779 100644
+index a8222a73d5..ea007a233f 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -411,7 +411,7 @@ def test_hidden_axes():
@@ -63,7 +63,7 @@ index 007fac6ec1..a8bb740779 100644
  
  def test_colorbar_align():
 diff --git a/lib/matplotlib/tests/test_mathtext.py b/lib/matplotlib/tests/test_mathtext.py
-index 768db940c7..3ce83763eb 100644
+index 0055d54a03..09a8005e50 100644
 --- a/lib/matplotlib/tests/test_mathtext.py
 +++ b/lib/matplotlib/tests/test_mathtext.py
 @@ -1,5 +1,6 @@
@@ -129,10 +129,10 @@ index 23d363b508..e94c863477 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index 81c4fb56eb..c042f1b66d 100644
+index 0d85f479d1..42d6fbe2ca 100644
 --- a/setupext.py
 +++ b/setupext.py
-@@ -166,12 +166,18 @@ _freetype_hashes = {
+@@ -167,12 +167,18 @@ _freetype_hashes = {
          '955e17244e9b38adb0c98df66abb50467312e6bb70eac07e49ce6bd1a20e809a',
      '2.10.1':
          '3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110',
@@ -143,16 +143,16 @@ index 81c4fb56eb..c042f1b66d 100644
 +    '2.11.0':
 +        'a45c6b403413abd5706f3582f04c8339d26397c4304b78fa552f2215df64101f',
  }
- # This is the version of FreeType to use when building a local
- # version.  It must match the value in
- # lib/matplotlib.__init__.py and also needs to be changed below in the
- # embedded windows build script (grep for "REMINDER" in this file)
+ # This is the version of FreeType to use when building a local version.  It
+ # must match the value in lib/matplotlib.__init__.py and also needs to be
+ # changed below in the embedded windows build script (grep for "REMINDER" in
+ # this file). Also update the cache path in `.circleci/config.yml`.
 -LOCAL_FREETYPE_VERSION = '2.6.1'
 +LOCAL_FREETYPE_VERSION = '2.11.0'
  LOCAL_FREETYPE_HASH = _freetype_hashes.get(LOCAL_FREETYPE_VERSION, 'unknown')
  
- LOCAL_QHULL_VERSION = '2020.2'
-@@ -556,6 +562,7 @@ class FreeType(SetupPackage):
+ # Also update the cache path in `.circleci/config.yml`.
+@@ -580,6 +586,7 @@ class FreeType(SetupPackage):
              ext.extra_objects.insert(
                  0, str(src_path / 'objs' / '.libs' / libfreetype))
              ext.define_macros.append(('FREETYPE_BUILD_TYPE', 'local'))
