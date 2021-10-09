@@ -58,6 +58,8 @@ Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patc
 # Work around for problems with texlive 2021 (#1965547)
 Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
 Patch1004:      0004-Increase-a-few-test-tolerances-on-some-arches.patch
+# https://github.com/matplotlib/matplotlib/pull/21293
+Patch1005:      0005-Fix-snap-argument-to-pcolormesh.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -282,6 +284,7 @@ cp -p %{SOURCE1} mplsetup.cfg
 
 %patch1003 -p1
 %patch1004 -p1
+%patch1005 -p1
 
 
 %generate_buildrequires
