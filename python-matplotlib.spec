@@ -72,7 +72,7 @@ BuildRequires:  zlib-devel
 
 BuildRequires:  ghostscript
 # No ImageMagick for EL8/ELN/EL9
-%if ! 0%{?rhel} >= 8
+%if 0%{?fedora} || (0%{?rhel} && 0%{?rhel} < 8)
 BuildRequires:  ImageMagick
 %endif
 %ifnarch s390x
