@@ -40,7 +40,7 @@ Version:        3.5.0
 %global Version 3.5.0rc1
 Release:        %autorelease -p -e rc1
 Summary:        Python 2D plotting library
-# qt4_editor backend is MIT
+# qt_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
 License:        Python and MIT and Public Domain
 URL:            http://matplotlib.org
@@ -226,6 +226,18 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %description -n python3-matplotlib-gtk3
 %{summary}
 
+%package -n     python3-matplotlib-gtk4
+Summary:        GTK4 backend for python3-matplotlib
+# This should be converted to typelib(Gtk) when supported
+BuildRequires:  gtk4
+BuildRequires:  python3-gobject
+Requires:       gtk4%{?_isa}
+Requires:       python3-gobject%{?_isa}
+Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
+
+%description -n python3-matplotlib-gtk4
+%{summary}
+
 %package -n     python3-matplotlib-tk
 Summary:        Tk backend for python3-matplotlib
 BuildRequires:  python3-pillow-tk
@@ -379,7 +391,6 @@ MPLCONFIGDIR=$PWD \
 %{python3_sitearch}/mpl_toolkits/
 %exclude %{python3_sitearch}/mpl_toolkits/tests/baseline_images/*
 %pycached %{python3_sitearch}/pylab.py
-%pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt4*.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt5*.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/_backend_tk.py
@@ -397,7 +408,10 @@ MPLCONFIGDIR=$PWD \
 %pycached %{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
 
 %files -n python3-matplotlib-gtk3
-%pycached %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
+%pycached %{python3_sitearch}/matplotlib/backends/backend_gtk3*.py
+
+%files -n python3-matplotlib-gtk4
+%pycached %{python3_sitearch}/matplotlib/backends/backend_gtk4*.py
 
 %files -n python3-matplotlib-tk
 %pycached %{python3_sitearch}/matplotlib/backends/backend_tk*.py
