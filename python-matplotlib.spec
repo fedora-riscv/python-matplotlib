@@ -30,15 +30,15 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.5.0rc1
+%global mpl_images_version 3.5.0
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.11.0
 
 Name:           python-matplotlib
 Version:        3.5.0
-%global Version 3.5.0rc1
-Release:        %autorelease -p -e rc1
+%global Version 3.5.0
+Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
@@ -58,8 +58,6 @@ Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patc
 # Work around for problems with texlive 2021 (#1965547)
 Patch1003:      0003-Slightly-increase-tolerance-on-rcupdate-test.patch
 Patch1004:      0004-Increase-a-few-test-tolerances-on-some-arches.patch
-# https://github.com/matplotlib/matplotlib/pull/21293
-Patch1005:      0005-Fix-snap-argument-to-pcolormesh.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -100,6 +98,7 @@ BuildRequires:  tex(avant.sty)
 BuildRequires:  tex(bm.sty)
 BuildRequires:  tex(chancery.sty)
 BuildRequires:  tex(charter.sty)
+BuildRequires:  tex(chemformula.sty)
 BuildRequires:  tex(color.sty)
 BuildRequires:  tex(courier.sty)
 BuildRequires:  tex(euler.sty)
@@ -296,7 +295,6 @@ cp -p %{SOURCE1} mplsetup.cfg
 
 %patch1003 -p1
 %patch1004 -p1
-%patch1005 -p1
 
 
 %generate_buildrequires
