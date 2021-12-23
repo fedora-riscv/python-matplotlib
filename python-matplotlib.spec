@@ -402,8 +402,7 @@ MPLCONFIGDIR=$PWD \
 %{python3_sitearch}/mpl_toolkits/tests/baseline_images/
 
 %files -n python3-matplotlib-qt5
-%pycached %{python3_sitearch}/matplotlib/backends/backend_qt5.py
-%pycached %{python3_sitearch}/matplotlib/backends/backend_qt5agg.py
+%pycached %{python3_sitearch}/matplotlib/backends/backend_qt5*.py
 
 %files -n python3-matplotlib-gtk3
 %pycached %{python3_sitearch}/matplotlib/backends/backend_gtk3*.py
