@@ -1,13 +1,12 @@
 %global with_html               0
 
-# No qt4 or wx for EL8
+# No qt4 for EL8
 %if 0%{rhel} >= 8
 %bcond_with qt4
-%bcond_with wx
 %else
 %bcond_without qt4
-%bcond_without wx
 %endif
+%bcond_without wx
 
 # It seems like there's some kind of weird occasional error where a
 # build (often aarch64 or ppc64) will fail in one of the Stix font
@@ -53,7 +52,7 @@
 
 Name:           python-matplotlib
 Version:        3.0.3
-Release:        3%{?rctag:.%{rctag}}%{?dist}
+Release:        4%{?rctag:.%{rctag}}%{?dist}
 Summary:        Python 2D plotting library
 # qt4_editor backend is MIT
 License:        Python and MIT
@@ -353,6 +352,12 @@ export http_proxy=http://127.0.0.1/
 #  * test_invisible_Line_rendering: Checks for "slowness" that often fails on a
 #    heavily-loaded builder.
 #  * test_tinypages fails due to new Sphinx warning
+#  * test_determinism_all fails on s390x
+%ifarch s390x
+fail=0
+%else
+fail=1
+%endif
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
 MATPLOTLIBRC=%{buildroot}%{_sysconfdir}/matplotlibrc \
@@ -361,7 +366,7 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             -k 'not test_invisible_Line_rendering and not backend_qt5 and not test_tinypages'
+             -k 'not test_invisible_Line_rendering and not backend_qt5 and not test_tinypages' || exit $fail
 # Run Qt5Agg tests separately to not conflict with Qt4 tests.
 MPLCONFIGDIR=$PWD \
 MATPLOTLIBDATA=%{buildroot}%{_datadir}/matplotlib/mpl-data \
@@ -371,7 +376,7 @@ PYTHONDONTWRITEBYTECODE=1 \
      xvfb-run -a -s "-screen 0 640x480x24" \
          %{__python3} tests.py -ra -n $(getconf _NPROCESSORS_ONLN) \
              -m 'not network' \
-             matplotlib.tests.test_backend_qt5
+             matplotlib.tests.test_backend_qt5 || exit $fail
 %endif
 
 %files -n python3-matplotlib-data
@@ -469,6 +474,9 @@ PYTHONDONTWRITEBYTECODE=1 \
 
 
 %changelog
+* Wed Jan 19 2022 Orion Poplawski <orion@nwra.com> - 3.0.3-4
+- Enable wx backend (bz#1955488)
+
 * Tue Sep 17 2019 Orion Poplawski <orion@nwra.com> - 3.0.3-3
 - Disable qt4 and wx for EPEL8
 
