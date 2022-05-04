@@ -1,7 +1,7 @@
-From 715490fce1f7a2579f620802bbf25d525b5f2e7c Mon Sep 17 00:00:00 2001
+From eec799b589e203bfadaed0edb67e1719b843f0fd Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 24 Aug 2021 04:47:50 -0400
-Subject: [PATCH 4/4] Increase a few test tolerances on some arches.
+Subject: [PATCH 3/3] Increase a few test tolerances on some arches.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -14,10 +14,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  6 files changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 98878513b5..890f1de85d 100644
+index 03b92d34fa..0149a5d01a 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -890,7 +890,8 @@ def test_imshow():
+@@ -918,7 +918,8 @@ def test_imshow():
      ax.imshow("r", data=data)
  
  
@@ -27,7 +27,7 @@ index 98878513b5..890f1de85d 100644
  def test_imshow_clip():
      # As originally reported by Gellule Xg <gellule.xg@free.fr>
      # use former defaults to match existing baseline image
-@@ -2083,7 +2084,8 @@ def test_contour_hatching():
+@@ -2127,7 +2128,8 @@ def test_contour_hatching():
                  extend='both', alpha=0.5)
  
  
@@ -38,7 +38,7 @@ index 98878513b5..890f1de85d 100644
      x, y, z = contour_dat()
  
 diff --git a/lib/matplotlib/tests/test_colorbar.py b/lib/matplotlib/tests/test_colorbar.py
-index 0fd049655a..65dbb6410e 100644
+index 304056f6d1..083c595f6b 100644
 --- a/lib/matplotlib/tests/test_colorbar.py
 +++ b/lib/matplotlib/tests/test_colorbar.py
 @@ -1,3 +1,5 @@
@@ -47,8 +47,8 @@ index 0fd049655a..65dbb6410e 100644
  import numpy as np
  import pytest
  
-@@ -186,7 +188,8 @@ def test_colorbar_positioning(use_gridspec):
-                  anchor=(0.8, 0.5), shrink=0.6, use_gridspec=use_gridspec)
+@@ -218,7 +220,8 @@ def test_colorbar_single_ax_panchor_false():
+     plt.colorbar(panchor=False)
  
  
 -@image_comparison(['contour_colorbar.png'], remove_text=True)
@@ -58,7 +58,7 @@ index 0fd049655a..65dbb6410e 100644
      fig, ax = plt.subplots(figsize=(4, 2))
      data = np.arange(1200).reshape(30, 40) - 500
 diff --git a/lib/matplotlib/tests/test_contour.py b/lib/matplotlib/tests/test_contour.py
-index 5d887416a4..c0a652f5d5 100644
+index 10fb011166..40f60de022 100644
 --- a/lib/matplotlib/tests/test_contour.py
 +++ b/lib/matplotlib/tests/test_contour.py
 @@ -345,7 +345,8 @@ def test_contourf_log_extension():
@@ -109,7 +109,7 @@ index f6917a134b..a7b5772e8c 100644
      fig, ax = plt.subplots()
      np.random.seed(0)
 diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index c846ecfdcb..c04b086784 100644
+index c8824feb06..879d43f28b 100644
 --- a/lib/matplotlib/tests/test_streamplot.py
 +++ b/lib/matplotlib/tests/test_streamplot.py
 @@ -34,7 +34,8 @@ def test_startpoints():
@@ -123,5 +123,5 @@ index c846ecfdcb..c04b086784 100644
      X, Y, U, V = velocity_field()
      plt.streamplot(X, Y, U, V, color=U, density=0.6, linewidth=2,
 -- 
-2.31.1
+2.35.1
 
