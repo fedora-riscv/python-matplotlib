@@ -351,7 +351,9 @@ export http_proxy=http://127.0.0.1/
 #    heavily-loaded builder.
 #  * test_form_widget_get_with_datetime_and_date_fields is flaky.
 MPLCONFIGDIR=$PWD \
+%ifnarch %{ix86}
      xvfb-run -a -s "-screen 0 640x480x24" \
+%endif
          env %{pytest} -ra -n auto \
              -m 'not network' \
              -k 'not test_invisible_Line_rendering and not test_form_widget_get_with_datetime_and_date_fields' \
