@@ -1,3 +1,4 @@
+%global _without_check 1
 %bcond_with html
 %bcond_without check
 # https://fedorahosted.org/fpc/ticket/381
