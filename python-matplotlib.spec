@@ -33,7 +33,7 @@
 %global mpl_images_version 3.5.3
 
 # The version of FreeType in this Fedora branch.
-%global ftver 2.11.0
+%global ftver 2.12.1
 
 Name:           python-matplotlib
 Version:        3.5.3

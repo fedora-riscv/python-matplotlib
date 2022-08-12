@@ -1,7 +1,7 @@
-From 1455f1909ac18fb79e234d1d5f78ecb2757fe398 Mon Sep 17 00:00:00 2001
+From 70e97e4ede29ccc16bad1d329d08b27d753a8f00 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/3] Set FreeType version to 2.11.0 and update tolerances.
+Subject: [PATCH 2/3] Set FreeType version to 2.12.1 and update tolerances.
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -11,11 +11,11 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  lib/matplotlib/tests/test_mathtext.py          |  7 +++++--
  lib/matplotlib/tests/test_polar.py             |  2 +-
  lib/matplotlib/tests/test_tightlayout.py       | 10 +++++-----
- setupext.py                                    |  9 ++++++++-
- 7 files changed, 23 insertions(+), 13 deletions(-)
+ setupext.py                                    | 15 +++++++++++++--
+ 7 files changed, 28 insertions(+), 14 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 23841c8377..94113e7570 100644
+index 23841c8377..f7f76cbae6 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
 @@ -1203,7 +1203,7 @@ default_test_modules = [
@@ -23,7 +23,7 @@ index 23841c8377..94113e7570 100644
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
 -    LOCAL_FREETYPE_VERSION = '2.6.1'
-+    LOCAL_FREETYPE_VERSION = '2.11.0'
++    LOCAL_FREETYPE_VERSION = '2.12.1'
  
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
@@ -129,10 +129,10 @@ index e9b01b160d..beab853489 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index ae8c21599f..9656104b0d 100644
+index ae8c21599f..abd01d8813 100644
 --- a/setupext.py
 +++ b/setupext.py
-@@ -167,6 +167,12 @@ _freetype_hashes = {
+@@ -167,14 +167,24 @@ _freetype_hashes = {
          '955e17244e9b38adb0c98df66abb50467312e6bb70eac07e49ce6bd1a20e809a',
      '2.10.1':
          '3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110',
@@ -143,18 +143,23 @@ index ae8c21599f..9656104b0d 100644
 +    '2.11.0':
 +        'a45c6b403413abd5706f3582f04c8339d26397c4304b78fa552f2215df64101f',
      '2.11.1':
-         'f8db94d307e9c54961b39a1cc799a67d46681480696ed72ecf78d4473770f09b'
+-        'f8db94d307e9c54961b39a1cc799a67d46681480696ed72ecf78d4473770f09b'
++        'f8db94d307e9c54961b39a1cc799a67d46681480696ed72ecf78d4473770f09b',
++    '2.12.0':
++        '7940a46eeb0255baaa87c553d72778c4f8daa2b8888c8e2a05766a2a8686740c',
++    '2.12.1':
++        'efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938',
  }
-@@ -174,7 +180,7 @@ _freetype_hashes = {
+ # This is the version of FreeType to use when building a local version.  It
  # must match the value in lib/matplotlib.__init__.py and also needs to be
  # changed below in the embedded windows build script (grep for "REMINDER" in
  # this file). Also update the cache path in `.circleci/config.yml`.
 -TESTING_VERSION_OF_FREETYPE = '2.6.1'
-+TESTING_VERSION_OF_FREETYPE = '2.11.0'
++TESTING_VERSION_OF_FREETYPE = '2.12.1'
  if sys.platform.startswith('win') and platform.machine() == 'ARM64':
      # older versions of freetype are not supported for win/arm64
      # Matplotlib tests will not pass
-@@ -593,6 +599,7 @@ class FreeType(SetupPackage):
+@@ -593,6 +603,7 @@ class FreeType(SetupPackage):
              ext.extra_objects.insert(
                  0, str(src_path / 'objs' / '.libs' / libfreetype))
              ext.define_macros.append(('FREETYPE_BUILD_TYPE', 'local'))
