@@ -30,14 +30,14 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.5.2
+%global mpl_images_version 3.5.3
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.11.0
 
 Name:           python-matplotlib
-Version:        3.5.2
-%global Version 3.5.2
+Version:        3.5.3
+%global Version 3.5.3
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
@@ -56,7 +56,6 @@ Patch1001:      0001-matplotlibrc-path-search-fix.patch
 # Increase tolerances for new FreeType everywhere:
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 Patch1003:      0003-Increase-a-few-test-tolerances-on-some-arches.patch
-Patch0001:      https://github.com/matplotlib/matplotlib/pull/22979.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -294,9 +293,6 @@ cp -p %{SOURCE1} mplsetup.cfg
 
 %patch1003 -p1
 
-# Backports
-%patch0001 -p1
-
 
 %generate_buildrequires
 %pyproject_buildrequires -r
@@ -398,7 +394,9 @@ MPLCONFIGDIR=$PWD \
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_tk*.py
 %exclude %{python3_sitearch}/matplotlib/backends/_tkagg.*
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_wx*.py
+%if %{with html}
 %exclude %{_pkgdocdir}/*/
+%endif
 
 %files -n python3-matplotlib-test-data
 %{python3_sitearch}/matplotlib/tests/baseline_images/
