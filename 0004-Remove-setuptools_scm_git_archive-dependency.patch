@@ -1,0 +1,36 @@
+From 804a868268056f01ac81906f311b61f4af480d92 Mon Sep 17 00:00:00 2001
+From: Oscar Gustafsson <oscar.gustafsson@gmail.com>
+Date: Mon, 4 Jul 2022 12:38:08 +0200
+Subject: [PATCH 4/4] Remove setuptools_scm_git_archive dependency
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ setup.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 17bb7481d2..9840c16601 100644
+--- a/setup.py
++++ b/setup.py
+@@ -316,8 +316,7 @@ setup(  # Finally, pass this all along to setuptools to do the heavy lifting.
+     setup_requires=[
+         "certifi>=2020.06.20",
+         "numpy>=1.17",
+-        "setuptools_scm>=4,<7",
+-        "setuptools_scm_git_archive",
++        "setuptools_scm>=7",
+     ],
+     install_requires=[
+         "cycler>=0.10",
+@@ -330,7 +329,7 @@ setup(  # Finally, pass this all along to setuptools to do the heavy lifting.
+         "python-dateutil>=2.7",
+     ] + (
+         # Installing from a git checkout that is not producing a wheel.
+-        ["setuptools_scm>=4,<7"] if (
++        ["setuptools_scm>=7"] if (
+             Path(__file__).with_name(".git").exists() and
+             os.environ.get("CIBUILDWHEEL", "0") != "1"
+         ) else []
+-- 
+2.36.1
+

@@ -57,6 +57,9 @@ Patch1001:      0001-matplotlibrc-path-search-fix.patch
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 Patch1003:      0003-Increase-a-few-test-tolerances-on-some-arches.patch
 
+# https://github.com/matplotlib/matplotlib/pull/23387
+Patch0001:      0004-Remove-setuptools_scm_git_archive-dependency.patch
+
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  glibc-langpack-en
@@ -292,6 +295,9 @@ gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}
 cp -p %{SOURCE1} mplsetup.cfg
 
 %patch1003 -p1
+
+# Backports
+%patch0001 -p1
 
 
 %generate_buildrequires
