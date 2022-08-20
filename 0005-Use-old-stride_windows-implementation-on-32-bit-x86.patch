@@ -1,0 +1,36 @@
+From c35382d801eb981755faab8e48c629c1e428202e Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Mon, 22 Aug 2022 18:43:28 -0400
+Subject: [PATCH 5/5] Use old stride_windows implementation on 32-bit x86
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/mlab.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/lib/matplotlib/mlab.py b/lib/matplotlib/mlab.py
+index 5e85a9c119..d75acf6d26 100644
+--- a/lib/matplotlib/mlab.py
++++ b/lib/matplotlib/mlab.py
+@@ -52,6 +52,7 @@ Spectral functions
+ 
+ import functools
+ from numbers import Number
++import sys
+ 
+ import numpy as np
+ 
+@@ -252,7 +253,9 @@ def stride_windows(x, n, noverlap=None, axis=0):
+ 
+ def _stride_windows(x, n, noverlap=0, axis=0):
+     # np>=1.20 provides sliding_window_view, and we only ever use axis=0.
+-    if hasattr(np.lib.stride_tricks, "sliding_window_view") and axis == 0:
++    if (sys.maxsize > 2**32 and  # NumPy version on 32-bit OOMs.
++            hasattr(np.lib.stride_tricks, "sliding_window_view") and
++            axis == 0):
+         if noverlap >= n:
+             raise ValueError('noverlap must be less than n')
+         return np.lib.stride_tricks.sliding_window_view(
+-- 
+2.36.1
+

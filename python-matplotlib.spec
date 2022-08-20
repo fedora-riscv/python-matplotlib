@@ -30,21 +30,21 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.5.3
+%global mpl_images_version 3.6.0rc1
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.12.1
 
 Name:           python-matplotlib
-Version:        3.5.3
-%global Version 3.5.3
+Version:        3.6.0~rc1
+%global Version 3.6.0rc1
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
 License:        Python and MIT and Public Domain
 URL:            http://matplotlib.org
-Source0:        https://github.com/matplotlib/matplotlib/archive/v%{Version}/matplotlib-%{Version}.tar.gz
+Source0:        %pypi_source matplotlib %{Version}
 Source1:        mplsetup.cfg
 
 # Fedora-specific patches; see:
@@ -57,8 +57,10 @@ Patch1001:      0001-matplotlibrc-path-search-fix.patch
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 Patch1003:      0003-Increase-a-few-test-tolerances-on-some-arches.patch
 
-# https://github.com/matplotlib/matplotlib/pull/23387
-Patch0001:      0004-Remove-setuptools_scm_git_archive-dependency.patch
+# https://github.com/matplotlib/matplotlib/issues/23707
+Patch0001:      0004-Loosen-up-test_Normalize-test.patch
+# https://github.com/matplotlib/matplotlib/pull/21190#issuecomment-1223271888
+Patch0002:      0005-Use-old-stride_windows-implementation-on-32-bit-x86.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -78,6 +80,10 @@ BuildRequires:  ImageMagick
 BuildRequires:  inkscape
 %endif
 
+BuildRequires:  font(dejavusans)
+BuildRequires:  font(notosanscjkjp)
+BuildRequires:  font(wenquanyizenhei)
+
 BuildRequires:  texlive-collection-basic
 BuildRequires:  texlive-collection-fontsrecommended
 BuildRequires:  texlive-collection-latex
@@ -89,39 +95,35 @@ BuildRequires:  texlive-tex-bin
 BuildRequires:  texlive-xetex-bin
 # Search for documentclass and add the classes here.
 BuildRequires:  tex(article.cls)
-BuildRequires:  tex(minimal.cls)
 # Search for inputenc and add any encodings used with it.
 BuildRequires:  tex(utf8.def)
 BuildRequires:  tex(utf8x.def)
 # Found with: rg -Io 'usepackage(\[.+\])?\{.+\}' lib | rg -o '\{.+\}' | sort -u
 # and then removing duplicates in one line, etc.
 BuildRequires:  tex(avant.sty)
-BuildRequires:  tex(bm.sty)
 BuildRequires:  tex(chancery.sty)
 BuildRequires:  tex(charter.sty)
 BuildRequires:  tex(chemformula.sty)
 BuildRequires:  tex(color.sty)
 BuildRequires:  tex(courier.sty)
-BuildRequires:  tex(euler.sty)
-BuildRequires:  tex(fancyhdr.sty)
 BuildRequires:  tex(fontenc.sty)
 BuildRequires:  tex(fontspec.sty)
 BuildRequires:  tex(geometry.sty)
 BuildRequires:  tex(graphicx.sty)
 BuildRequires:  tex(helvet.sty)
+BuildRequires:  tex(hyperref.sty)
 BuildRequires:  tex(import.sty)
 BuildRequires:  tex(inputenc.sty)
+BuildRequires:  tex(lmodern.sty)
 BuildRequires:  tex(mathpazo.sty)
 BuildRequires:  tex(mathptmx.sty)
 BuildRequires:  tex(pgf.sty)
-BuildRequires:  tex(preview.sty)
-BuildRequires:  tex(psfrag.sty)
 BuildRequires:  tex(sfmath.sty)
 BuildRequires:  tex(textcomp.sty)
 BuildRequires:  tex(txfonts.sty)
 BuildRequires:  tex(type1cm.sty)
 BuildRequires:  tex(type1ec.sty)
-BuildRequires:  tex(unicode-math.sty)
+BuildRequires:  tex(underscore.sty)
 # See BakomaFonts._fontmap in lib/matplotlib/mathtext.py
 BuildRequires:  tex(cmb10.tfm)
 BuildRequires:  tex(cmex10.tfm)
@@ -296,8 +298,9 @@ cp -p %{SOURCE1} mplsetup.cfg
 
 %patch1003 -p1
 
-# Backports
+# Backports or reported upstream
 %patch0001 -p1
+%patch0002 -p1
 
 
 %generate_buildrequires
@@ -312,7 +315,7 @@ MPLCONFIGDIR=$PWD %pyproject_wheel
 %if %{with html}
 # Need to make built matplotlib libs available for the sphinx extensions:
 MPLCONFIGDIR=$PWD \
-PYTHONPATH=$(ls -d %{_pyproject_builddir}/pip-req-build-*/build/lib.%{python3_platform}-%{python3_version}) \
+PYTHONPATH="%{pyprojec_site_lib}" \
     make -C doc html
 %endif
 # Ensure all example files are non-executable so that the -doc
