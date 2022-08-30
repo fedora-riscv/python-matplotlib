@@ -30,14 +30,14 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.6.0rc1
+%global mpl_images_version 3.6.0rc2
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.12.1
 
 Name:           python-matplotlib
-Version:        3.6.0~rc1
-%global Version 3.6.0rc1
+Version:        3.6.0~rc2
+%global Version 3.6.0rc2
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
@@ -57,10 +57,8 @@ Patch1001:      0001-matplotlibrc-path-search-fix.patch
 Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 Patch1003:      0003-Increase-a-few-test-tolerances-on-some-arches.patch
 
-# https://github.com/matplotlib/matplotlib/issues/23707
-Patch0001:      0004-Loosen-up-test_Normalize-test.patch
 # https://github.com/matplotlib/matplotlib/pull/21190#issuecomment-1223271888
-Patch0002:      0005-Use-old-stride_windows-implementation-on-32-bit-x86.patch
+Patch0001:      0004-Use-old-stride_windows-implementation-on-32-bit-x86.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -300,7 +298,6 @@ cp -p %{SOURCE1} mplsetup.cfg
 
 # Backports or reported upstream
 %patch0001 -p1
-%patch0002 -p1
 
 
 %generate_buildrequires
