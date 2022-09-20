@@ -30,14 +30,14 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.6.0rc2
+%global mpl_images_version 3.6.0
 
 # The version of FreeType in this Fedora branch.
 %global ftver 2.12.1
 
 Name:           python-matplotlib
-Version:        3.6.0~rc2
-%global Version 3.6.0rc2
+Version:        3.6.0
+%global Version 3.6.0
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
