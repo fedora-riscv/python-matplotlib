@@ -1,4 +1,4 @@
-From f4fb00d01a22ecab946ca335ab0c66ed07a5a920 Mon Sep 17 00:00:00 2001
+From 0939c27b1d47cabd19c09fc09f15ef4fb18331b4 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Tue, 24 Aug 2021 04:47:50 -0400
 Subject: [PATCH 3/4] Increase a few test tolerances on some arches.
@@ -12,14 +12,13 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  lib/matplotlib/tests/test_image.py       | 4 ++--
  lib/matplotlib/tests/test_lines.py       | 4 +++-
  lib/matplotlib/tests/test_mathtext.py    | 7 +++++--
- lib/matplotlib/tests/test_streamplot.py  | 3 ++-
- 8 files changed, 23 insertions(+), 11 deletions(-)
+ 7 files changed, 21 insertions(+), 10 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 9cadbd7975..3cf2b40d0a 100644
+index c8604b8657..da72bb9415 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -1025,7 +1025,8 @@ def test_imshow():
+@@ -1031,7 +1031,8 @@ def test_imshow():
      ax.imshow("r", data=data)
  
  
@@ -29,7 +28,7 @@ index 9cadbd7975..3cf2b40d0a 100644
  def test_imshow_clip():
      # As originally reported by Gellule Xg <gellule.xg@free.fr>
      # use former defaults to match existing baseline image
-@@ -2334,7 +2335,8 @@ def test_contour_hatching():
+@@ -2340,7 +2341,8 @@ def test_contour_hatching():
                  extend='both', alpha=0.5)
  
  
@@ -53,7 +52,7 @@ index 482bc073a7..ab16d9736c 100644
      mpl.rcParams.update({'font.family': 'serif', 'pgf.rcfonts': False})
      Y, X = np.ogrid[-1:1:40j, -1:1:40j]
 diff --git a/lib/matplotlib/tests/test_colorbar.py b/lib/matplotlib/tests/test_colorbar.py
-index 149ed4c3d2..2e1f1ce171 100644
+index 4336b761f6..7d3927408b 100644
 --- a/lib/matplotlib/tests/test_colorbar.py
 +++ b/lib/matplotlib/tests/test_colorbar.py
 @@ -1,3 +1,5 @@
@@ -62,7 +61,7 @@ index 149ed4c3d2..2e1f1ce171 100644
  import numpy as np
  import pytest
  
-@@ -231,7 +233,8 @@ def test_colorbar_single_ax_panchor_east(constrained):
+@@ -233,7 +235,8 @@ def test_colorbar_single_ax_panchor_east(constrained):
      assert ax.get_anchor() == 'E'
  
  
@@ -73,10 +72,10 @@ index 149ed4c3d2..2e1f1ce171 100644
      fig, ax = plt.subplots(figsize=(4, 2))
      data = np.arange(1200).reshape(30, 40) - 500
 diff --git a/lib/matplotlib/tests/test_contour.py b/lib/matplotlib/tests/test_contour.py
-index 2c76f34cb1..cc6966182f 100644
+index 8bf77f0d54..82c0b09ac3 100644
 --- a/lib/matplotlib/tests/test_contour.py
 +++ b/lib/matplotlib/tests/test_contour.py
-@@ -318,7 +318,8 @@ def test_contourf_log_extension():
+@@ -319,7 +319,8 @@ def test_contourf_log_extension():
  
  
  @image_comparison(['contour_addlines.png'],
@@ -154,20 +153,6 @@ index 7f8b06fa0e..d7d5e687fe 100644
  def test_mathfont_rendering(baseline_images, fontset, index, text):
      mpl.rcParams['mathtext.fontset'] = fontset
      fig = plt.figure(figsize=(5.25, 0.75))
-diff --git a/lib/matplotlib/tests/test_streamplot.py b/lib/matplotlib/tests/test_streamplot.py
-index 5ee6df09e4..2084457a99 100644
---- a/lib/matplotlib/tests/test_streamplot.py
-+++ b/lib/matplotlib/tests/test_streamplot.py
-@@ -34,7 +34,8 @@ def test_startpoints():
-     plt.plot(start_x, start_y, 'ok')
- 
- 
--@image_comparison(['streamplot_colormap'], remove_text=True, style='mpl20')
-+@image_comparison(['streamplot_colormap'], remove_text=True, style='mpl20',
-+                  tol=0.01)
- def test_colormap():
-     X, Y, U, V = velocity_field()
-     plt.streamplot(X, Y, U, V, color=U, density=0.6, linewidth=2,
 -- 
 2.36.1
 
