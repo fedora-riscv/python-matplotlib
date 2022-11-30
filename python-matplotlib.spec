@@ -41,9 +41,9 @@ Version:        3.6.2
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
-# ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is Public Domain
-License:        Python and MIT and Public Domain
-URL:            http://matplotlib.org
+# ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is CC0
+License:        PSF-2.0 and MIT and CC0-1.0
+URL:            https://matplotlib.org
 Source0:        %pypi_source matplotlib %{Version}
 Source1:        mplsetup.cfg
 
@@ -154,9 +154,9 @@ Obsoletes:      python-matplotlib-data < 3
 %if %{with bundled_fonts}
 %package -n python3-matplotlib-data-fonts
 Summary:        Fonts used by python-matplotlib
-# STIX and Computer Modern is OFL
+# Carlogo, STIX and Computer Modern is OFL
 # DejaVu is Bitstream Vera and Public Domain
-License:        OFL and Bitstream Vera and Public Domain
+License:        OFL-1.1 and Bitstream-Vera and LicenseRef-Fedora-Public-Domain
 BuildArch:      noarch
 Requires:       python3-matplotlib-data = %{version}-%{release}
 Obsoletes:      python-matplotlib-data-fonts < 3
