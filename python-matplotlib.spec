@@ -74,9 +74,7 @@ BuildRequires:  ghostscript
 %if 0%{?fedora} || (0%{?rhel} && 0%{?rhel} < 8)
 BuildRequires:  ImageMagick
 %endif
-%ifnarch s390x
 BuildRequires:  inkscape
-%endif
 
 BuildRequires:  font(dejavusans)
 BuildRequires:  font(notosanscjkjp)
