@@ -38,19 +38,6 @@ index c8604b8657..da72bb9415 100644
  def test_contour_colorbar():
      x, y, z = contour_dat()
  
-diff --git a/lib/matplotlib/tests/test_backend_pgf.py b/lib/matplotlib/tests/test_backend_pgf.py
-index 482bc073a7..ab16d9736c 100644
---- a/lib/matplotlib/tests/test_backend_pgf.py
-+++ b/lib/matplotlib/tests/test_backend_pgf.py
-@@ -169,7 +169,7 @@ def test_pathclip():
- # test mixed mode rendering
- @needs_pgf_xelatex
- @pytest.mark.backend('pgf')
--@image_comparison(['pgf_mixedmode.pdf'], style='default')
-+@image_comparison(['pgf_mixedmode.pdf'], style='default', tol=0.9)
- def test_mixedmode():
-     mpl.rcParams.update({'font.family': 'serif', 'pgf.rcfonts': False})
-     Y, X = np.ogrid[-1:1:40j, -1:1:40j]
 diff --git a/lib/matplotlib/tests/test_colorbar.py b/lib/matplotlib/tests/test_colorbar.py
 index 4336b761f6..7d3927408b 100644
 --- a/lib/matplotlib/tests/test_colorbar.py
