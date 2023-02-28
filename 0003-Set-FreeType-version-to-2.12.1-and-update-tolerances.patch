@@ -1,23 +1,24 @@
-From c7f6a197992cfd989fddb858afcde5abcdecf70e Mon Sep 17 00:00:00 2001
+From 13103ca6deedcc82a8c22cee56688c10e18ee30e Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 2/4] Set FreeType version to 2.12.1 and update tolerances.
+Subject: [PATCH 3/7] Set FreeType version to 2.12.1 and update tolerances
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
  lib/matplotlib/__init__.py                     |  2 +-
  lib/matplotlib/tests/test_axes.py              |  4 ++--
- lib/matplotlib/tests/test_constrainedlayout.py |  6 +++---
+ lib/matplotlib/tests/test_constrainedlayout.py |  8 ++++----
+ lib/matplotlib/tests/test_legend.py            |  4 ++--
  lib/matplotlib/tests/test_polar.py             |  2 +-
  lib/matplotlib/tests/test_tightlayout.py       | 10 +++++-----
  setupext.py                                    | 15 +++++++++++++--
- 6 files changed, 25 insertions(+), 14 deletions(-)
+ 7 files changed, 28 insertions(+), 17 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 9786447e23..56266f0688 100644
+index 27de76f0c4..179d7ed1ff 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -1213,7 +1213,7 @@ default_test_modules = [
+@@ -1284,7 +1284,7 @@ def is_interactive():
  def _init_tests():
      # The version of FreeType to install locally for running the
      # tests.  This must match the value in `setupext.py`
@@ -27,10 +28,10 @@ index 9786447e23..56266f0688 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 8d6466c749..c8604b8657 100644
+index 8bf6051b3e..2072056d9e 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -7210,7 +7210,7 @@ def test_normal_axes():
+@@ -7388,7 +7388,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -39,7 +40,7 @@ index 8d6466c749..c8604b8657 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -7228,7 +7228,7 @@ def test_normal_axes():
+@@ -7406,7 +7406,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)
@@ -49,7 +50,7 @@ index 8d6466c749..c8604b8657 100644
      # test that get_position roundtrips to get_window_extent
      axbb = ax.get_position().transformed(fig.transFigure).bounds
 diff --git a/lib/matplotlib/tests/test_constrainedlayout.py b/lib/matplotlib/tests/test_constrainedlayout.py
-index 64906b74c3..bfa53cd430 100644
+index b0833052ad..c087baa0d5 100644
 --- a/lib/matplotlib/tests/test_constrainedlayout.py
 +++ b/lib/matplotlib/tests/test_constrainedlayout.py
 @@ -431,7 +431,7 @@ def test_hidden_axes():
@@ -70,7 +71,7 @@ index 64906b74c3..bfa53cd430 100644
      pos = axs[0, 1].get_position()
      np.testing.assert_allclose(pos.x1, 0.7024, atol=1e-3)
  
-@@ -652,7 +652,7 @@ def test_compressed1():
+@@ -652,10 +652,10 @@ def test_compressed1():
  
      pos = axs[0, 0].get_position()
      np.testing.assert_allclose(pos.x0, 0.06195, atol=1e-3)
@@ -78,12 +79,32 @@ index 64906b74c3..bfa53cd430 100644
 +    np.testing.assert_allclose(pos.y1, 0.8537, atol=1e-2)
      pos = axs[1, 2].get_position()
      np.testing.assert_allclose(pos.x1, 0.8618, atol=1e-3)
-     np.testing.assert_allclose(pos.y0, 0.1934, atol=1e-3)
+-    np.testing.assert_allclose(pos.y0, 0.1934, atol=1e-3)
++    np.testing.assert_allclose(pos.y0, 0.1934, atol=1e-2)
+ 
+ 
+ @pytest.mark.parametrize('arg, state', [
+diff --git a/lib/matplotlib/tests/test_legend.py b/lib/matplotlib/tests/test_legend.py
+index a8d7fd107d..cbca9e93e9 100644
+--- a/lib/matplotlib/tests/test_legend.py
++++ b/lib/matplotlib/tests/test_legend.py
+@@ -522,9 +522,9 @@ def test_figure_legend_outside():
+         fig.draw_without_rendering()
+ 
+         assert_allclose(axs.get_window_extent().extents,
+-                        axbb[nn])
++                        axbb[nn], rtol=1)
+         assert_allclose(leg.get_window_extent().extents,
+-                        legbb[nn])
++                        legbb[nn], rtol=1)
+ 
+ 
+ @image_comparison(['legend_stackplot.png'])
 diff --git a/lib/matplotlib/tests/test_polar.py b/lib/matplotlib/tests/test_polar.py
-index c51508ae22..942ffcb521 100644
+index 1f8e6a75ba..ace40f5526 100644
 --- a/lib/matplotlib/tests/test_polar.py
 +++ b/lib/matplotlib/tests/test_polar.py
-@@ -314,7 +314,7 @@ def test_get_tightbbox_polar():
+@@ -321,7 +321,7 @@ def test_get_tightbbox_polar():
      fig.canvas.draw()
      bb = ax.get_tightbbox(fig.canvas.get_renderer())
      assert_allclose(
@@ -93,7 +114,7 @@ index c51508ae22..942ffcb521 100644
  
  @check_figures_equal(extensions=["png"])
 diff --git a/lib/matplotlib/tests/test_tightlayout.py b/lib/matplotlib/tests/test_tightlayout.py
-index 1eb7b4b453..697eba3211 100644
+index 968f0da7b5..89caa81b98 100644
 --- a/lib/matplotlib/tests/test_tightlayout.py
 +++ b/lib/matplotlib/tests/test_tightlayout.py
 @@ -173,12 +173,12 @@ def test_outward_ticks():
@@ -115,10 +136,10 @@ index 1eb7b4b453..697eba3211 100644
  
  
 diff --git a/setupext.py b/setupext.py
-index 0387223b94..13096a812c 100644
+index a898d642d6..26cd6fe277 100644
 --- a/setupext.py
 +++ b/setupext.py
-@@ -168,13 +168,23 @@ _freetype_hashes = {
+@@ -176,13 +176,23 @@ _freetype_hashes = {
          '955e17244e9b38adb0c98df66abb50467312e6bb70eac07e49ce6bd1a20e809a',
      '2.10.1':
          '3a60d391fd579440561bf0e7f31af2222bc610ad6ce4d9d7bd2165bca8669110',
@@ -144,7 +165,7 @@ index 0387223b94..13096a812c 100644
  if sys.platform.startswith('win') and platform.machine() == 'ARM64':
      # older versions of freetype are not supported for win/arm64
      # Matplotlib tests will not pass
-@@ -584,6 +594,7 @@ class FreeType(SetupPackage):
+@@ -597,6 +607,7 @@ class FreeType(SetupPackage):
              ext.extra_objects.insert(
                  0, str(src_path / 'objs' / '.libs' / libfreetype))
              ext.define_macros.append(('FREETYPE_BUILD_TYPE', 'local'))
@@ -153,5 +174,5 @@ index 0387223b94..13096a812c 100644
      def do_custom_build(self, env):
          # We're using a system freetype
 -- 
-2.36.1
+2.39.2
 

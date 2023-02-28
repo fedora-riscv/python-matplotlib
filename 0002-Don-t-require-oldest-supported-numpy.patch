@@ -1,0 +1,26 @@
+From a183eed4c8d341af938a49bb646a14f64df0c180 Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Thu, 26 Jan 2023 06:40:06 -0500
+Subject: [PATCH 2/7] Don't require oldest-supported-numpy
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ pyproject.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 907b05a39b..81e3d80035 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -2,7 +2,7 @@
+ build-backend = "setuptools.build_meta"
+ requires = [
+     "certifi>=2020.06.20",
+-    "oldest-supported-numpy",
++    "numpy",
+     "pybind11>=2.6",
+     "setuptools_scm>=7",
+ ]
+-- 
+2.39.2
+
