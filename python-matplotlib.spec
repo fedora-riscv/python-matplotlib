@@ -1,5 +1,6 @@
 %bcond_with html
-%bcond_without check
+%bcond_with check
+%bcond_without bootstrap
 # https://fedorahosted.org/fpc/ticket/381
 %bcond_without bundled_fonts
 
