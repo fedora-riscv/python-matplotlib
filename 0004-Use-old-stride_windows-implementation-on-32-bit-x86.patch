@@ -1,7 +1,7 @@
-From b019c8ef0d18c67ddb0350b8821fcbe93ad2ee84 Mon Sep 17 00:00:00 2001
+From c00da95dde370d3b04c0134cd10674d226830c67 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Mon, 22 Aug 2022 18:43:28 -0400
-Subject: [PATCH 4/7] Use old stride_windows implementation on 32-bit x86
+Subject: [PATCH 4/5] Use old stride_windows implementation on 32-bit x86
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---

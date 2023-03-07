@@ -1,7 +1,7 @@
-From a183eed4c8d341af938a49bb646a14f64df0c180 Mon Sep 17 00:00:00 2001
+From 42ccc6269120bea873873e3479f549b30004680b Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Thu, 26 Jan 2023 06:40:06 -0500
-Subject: [PATCH 2/7] Don't require oldest-supported-numpy
+Subject: [PATCH 2/5] Don't require oldest-supported-numpy
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
