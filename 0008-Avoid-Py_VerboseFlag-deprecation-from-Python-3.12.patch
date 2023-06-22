@@ -1,0 +1,79 @@
+From a74988db693861d86c85a1307d51b9017af3c33e Mon Sep 17 00:00:00 2001
+From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+Date: Wed, 21 Jun 2023 22:14:27 -0400
+Subject: [PATCH 8/8] Avoid Py_VerboseFlag deprecation from Python 3.12
+
+Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
+---
+ lib/matplotlib/tri/_triangulation.py |  4 +++-
+ src/_qhull_wrapper.cpp               | 12 ++++++++----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/lib/matplotlib/tri/_triangulation.py b/lib/matplotlib/tri/_triangulation.py
+index fa03a9c030..15bb1760c5 100644
+--- a/lib/matplotlib/tri/_triangulation.py
++++ b/lib/matplotlib/tri/_triangulation.py
+@@ -1,3 +1,5 @@
++import sys
++
+ import numpy as np
+ 
+ from matplotlib import _api
+@@ -55,7 +57,7 @@ class Triangulation:
+         if triangles is None:
+             # No triangulation specified, so use matplotlib._qhull to obtain
+             # Delaunay triangulation.
+-            self.triangles, self._neighbors = _qhull.delaunay(x, y)
++            self.triangles, self._neighbors = _qhull.delaunay(x, y, sys.flags.verbose)
+             self.is_delaunay = True
+         else:
+             # Triangulation specified. Copy, since we may correct triangle
+diff --git a/src/_qhull_wrapper.cpp b/src/_qhull_wrapper.cpp
+index e27c4215b9..6b8173d3a3 100644
+--- a/src/_qhull_wrapper.cpp
++++ b/src/_qhull_wrapper.cpp
+@@ -258,10 +258,12 @@ delaunay(PyObject *self, PyObject *args)
+     npy_intp npoints;
+     const double* x;
+     const double* y;
++    int verbose = 0;
+ 
+-    if (!PyArg_ParseTuple(args, "O&O&",
++    if (!PyArg_ParseTuple(args, "O&O&i:delaunay",
+                           &xarray.converter_contiguous, &xarray,
+-                          &yarray.converter_contiguous, &yarray)) {
++                          &yarray.converter_contiguous, &yarray,
++                          &verbose)) {
+         return NULL;
+     }
+ 
+@@ -288,7 +290,7 @@ delaunay(PyObject *self, PyObject *args)
+     }
+ 
+     CALL_CPP("qhull.delaunay",
+-             (ret = delaunay_impl(npoints, x, y, Py_VerboseFlag == 0)));
++             (ret = delaunay_impl(npoints, x, y, verbose == 0)));
+ 
+     return ret;
+ }
+@@ -302,7 +304,7 @@ version(PyObject *self, PyObject *arg)
+ 
+ static PyMethodDef qhull_methods[] = {
+     {"delaunay", delaunay, METH_VARARGS,
+-     "delaunay(x, y, /)\n"
++     "delaunay(x, y, verbose, /)\n"
+      "--\n\n"
+      "Compute a Delaunay triangulation.\n"
+      "\n"
+@@ -311,6 +313,8 @@ static PyMethodDef qhull_methods[] = {
+      "x, y : 1d arrays\n"
+      "    The coordinates of the point set, which must consist of at least\n"
+      "    three unique points.\n"
++     "verbose : int\n"
++     "    Python's verbosity level.\n"
+      "\n"
+      "Returns\n"
+      "-------\n"
+-- 
+2.41.0
+

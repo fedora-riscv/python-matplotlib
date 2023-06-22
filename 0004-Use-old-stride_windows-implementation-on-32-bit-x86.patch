@@ -1,7 +1,7 @@
 From c00da95dde370d3b04c0134cd10674d226830c67 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Mon, 22 Aug 2022 18:43:28 -0400
-Subject: [PATCH 4/5] Use old stride_windows implementation on 32-bit x86
+Subject: [PATCH 4/8] Use old stride_windows implementation on 32-bit x86
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -32,5 +32,5 @@ index 059cf0f162..943eb18e6f 100644
              raise ValueError('noverlap must be less than n')
          return np.lib.stride_tricks.sliding_window_view(
 -- 
-2.39.2
+2.41.0
 

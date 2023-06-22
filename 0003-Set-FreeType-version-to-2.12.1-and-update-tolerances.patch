@@ -1,7 +1,7 @@
 From c00966e628018f2b1edc103c2c24e4296a6f24e3 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
-Subject: [PATCH 3/5] Set FreeType version to 2.12.1 and update tolerances
+Subject: [PATCH 3/8] Set FreeType version to 2.12.1 and update tolerances
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -174,5 +174,5 @@ index a898d642d6..26cd6fe277 100644
      def do_custom_build(self, env):
          # We're using a system freetype
 -- 
-2.39.2
+2.41.0
 

@@ -1,7 +1,7 @@
 From e5fc2dc6299a3965fae77246f088a10633e6ba03 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
-Subject: [PATCH 1/5] matplotlibrc path search fix
+Subject: [PATCH 1/8] matplotlibrc path search fix
 
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
@@ -39,5 +39,5 @@ index b279c46516..27de76f0c4 100644
  
      for fname in gen_candidates():
 -- 
-2.39.2
+2.41.0
 
