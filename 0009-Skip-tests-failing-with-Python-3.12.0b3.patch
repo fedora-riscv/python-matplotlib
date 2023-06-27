@@ -1,0 +1,60 @@
+From 86d7e391a75838ccdc22b3e98dcf40954e5b25a2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tom=C3=A1=C5=A1=20Hrn=C4=8Diar?= <thrnciar@redhat.com>
+Date: Tue, 27 Jun 2023 15:34:58 +0200
+Subject: [PATCH] Skip tests failing with Python 3.12.0b3+
+
+---
+ lib/matplotlib/tests/test_backends_interactive.py | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/lib/matplotlib/tests/test_backends_interactive.py b/lib/matplotlib/tests/test_backends_interactive.py
+index 24d47bb..4008482 100644
+--- a/lib/matplotlib/tests/test_backends_interactive.py
++++ b/lib/matplotlib/tests/test_backends_interactive.py
+@@ -193,6 +193,8 @@ def test_interactive_backend(env, toolbar):
+             pytest.skip("toolmanager is not implemented for macosx.")
+     if env["MPLBACKEND"] == "wx":
+         pytest.skip("wx backend is deprecated; tests failed on appveyor")
++    if env["MPLBACKEND"] in ["qtagg", "qtcairo", "wxagg"]:
++        pytest.skip("qtagg, qtcairo and wxagg backends are failing with Python 3.12")
+     try:
+         proc = _run_helper(
+                 _test_interactive_impl,
+@@ -272,6 +274,8 @@ for param in _thread_safe_backends:
+ @pytest.mark.parametrize("env", _thread_safe_backends)
+ @pytest.mark.flaky(reruns=3)
+ def test_interactive_thread_safety(env):
++    if env["MPLBACKEND"] in ["qtagg", "wxagg"]:
++        pytest.skip("qtagg and wxagg backends are failing with Python 3.12")
+     proc = _run_helper(_test_thread_impl, timeout=_test_timeout, extra_env=env)
+     assert proc.stdout.count("CloseEvent") == 1
+ 
+@@ -336,6 +340,7 @@ def _implcore():
+         matplotlib.backends.backend_qt5.qApp
+ 
+ 
++@pytest.mark.skip(reason="Failing with Python 3.12")
+ def test_qt5backends_uses_qt5():
+     qt5_bindings = [
+         dep for dep in ['PyQt5', 'pyside2']
+@@ -467,6 +472,8 @@ def _lazy_headless():
+ @pytest.mark.skipif(sys.platform != "linux", reason="this a linux-only test")
+ @pytest.mark.parametrize("env", _get_testable_interactive_backends())
+ def test_lazy_linux_headless(env):
++    if env["MPLBACKEND"] in ["qtagg", "qtcairo", "wxagg", "wx"]:
++        pytest.skip("qtagg, qtcairo, wxagg and wx backends are failing with Python 3.12")
+     proc = _run_helper(
+         _lazy_headless,
+         env.pop('MPLBACKEND'), env.pop("BACKEND_DEPS"),
+@@ -550,6 +557,8 @@ for param in _blit_backends:
+ # subprocesses can struggle to get the display, so rerun a few times
+ @pytest.mark.flaky(reruns=4)
+ def test_blitting_events(env):
++    if env["MPLBACKEND"] in ["qtagg", "qtcairo", "wxagg"]:
++        pytest.skip("qtagg, qtcairo and wxagg backends are failing with Python 3.12")
+     proc = _run_helper(
+         _test_number_of_draws_script, timeout=_test_timeout, extra_env=env)
+     # Count the number of draw_events we got. We could count some initial
+-- 
+2.40.1
+
