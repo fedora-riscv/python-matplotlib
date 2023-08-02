@@ -31,14 +31,14 @@
 %global _docdir_fmt %{name}
 
 # Updated test images for new FreeType.
-%global mpl_images_version 3.6.1
+%global mpl_images_version 3.7.2
 
 # The version of FreeType in this Fedora branch.
-%global ftver 2.12.1
+%global ftver 2.13.1
 
 Name:           python-matplotlib
-Version:        3.6.3
-%global Version 3.6.3
+Version:        3.7.2
+%global Version 3.7.2
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
@@ -54,9 +54,9 @@ Source1:        mplsetup.cfg
 Source1000:     https://github.com/QuLogic/mpl-images/archive/v%{mpl_images_version}-with-freetype-%{ftver}/matplotlib-%{mpl_images_version}-with-freetype-%{ftver}.tar.gz
 # Search in /etc/matplotlibrc:
 Patch1001:      0001-matplotlibrc-path-search-fix.patch
+Patch1002:      0002-Don-t-require-oldest-supported-numpy.patch
 # Increase tolerances for new FreeType everywhere:
-Patch1002:      0002-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
-Patch1003:      0003-Increase-a-few-test-tolerances-on-some-arches.patch
+Patch1003:      0003-Set-FreeType-version-to-%{ftver}-and-update-tolerances.patch
 
 # https://github.com/matplotlib/matplotlib/pull/21190#issuecomment-1223271888
 Patch0001:      0004-Use-old-stride_windows-implementation-on-32-bit-x86.patch
@@ -297,18 +297,15 @@ Requires:       python3-matplotlib%{?_isa} = %{version}-%{release}
 %autosetup -n matplotlib-%{Version} -N
 
 # Fedora-specific patches follow:
-%patch1001 -p1
+%autopatch -p1 -m 1000
 # Updated test images for new FreeType.
-%patch1002 -p1
-gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/\([^/]\+\)/~lib/\1/tests/baseline_images/~'
+gzip -dc %SOURCE1000 | tar xf - --transform='s~^mpl-images-%{mpl_images_version}-with-freetype-%{ftver}/~~'
 
 # Copy mplsetup.cfg to the builddir
 cp -p %{SOURCE1} mplsetup.cfg
 
-%patch1003 -p1
-
 # Backports or reported upstream
-%patch0001 -p1
+%autopatch -p1 -M 999
 
 
 %generate_buildrequires
@@ -323,7 +320,7 @@ MPLCONFIGDIR=$PWD %pyproject_wheel
 %if %{with html}
 # Need to make built matplotlib libs available for the sphinx extensions:
 MPLCONFIGDIR=$PWD \
-PYTHONPATH="%{pyprojec_site_lib}" \
+PYTHONPATH="%{pyproject_site_lib}" \
     make -C doc html
 %endif
 # Ensure all example files are non-executable so that the -doc
@@ -374,7 +371,7 @@ MPLCONFIGDIR=$PWD \
          env %{pytest} -ra -n auto \
              -m 'not network' \
              -k 'not test_invisible_Line_rendering and not test_form_widget_get_with_datetime_and_date_fields' \
-             --pyargs matplotlib mpl_toolkits.tests
+             --pyargs matplotlib mpl_toolkits.axes_grid1 mpl_toolkits.axisartist mpl_toolkits.mplot3d
 %endif
 
 
@@ -397,13 +394,13 @@ MPLCONFIGDIR=$PWD \
 
 %files -n python3-matplotlib
 %license LICENSE/
-%doc README.rst
+%doc README.md
 %{python3_sitearch}/matplotlib-*.dist-info/
 %{python3_sitearch}/matplotlib-*-nspkg.pth
 %{python3_sitearch}/matplotlib/
 %exclude %{python3_sitearch}/matplotlib/tests/baseline_images/*
 %{python3_sitearch}/mpl_toolkits/
-%exclude %{python3_sitearch}/mpl_toolkits/tests/baseline_images/*
+%exclude %{python3_sitearch}/mpl_toolkits/*/tests/baseline_images/*
 %pycached %{python3_sitearch}/pylab.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_qt5*.py
 %pycached %exclude %{python3_sitearch}/matplotlib/backends/backend_gtk*.py
@@ -417,7 +414,7 @@ MPLCONFIGDIR=$PWD \
 
 %files -n python3-matplotlib-test-data
 %{python3_sitearch}/matplotlib/tests/baseline_images/
-%{python3_sitearch}/mpl_toolkits/tests/baseline_images/
+%{python3_sitearch}/mpl_toolkits/*/tests/baseline_images/
 
 %files -n python3-matplotlib-qt5
 %pycached %{python3_sitearch}/matplotlib/backends/backend_qt5*.py

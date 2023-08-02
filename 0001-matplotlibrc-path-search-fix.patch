@@ -1,4 +1,4 @@
-From 3e43f06eaad8cdb48d30b4cbe23a881c6fa5c1ff Mon Sep 17 00:00:00 2001
+From 7f525ad4de95f9e9ec90a39498eefd22aadcedda Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
 Subject: [PATCH 1/4] matplotlibrc path search fix
@@ -9,10 +9,10 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 77d25bbe33..9786447e23 100644
+index ae68094000..06fb76827d 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
-@@ -540,7 +540,8 @@ def get_cachedir():
+@@ -570,7 +570,8 @@ def get_cachedir():
  @_logged_cached('matplotlib data path: %s')
  def get_data_path():
      """Return the path to Matplotlib data."""
@@ -22,7 +22,7 @@ index 77d25bbe33..9786447e23 100644
  
  
  def matplotlib_fname():
-@@ -560,6 +561,7 @@ def matplotlib_fname():
+@@ -590,6 +591,7 @@ def matplotlib_fname():
            is not defined)
      - On other platforms,
        - ``$HOME/.matplotlib/matplotlibrc`` if ``$HOME`` is defined
@@ -30,7 +30,7 @@ index 77d25bbe33..9786447e23 100644
      - Lastly, it looks in ``$MATPLOTLIBDATA/matplotlibrc``, which should always
        exist.
      """
-@@ -578,6 +580,7 @@ def matplotlib_fname():
+@@ -608,6 +610,7 @@ def matplotlib_fname():
              yield matplotlibrc
              yield os.path.join(matplotlibrc, 'matplotlibrc')
          yield os.path.join(get_configdir(), 'matplotlibrc')
@@ -39,5 +39,5 @@ index 77d25bbe33..9786447e23 100644
  
      for fname in gen_candidates():
 -- 
-2.36.1
+2.41.0
 

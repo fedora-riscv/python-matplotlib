@@ -1,4 +1,4 @@
-From 77d0ef4bac7e14da704556a6f1f99962b0864a6a Mon Sep 17 00:00:00 2001
+From 5d12c697908d1103dc7fa2d915ad82d357975709 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Mon, 22 Aug 2022 18:43:28 -0400
 Subject: [PATCH 4/4] Use old stride_windows implementation on 32-bit x86
@@ -9,7 +9,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/lib/matplotlib/mlab.py b/lib/matplotlib/mlab.py
-index 5e85a9c119..d75acf6d26 100644
+index 059cf0f162..943eb18e6f 100644
 --- a/lib/matplotlib/mlab.py
 +++ b/lib/matplotlib/mlab.py
 @@ -52,6 +52,7 @@ Spectral functions
@@ -32,5 +32,5 @@ index 5e85a9c119..d75acf6d26 100644
              raise ValueError('noverlap must be less than n')
          return np.lib.stride_tricks.sliding_window_view(
 -- 
-2.36.1
+2.41.0
 
