@@ -1,3 +1,6 @@
+* Fri Aug 11 2023 Tom Callaway <spot@fedoraproject.org> - 3.7.2-2
+- rebuild for new qhull
+
 * Mon Aug 09 2021 Elliott Sales de Andrade <quantum.analyst@gmail.com> - 3.4.2-5
 - Update test images for FreeType 2.11.0
 - Backport patch for NumPy 1.21
