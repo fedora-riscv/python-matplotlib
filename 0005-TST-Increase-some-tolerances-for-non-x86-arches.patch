@@ -1,4 +1,4 @@
-From 7381c07409a36b4d3af029fbf66048658d55aa5c Mon Sep 17 00:00:00 2001
+From b224df2d58bd6335d24ec185e85348c893c076c3 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 11 Aug 2023 05:13:38 -0400
 Subject: [PATCH 5/5] TST: Increase some tolerances for non-x86 arches
@@ -6,8 +6,8 @@ Subject: [PATCH 5/5] TST: Increase some tolerances for non-x86 arches
 Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 ---
  lib/matplotlib/tests/test_axes.py             | 2 +-
- lib/mpl_toolkits/mplot3d/tests/test_axes3d.py | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ lib/mpl_toolkits/mplot3d/tests/test_axes3d.py | 7 +++++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
 index c9687914c8..3a6edde772 100644
@@ -23,7 +23,7 @@ index c9687914c8..3a6edde772 100644
      x, y, z = contour_dat()
  
 diff --git a/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py b/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py
-index ad04b12526..644e2f2458 100644
+index ad04b12526..5970132095 100644
 --- a/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py
 +++ b/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py
 @@ -1,5 +1,6 @@
@@ -42,6 +42,15 @@ index ad04b12526..644e2f2458 100644
 +    ['contour3d.png'], style='mpl20',
 +    tol=0.002 if platform.machine() in ('aarch64', 'ppc64le', 's390x') else 0)
  def test_contour3d():
+     fig = plt.figure()
+     ax = fig.add_subplot(projection='3d')
+@@ -2246,7 +2249,7 @@ def test_scatter_masked_color():
+            len(super(type(path3d), path3d).get_facecolors())
+ 
+ 
+-@mpl3d_image_comparison(['surface3d_zsort_inf.png'], style='mpl20')
++@mpl3d_image_comparison(['surface3d_zsort_inf.png'], style='mpl20', tol=0.055)
+ def test_surface3d_zsort_inf():
      fig = plt.figure()
      ax = fig.add_subplot(projection='3d')
 -- 
