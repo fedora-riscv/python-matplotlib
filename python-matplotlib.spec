@@ -37,7 +37,7 @@
 
 Name:           python-matplotlib
 Version:        3.8.0~rc1
-%global Version 3.8.0rc1
+%global Version %{version_no_tilde %{quote:%nil}}
 Release:        %autorelease
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
