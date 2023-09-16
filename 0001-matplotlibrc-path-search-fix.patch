@@ -1,4 +1,4 @@
-From 8316721d7a203dd5b170c56e0ceb541296d8f67a Mon Sep 17 00:00:00 2001
+From ad95c0abec7677bc256b5a1fc198c16c4539a6d0 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
 Subject: [PATCH 1/5] matplotlibrc path search fix

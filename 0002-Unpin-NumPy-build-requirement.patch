@@ -1,4 +1,4 @@
-From 23f561e7b578806239bb3c68ed9ef02aa1e00ce4 Mon Sep 17 00:00:00 2001
+From 9a1f728c8f56aaa1961cc9690e169ae5e31054d5 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 11 Aug 2023 02:36:06 -0400
 Subject: [PATCH 2/5] Unpin NumPy build requirement
