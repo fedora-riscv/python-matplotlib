@@ -1,4 +1,4 @@
-From ad95c0abec7677bc256b5a1fc198c16c4539a6d0 Mon Sep 17 00:00:00 2001
+From a035d73964343cbba0daad79b9349153a51af56a Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Wed, 27 Sep 2017 19:35:59 -0400
 Subject: [PATCH 1/5] matplotlibrc path search fix
@@ -9,7 +9,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 1e3dab1b33..324b9bcabd 100644
+index 353406832c..26dd9372e1 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
 @@ -582,7 +582,8 @@ def get_cachedir():

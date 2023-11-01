@@ -1,4 +1,4 @@
-From bddeb2a46d7d6e706675c3a4959403825b36fc7b Mon Sep 17 00:00:00 2001
+From a5490ca593e1515bddbc96491efd8d1ff5e372d6 Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 14 Feb 2020 06:05:42 -0500
 Subject: [PATCH 3/5] Set FreeType version to 2.13.1 and update tolerances
@@ -16,7 +16,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  8 files changed, 36 insertions(+), 19 deletions(-)
 
 diff --git a/lib/matplotlib/__init__.py b/lib/matplotlib/__init__.py
-index 324b9bcabd..133dc73548 100644
+index 26dd9372e1..81b77d455f 100644
 --- a/lib/matplotlib/__init__.py
 +++ b/lib/matplotlib/__init__.py
 @@ -1307,7 +1307,7 @@ def _val_or_rc(val, rc_name):
@@ -29,10 +29,10 @@ index 324b9bcabd..133dc73548 100644
      from matplotlib import ft2font
      if (ft2font.__freetype_version__ != LOCAL_FREETYPE_VERSION or
 diff --git a/lib/matplotlib/tests/test_axes.py b/lib/matplotlib/tests/test_axes.py
-index 30992d5780..348181e67f 100644
+index 6c5dd712b7..0a70c37891 100644
 --- a/lib/matplotlib/tests/test_axes.py
 +++ b/lib/matplotlib/tests/test_axes.py
-@@ -7621,7 +7621,7 @@ def test_normal_axes():
+@@ -7623,7 +7623,7 @@ def test_normal_axes():
      ]
      for nn, b in enumerate(bbaxis):
          targetbb = mtransforms.Bbox.from_bounds(*target[nn])
@@ -41,7 +41,7 @@ index 30992d5780..348181e67f 100644
  
      target = [
          [150.0, 119.999, 930.0, 11.111],
-@@ -7639,7 +7639,7 @@ def test_normal_axes():
+@@ -7641,7 +7641,7 @@ def test_normal_axes():
  
      target = [85.5138, 75.88888, 1021.11, 1017.11]
      targetbb = mtransforms.Bbox.from_bounds(*target)

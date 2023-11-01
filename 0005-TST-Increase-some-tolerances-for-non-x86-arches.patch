@@ -1,4 +1,4 @@
-From d429c3d4b548a976bc9eac437fca09fdfe784fa8 Mon Sep 17 00:00:00 2001
+From c3b9e1f09d8b061db4810640afb4b92f0cc25aaf Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 11 Aug 2023 05:13:38 -0400
 Subject: [PATCH 5/5] TST: Increase some tolerances for non-x86 arches
@@ -9,7 +9,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py b/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py
-index 1f8764cbab..c998e929a9 100644
+index 9cebc8a33e..080f17ac81 100644
 --- a/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py
 +++ b/lib/mpl_toolkits/mplot3d/tests/test_axes3d.py
 @@ -2249,7 +2249,7 @@ def test_scatter_masked_color():

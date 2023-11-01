@@ -1,4 +1,4 @@
-From 9a1f728c8f56aaa1961cc9690e169ae5e31054d5 Mon Sep 17 00:00:00 2001
+From 789bb69a3175c6ecc03449128d72cac63522d98f Mon Sep 17 00:00:00 2001
 From: Elliott Sales de Andrade <quantum.analyst@gmail.com>
 Date: Fri, 11 Aug 2023 02:36:06 -0400
 Subject: [PATCH 2/5] Unpin NumPy build requirement
@@ -13,7 +13,7 @@ Signed-off-by: Elliott Sales de Andrade <quantum.analyst@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/pyproject.toml b/pyproject.toml
-index d2e2f769b7..d2e4153202 100644
+index 7131609c63..e76ec736d7 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
 @@ -2,7 +2,7 @@
@@ -23,7 +23,7 @@ index d2e2f769b7..d2e4153202 100644
 -    "numpy>=1.25",
 +    "numpy",
      "pybind11>=2.6",
-     "setuptools>=42",
+     "setuptools>=64",
      "setuptools_scm>=7",
 -- 
 2.41.0
