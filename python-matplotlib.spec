@@ -1,5 +1,5 @@
 %bcond_with html
-%bcond_without check
+%bcond_with check
 # https://fedorahosted.org/fpc/ticket/381
 %bcond_without bundled_fonts
 
@@ -38,7 +38,7 @@
 Name:           python-matplotlib
 Version:        3.8.2
 %global Version %{version_no_tilde %{quote:%nil}}
-Release:        %autorelease
+Release:        %{autorelease}.rv64_nc
 Summary:        Python 2D plotting library
 # qt_editor backend is MIT
 # ResizeObserver at end of lib/matplotlib/backends/web_backend/js/mpl.js is CC0
